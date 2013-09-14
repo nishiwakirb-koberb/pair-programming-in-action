@@ -1,4 +1,4 @@
-pair-programming-meetup
+pair-programming-in-action
 =======================
 
-pair programming meetup
+pair programming in action
