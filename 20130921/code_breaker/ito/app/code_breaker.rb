@@ -9,8 +9,7 @@ class CodeChar
 
   def are_you_there?(other)
     if not self.found? and not other.found? and self.char == other.char
-      self.found = true
-      other.found = true
+      self.found = other.found = true
     end
   end
 
