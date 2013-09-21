@@ -9,8 +9,8 @@ describe CodeBreaker do
       it { expect(codebreaker.guess(5555)).to be_empty }
     end
 
-    context "when guess no match" do
-      it { expect(codebreaker.guess(1555)).to "+" }
+    context "when 1 number correct" do
+      it { expect(codebreaker.guess(1555)).to eq "+" }
     end
   end
 end
