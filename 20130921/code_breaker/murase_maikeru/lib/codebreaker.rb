@@ -10,10 +10,9 @@ module Codebreaker
     end
 
     def judge(guess)
-      not_matched_guess, not_matched_secret = remove_exact_match_chars(guess, @secret)
-      result = "+" * (guess.size - not_matched_guess.size)
-      result += "-" * inexact_match_count(not_matched_guess, not_matched_secret)
-      sort_result(result)
+      unmatched_secret, unmatched_guess = remove_exact_match_chars(@secret, guess)
+      result = "+" * (guess.size - unmatched_guess.size)
+      result += "-" * inexact_match_count(unmatched_guess, unmatched_secret)
     end
 
     def inexact_match_count(str1, str2)
@@ -38,14 +37,6 @@ module Codebreaker
         end
       end
       [removed1, removed2]
-    end
-
-    def sort_result(str)
-      order = ["+", "-"]
-      sorted = str.split(//).sort_by do |c|
-        order.index c
-      end
-      sorted.join
     end
   end
 end
