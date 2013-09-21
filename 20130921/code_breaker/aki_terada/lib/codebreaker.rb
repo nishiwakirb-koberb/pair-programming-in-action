@@ -1,4 +1,5 @@
 class CodeBreaker
-	def guess
-	end
+  def guess value
+    ''
+  end
 end
