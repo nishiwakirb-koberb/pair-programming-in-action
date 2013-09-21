@@ -60,6 +60,15 @@ describe CodeBreaker do
 			specify { expect(@code_breaker.guess(5115)).to eq '-' }
 			specify { expect(CodeBreaker.new(1134).guess(1155)).to eq '++' }
 			specify { expect(CodeBreaker.new(1134).guess(5115)).to eq '+-' }
+			specify { expect(CodeBreaker.new(1134).guess(5511)).to eq '--' }
+			specify { expect(CodeBreaker.new(1134).guess(1115)).to eq '++' }
+			specify { expect(CodeBreaker.new(1134).guess(5111)).to eq '+-' }
+			specify { expect(CodeBreaker.new(1155).guess(1234)).to eq '+' }
+			specify { expect(CodeBreaker.new(1111).guess(1112)).to eq '+++' }
+			specify { expect(CodeBreaker.new(1113).guess(1121)).to eq '++-' }
+			specify { expect(CodeBreaker.new(3111).guess(1311)).to eq '++--' }
+			specify { expect(CodeBreaker.new(3114).guess(1251)).to eq '--' }
+			specify { expect(CodeBreaker.new(1511).guess(2134)).to eq '-' }
     end
   end
   
