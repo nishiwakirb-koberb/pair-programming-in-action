@@ -6,10 +6,32 @@ module Codebreaker
       @secret = secret
     end
 
+    # def judge(guess)
+    #   unmatched_secret, unmatched_guess = remove_exact_match_chars(@secret, guess)
+    #   result = "+" * (guess.size - unmatched_guess.size)
+    #   result += "-" * inexact_match_count(unmatched_guess, unmatched_secret)
+    # end
+
     def judge(guess)
-      unmatched_secret, unmatched_guess = remove_exact_match_chars(@secret, guess)
-      result = "+" * (guess.size - unmatched_guess.size)
-      result += "-" * inexact_match_count(unmatched_guess, unmatched_secret)
+      num_exact_total = 0
+      num_inexact_total = 0
+      ("0".."9").each do |c|
+        secret_indexes = []
+        @secret.split(//).each_with_index do |s,idx|
+          secret_indexes << idx if s == c
+        end
+        guess_indexes = []
+        guess.split(//).each_with_index do |g, idx|
+          guess_indexes << idx if g == c
+        end
+        num_exact = (secret_indexes & guess_indexes).count
+        num_matched = secret_indexes.size > guess_indexes.size ? guess_indexes.size : secret_indexes.size
+        num_inexact = num_matched - num_exact
+        num_exact_total += num_exact
+        num_inexact_total += num_inexact
+      end
+
+      "+" * num_exact_total + "-" * num_inexact_total
     end
 
     private
