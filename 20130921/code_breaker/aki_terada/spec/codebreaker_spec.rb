@@ -21,5 +21,12 @@ describe CodeBreaker do
       it { expect(codebreaker.guess(5155)).to eq "-" }
     end
 
+    context "when 2 numbers correct" do
+      it { expect(codebreaker.guess(5154)).to eq "+-" }
+    end
+
+    context "when matches with duplicates" do
+      it { expect(codebreaker.guess(5115)).to eq "+-" }
+    end
   end
 end
