@@ -1,5 +1,4 @@
 class CodeBreaker
-  
   def initialize(answer)
     @answer = answer
   end
