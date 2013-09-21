@@ -7,10 +7,10 @@ class CodeChar
     @found = false
   end
 
-  def are_you_there?(code_char)
-    if not self.found? and not code_char.found? and self.char == code_char.char
-      @found = true
-      code_char.found = true
+  def are_you_there?(other)
+    if not self.found? and not other.found? and self.char == other.char
+      self.found = true
+      other.found = true
     end
   end
 
