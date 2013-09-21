@@ -25,18 +25,14 @@ class CodeBreaker
   end
   
   def guess(code)
-    code_chars = to_code_chars(code)
-
-    mark = ''
-    code_chars.each_with_index do |code_char, index|
-      mark << '+' if @answer_chars[index].are_you_there?(code_char)
-    end
-    code_chars.each do |code_char|
-      @answer_chars.each do |answer_char|
+    ''.tap do |mark|
+      to_code_chars(code).each_with_index {|code_char, index|
+        mark << '+' if @answer_chars[index].are_you_there?(code_char)
+      }.product(@answer_chars) {|code_and_answer|
+        code_char, answer_char = code_and_answer
         mark << '-' if answer_char.are_you_there?(code_char)
-      end
+      }
     end
-    mark
   end
 
   private
