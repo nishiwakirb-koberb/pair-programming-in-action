@@ -3,12 +3,26 @@ class CodeBreaker
     ret = ''
     codes = ["1", "2", "3", "4"]
     values = value.to_s.split ''
+    
+    codes_unmatch = codes.clone
+    values_unmatch = values.clone
+
     values.each_with_index do |v, i|
-      ret << '+' if v == codes[i]
+      if v == codes[i]
+        ret << '+'
+        codes[i] = nil
+        values[i] = nil
+      end
+    end
+
+    values.uniq!
+    values.each_with_index do |v, i|
+      next unless v
+      if codes.index(v)
+        ret << '-'
+        codes[i] = nil
+      end
     end
     ret
-  end
-  def code
-    1234.to_s.split nil
   end
 end
