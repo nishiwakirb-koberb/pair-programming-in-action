@@ -9,8 +9,13 @@ describe CodeBreaker do
       it { expect(codebreaker.guess(5555)).to be_empty }
     end
 
-    context "when 1 number correct" do
+    context "when 1 number and position correct" do
       it { expect(codebreaker.guess(1555)).to eq "+" }
     end
+
+    context "when 2 number and position correct" do
+      it { expect(codebreaker.guess(1255)).to eq "++" }
+    end
+
   end
 end
