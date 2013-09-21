@@ -1,7 +1,14 @@
 class CodeBreaker
   def guess value
-    code = 1555
-    value == code ?
-      '+' : ''
+    ret = ''
+    codes = ["1", "2", "3", "4"]
+    values = value.to_s.split ''
+    values.each_with_index do |v, i|
+      ret << '+' if v == codes[i]
+    end
+    ret
+  end
+  def code
+    1234.to_s.split nil
   end
 end
