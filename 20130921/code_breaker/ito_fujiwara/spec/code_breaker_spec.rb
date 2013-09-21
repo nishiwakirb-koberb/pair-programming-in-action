@@ -57,7 +57,9 @@ describe CodeBreaker do
 		
 		context 'matches with duplicates' do
       specify { expect(@code_breaker.guess(1155)).to eq '+' }
-      end
+			specify { expect(@code_breaker.guess(5115)).to eq '-' }
+			specify { expect(CodeBreaker.new(1134).guess(1155)).to eq '++' }
+    end
   end
   
 end

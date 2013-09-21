@@ -16,7 +16,12 @@ class CodeBreaker
     
     ret = []
     code_array.each_with_index do |c, i|
-			next if i > 0 && code_array[0..(i - 1)].include?(c)
+			if i > 0 && code_array[0..(i - 1)].include?(c)
+				if answer_array[i] == c
+					ret << '+'
+				end
+				next
+		  end
       if answer_array.include?(c)
         if answer_array[i] == c
           ret << '+'
