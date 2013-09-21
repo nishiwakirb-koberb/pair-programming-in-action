@@ -1,10 +1,6 @@
 require 'spec_helper'
 
 describe CodeBreaker do
-  it 'is true' do
-    expect(CodeBreaker.hello).to be_true
-  end
-  
   describe '#answer' do
     before do
       @code_breaker = CodeBreaker.new(1234)
@@ -54,21 +50,21 @@ describe CodeBreaker do
       specify { expect(@code_breaker.guess(1423)).to eq '+---' }
       specify { expect(@code_breaker.guess(4321)).to eq '----' }
     end
-		
-		context 'matches with duplicates' do
+    
+    context 'matches with duplicates' do
       specify { expect(@code_breaker.guess(1155)).to eq '+' }
-			specify { expect(@code_breaker.guess(5115)).to eq '-' }
-			specify { expect(CodeBreaker.new(1134).guess(1155)).to eq '++' }
-			specify { expect(CodeBreaker.new(1134).guess(5115)).to eq '+-' }
-			specify { expect(CodeBreaker.new(1134).guess(5511)).to eq '--' }
-			specify { expect(CodeBreaker.new(1134).guess(1115)).to eq '++' }
-			specify { expect(CodeBreaker.new(1134).guess(5111)).to eq '+-' }
-			specify { expect(CodeBreaker.new(1155).guess(1234)).to eq '+' }
-			specify { expect(CodeBreaker.new(1111).guess(1112)).to eq '+++' }
-			specify { expect(CodeBreaker.new(1113).guess(1121)).to eq '++-' }
-			specify { expect(CodeBreaker.new(3111).guess(1311)).to eq '++--' }
-			specify { expect(CodeBreaker.new(3114).guess(1251)).to eq '--' }
-			specify { expect(CodeBreaker.new(1511).guess(2134)).to eq '-' }
+      specify { expect(@code_breaker.guess(5115)).to eq '-' }
+      specify { expect(CodeBreaker.new(1134).guess(1155)).to eq '++' }
+      specify { expect(CodeBreaker.new(1134).guess(5115)).to eq '+-' }
+      specify { expect(CodeBreaker.new(1134).guess(5511)).to eq '--' }
+      specify { expect(CodeBreaker.new(1134).guess(1115)).to eq '++' }
+      specify { expect(CodeBreaker.new(1134).guess(5111)).to eq '+-' }
+      specify { expect(CodeBreaker.new(1155).guess(1234)).to eq '+' }
+      specify { expect(CodeBreaker.new(1111).guess(1112)).to eq '+++' }
+      specify { expect(CodeBreaker.new(1113).guess(1121)).to eq '++-' }
+      specify { expect(CodeBreaker.new(3111).guess(1311)).to eq '++--' }
+      specify { expect(CodeBreaker.new(3114).guess(1251)).to eq '--' }
+      specify { expect(CodeBreaker.new(1511).guess(2134)).to eq '-' }
     end
   end
   
