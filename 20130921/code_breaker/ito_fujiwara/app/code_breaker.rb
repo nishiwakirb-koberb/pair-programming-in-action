@@ -21,7 +21,7 @@ class CodeBreaker
       end
     end
     
-    code_work_array.each_with_index do |c, i|
+    code_work_array.each do |c|
       if index = answer_work_array.index(c)
         ret << '-'
         answer_work_array.delete_at(index)
