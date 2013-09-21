@@ -60,6 +60,7 @@ describe CodeBreaker do
     context "other code" do
       let(:code) { 1134 }
       let(:guess) { codebreaker.guess(value) }
+      
       context "when matches with duplicates" do
         let(:value) { 1155 }
         it { expect(guess).to eq "++" }
