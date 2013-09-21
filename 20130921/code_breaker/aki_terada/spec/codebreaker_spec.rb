@@ -2,11 +2,10 @@ require 'rspec'
 require 'codebreaker'
 
 describe CodeBreaker do
-  let(:codebreaker) { CodeBreaker.new }
+  let(:codebreaker) { CodeBreaker.new(code) }
   describe '.guess' do
 
     context "normal" do
-    
       let(:code) { 1234 }
       let(:guess) { codebreaker.guess(value) }
 
