@@ -4,27 +4,25 @@ class CodeBreaker
   end
   
   def guess(code)
-    answer_array = @answer.to_s.split('')
-    code_array = code.to_s.split('')
+    answer_chars = @answer.to_s.split('')
+    code_chars = code.to_s.split('')
     
-    mark = []
-    answer_work_array = []
-    code_work_array = []
-    code_array.each_with_index do |c, i|
-      if answer_array[i] == c
-        mark << '+'
-      else
-        answer_work_array << answer_array[i]
-        code_work_array << code_array[i]
+    ''.tap do |mark|
+  		3.downto(0).each do |i|
+  		  if answer_chars[i] == code_chars[i]
+  			  mark << '+'
+  				answer_chars.delete_at i
+  				code_chars.delete_at i
+  				end
+  			end
+  		
+      
+      code_chars.each do |c|
+        if index = answer_chars.index(c)
+          mark << '-'
+          answer_chars.delete_at(index)
+        end
       end
-    end
-    
-    code_work_array.each do |c|
-      if index = answer_work_array.index(c)
-        mark << '-'
-        answer_work_array.delete_at(index)
-      end
-    end
-    mark.sort.join
+  	end
   end
 end
