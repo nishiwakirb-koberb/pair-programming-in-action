@@ -1,23 +1,3 @@
-class CodeChar
-  attr_reader :char
-  attr_writer :found
-
-  def initialize(char)
-    @char = char
-    @found = false
-  end
-
-  def are_you_there?(other)
-    if self.not_found_yet? and other.not_found_yet? and self.char == other.char
-      self.found = other.found = true
-    end
-  end
-
-  def not_found_yet?
-    not @found
-  end
-end
-
 class CodeBreaker
   def initialize(answer_code)
     @answer_chars = to_code_chars(answer_code)
@@ -37,5 +17,23 @@ class CodeBreaker
 
   def to_code_chars(code)
     code.to_s.split('').map{|char| CodeChar.new(char) }
+  end
+
+  class CodeChar
+    attr_reader :char
+    attr_writer :found
+
+    def initialize(char)
+      @char = char
+      @found = false
+    end
+
+    def are_you_there?(other)
+      self.found = other.found = true if self.not_found_yet? and other.not_found_yet? and self.char == other.char
+    end
+
+    def not_found_yet?
+      not @found
+    end
   end
 end
