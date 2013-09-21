@@ -47,6 +47,13 @@ describe CodeBreaker do
       specify { expect(@code_breaker.guess(5124)).to eq '+--' }
       specify { expect(@code_breaker.guess(5123)).to eq '---' }
     end
+
+    context 'all numbers correct' do
+      specify { expect(@code_breaker.guess(1234)).to eq '++++' }
+      specify { expect(@code_breaker.guess(1243)).to eq '++--' }
+      specify { expect(@code_breaker.guess(1423)).to eq '+---' }
+      specify { expect(@code_breaker.guess(4321)).to eq '----' }
+    end
   end
   
 end
