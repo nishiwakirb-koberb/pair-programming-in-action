@@ -9,6 +9,7 @@ module Codebreaker
     end
 
     def judge(guess)
+      ""
     end
   end
 end
