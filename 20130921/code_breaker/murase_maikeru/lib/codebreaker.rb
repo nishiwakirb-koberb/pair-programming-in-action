@@ -12,6 +12,8 @@ module Codebreaker
       result += "-" * inexact_match_count(unmatched_guess, unmatched_secret)
     end
 
+    private
+
     def inexact_match_count(str1, str2)
       count = 0
       temp = str2.dup
