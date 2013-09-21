@@ -1,11 +1,12 @@
 class CodeBreaker
+  def initialize code
+    @code = code
+  end
+
   def guess value
     ret = ''
-    codes = ["1", "2", "3", "4"]
+    codes = @code.to_s.split ''
     values = value.to_s.split ''
-    
-    codes_unmatch = codes.clone
-    values_unmatch = values.clone
 
     values.each_with_index do |v, i|
       if v == codes[i]

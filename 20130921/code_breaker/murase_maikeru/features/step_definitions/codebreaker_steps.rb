@@ -1,6 +1,5 @@
 Given /^the secret code is "([^\"]*)"$/ do |secret|
-  @game = Codebreaker::Game.new
-  @game.start(secret)
+  @game = Codebreaker::Game.new(secret)
 end
 
 When /^I guess "([^\"]*)"$/ do |guess|
