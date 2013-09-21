@@ -11,8 +11,10 @@ module Codebreaker
 
     def judge(guess)
       result = ""
-      guess.each_char do |c|
-        if @secret.include? c
+      guess.split(//).each_with_index do |c, i|
+        if @secret[i] == c
+          result = "+"
+        elsif @secret.include? c
           result = "-"
         end
       end
