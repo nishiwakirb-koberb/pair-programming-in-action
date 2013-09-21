@@ -31,7 +31,7 @@ class CodeBreaker
     code_chars.each_with_index do |code_char, index|
       mark << '+' if @answer_chars[index].are_you_there?(code_char)
     end
-    code_chars.each_with_index do |code_char, index|
+    code_chars.each do |code_char|
       @answer_chars.each do |answer_char|
         mark << '-' if answer_char.are_you_there?(code_char)
       end
