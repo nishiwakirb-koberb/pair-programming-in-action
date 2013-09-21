@@ -2,10 +2,7 @@ module Codebreaker
 
   class Game
 
-    def initialize
-    end
-
-    def start(secret)
+    def initialize(secret)
       @secret = secret
     end
 
