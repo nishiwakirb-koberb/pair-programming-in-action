@@ -20,12 +20,12 @@ class CodeChar
 end
 
 class CodeBreaker
-  def initialize(answer)
-    @answer_chars = answer.to_s.split('').map{|char| CodeChar.new(char) }
+  def initialize(answer_code)
+    @answer_chars = to_code_chars(answer_code)
   end
   
   def guess(code)
-    code_chars = code.to_s.split('').map{|char| CodeChar.new(char) }
+    code_chars = to_code_chars(code)
 
     mark = ''
     code_chars.each_with_index do |code_char, index|
@@ -37,5 +37,11 @@ class CodeBreaker
       end
     end
     mark
+  end
+
+  private
+
+  def to_code_chars(code)
+    code.to_s.split('').map{|char| CodeChar.new(char) }
   end
 end
