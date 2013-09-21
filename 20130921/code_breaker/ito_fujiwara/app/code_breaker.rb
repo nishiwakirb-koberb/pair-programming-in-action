@@ -10,4 +10,7 @@ class CodeBreaker
 		@answer = answer
 	end
 	
+	def guess(code)
+		''
+	end
 end
