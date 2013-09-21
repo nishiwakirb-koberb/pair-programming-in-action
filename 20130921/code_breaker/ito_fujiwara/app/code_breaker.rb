@@ -14,7 +14,7 @@ class CodeBreaker
   				answer_chars.delete_at i
   				code_chars.delete_at i
   				end
-  			end
+  		end
   		
       
       code_chars.each do |c|
@@ -26,3 +26,4 @@ class CodeBreaker
   	end
   end
 end
+a, b = [1, 2]
