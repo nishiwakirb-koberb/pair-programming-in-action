@@ -34,6 +34,12 @@ describe CodeBreaker do
         expect(@code_breaker.guess(2555)).to eq '-'
       end
     end
+
+    context '2 number correct' do
+      specify { expect(@code_breaker.guess(5254)).to eq '++' }
+      specify { expect(@code_breaker.guess(5154)).to eq '+-' }
+      # specify { expect(@code_breaker.guess(5254)).to eq '++' }
+    end
   end
   
 end

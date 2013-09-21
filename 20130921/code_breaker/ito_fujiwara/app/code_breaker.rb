@@ -24,6 +24,6 @@ class CodeBreaker
         end
       end
     end
-    ret.join
+    ret.sort.join
   end
 end
