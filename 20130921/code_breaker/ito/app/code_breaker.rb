@@ -1,6 +1,6 @@
 class CodeChar
   attr_reader :char
-  attr_accessor :found
+  attr_writer :found
 
   def initialize(char)
     @char = char
