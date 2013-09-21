@@ -23,5 +23,11 @@ describe CodeBreaker do
 				expect(@code_breaker.guess(5555)).to eq ''
 			end
 		end
+		context '1 number correct' do
+			it 'returns one mark' do
+				expect(@code_breaker.guess(1555)).to eq '+'
+			end
+		end
 	end
+	
 end
