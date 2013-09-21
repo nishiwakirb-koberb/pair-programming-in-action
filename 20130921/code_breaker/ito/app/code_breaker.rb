@@ -8,13 +8,13 @@ class CodeChar
   end
 
   def are_you_there?(other)
-    if not self.found? and not other.found? and self.char == other.char
+    if self.not_found_yet? and other.not_found_yet? and self.char == other.char
       self.found = other.found = true
     end
   end
 
-  def found?
-    @found
+  def not_found_yet?
+    not @found
   end
 end
 
