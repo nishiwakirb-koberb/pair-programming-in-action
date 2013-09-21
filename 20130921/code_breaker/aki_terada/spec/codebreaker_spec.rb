@@ -17,5 +17,9 @@ describe CodeBreaker do
       it { expect(codebreaker.guess(1255)).to eq "++" }
     end
 
+    context "when 1 number correct" do
+      it { expect(codebreaker.guess(5155)).to eq "-" }
+    end
+
   end
 end
