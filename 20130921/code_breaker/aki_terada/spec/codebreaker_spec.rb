@@ -4,29 +4,45 @@ require 'codebreaker'
 describe CodeBreaker do
   let(:codebreaker) { CodeBreaker.new }
   describe '.guess' do
+
     let(:code) { 1234 }
+    let(:guess) { codebreaker.guess(value) }
+
     context "when guess no match" do
-      it { expect(codebreaker.guess(5555)).to be_empty }
-    end
-
-    context "when 1 number and position correct" do
-      it { expect(codebreaker.guess(1555)).to eq "+" }
-    end
-
-    context "when 2 number and position correct" do
-      it { expect(codebreaker.guess(1255)).to eq "++" }
+      let(:value) { 5555 }
+      it { expect(guess).to be_empty }
     end
 
     context "when 1 number correct" do
-      it { expect(codebreaker.guess(5155)).to eq "-" }
+      context "and position" do
+        let(:value) { 1555 }
+        it { expect(guess).to eq "+" }
+      end
+
+      context "include only" do
+        let(:value) { 2555 }
+        it { expect(guess).to eq "-" }
+      end
+    end
+
+    context "when 2 number and position correct" do
+      let(:value) { 1255 }
+      it { expect(guess).to eq "++" }
+    end
+
+    context "when 1 number correct" do
+      let(:value) { 5155 }
+      it { expect(guess).to eq "-" }
     end
 
     context "when 2 numbers correct" do
-      it { expect(codebreaker.guess(5154)).to eq "+-" }
+      let(:value) { 5154 }
+      it { expect(guess).to eq "+-" }
     end
 
     context "when matches with duplicates" do
-      it { expect(codebreaker.guess(5115)).to eq "-" }
+      let(:value) { 5115 }
+      it { expect(guess).to eq "-" }
     end
   end
 end
