@@ -1,69 +1,62 @@
-require 'rspec'
-require 'codebreaker'
+require 'spec_helper'
 
 describe CodeBreaker do
-  let(:codebreaker) { CodeBreaker.new(code) }
-  describe '.guess' do
-
-    context "normal" do
-      let(:code) { 1234 }
-      let(:guess) { codebreaker.guess(value) }
-
-      context "when guess no match" do
-        let(:value) { 5555 }
-        it { expect(guess).to be_empty }
+  describe '#guess' do
+    before do
+      @code_breaker = CodeBreaker.new(1234)
+    end
+    context 'no matches' do
+      it 'returns nothing' do
+        expect(@code_breaker.guess(5555)).to eq ''
       end
-
-      context "when 1 number correct" do
-        context "and position" do
-          let(:value) { 1555 }
-          it { expect(guess).to eq "+" }
-        end
-
-        context "include only" do
-          let(:value) { 2555 }
-          it { expect(guess).to eq "-" }
-        end
-      end
-
-      context "when 2 number and position correct" do
-        let(:value) { 1255 }
-        it { expect(guess).to eq "++" }
-      end
-
-      context "when 1 number correct" do
-        let(:value) { 5155 }
-        it { expect(guess).to eq "-" }
-      end
-
-      context "when 2 numbers correct" do
-        let(:value) { 5154 }
-        it { expect(guess).to eq "+-" }
-      end
-
-      context "when matches with duplicates" do
-        let(:value) { 5115 }
-        it { expect(guess).to eq "-" }
-      end
-
-      context "when matches with duplicates" do
-        let(:value) { 1155 }
-        it { expect(guess).to eq "+" }
-      end
-
-      context "when matches with duplicates" do
-        let(:value) { 5115 }
-        it { expect(guess).to eq "-" }
+    end
+    context '1 number correct and correct position' do
+      it 'returns one mark' do
+        expect(@code_breaker.guess(1555)).to eq '+'
       end
     end
     
-    context "other code" do
-      let(:code) { 1134 }
-      let(:guess) { codebreaker.guess(value) }
-      context "when matches with duplicates" do
-        let(:value) { 1155 }
-        it { expect(guess).to eq "++" }
+    context '1 number correct and incorrect position' do
+      it 'returns one mark' do
+        expect(@code_breaker.guess(2555)).to eq '-'
       end
     end
+
+    context '2 numbers correct' do
+      specify { expect(@code_breaker.guess(5254)).to eq '++' }
+      specify { expect(@code_breaker.guess(5154)).to eq '+-' }
+      specify { expect(@code_breaker.guess(2545)).to eq '--' }
+    end
+
+    context '3 numbers correct' do
+      specify { expect(@code_breaker.guess(5234)).to eq '+++' }
+      specify { expect(@code_breaker.guess(5134)).to eq '++-' }
+      specify { expect(@code_breaker.guess(5124)).to eq '+--' }
+      specify { expect(@code_breaker.guess(5123)).to eq '---' }
+    end
+
+    context 'all numbers correct' do
+      specify { expect(@code_breaker.guess(1234)).to eq '++++' }
+      specify { expect(@code_breaker.guess(1243)).to eq '++--' }
+      specify { expect(@code_breaker.guess(1423)).to eq '+---' }
+      specify { expect(@code_breaker.guess(4321)).to eq '----' }
+    end
+    
+    context 'matches with duplicates' do
+      specify { expect(@code_breaker.guess(1155)).to eq '+' }
+      specify { expect(@code_breaker.guess(5115)).to eq '-' }
+      specify { expect(CodeBreaker.new(1134).guess(1155)).to eq '++' }
+      specify { expect(CodeBreaker.new(1134).guess(5115)).to eq '+-' }
+      specify { expect(CodeBreaker.new(1134).guess(5511)).to eq '--' }
+      specify { expect(CodeBreaker.new(1134).guess(1115)).to eq '++' }
+      specify { expect(CodeBreaker.new(1134).guess(5111)).to eq '+-' }
+      specify { expect(CodeBreaker.new(1155).guess(1234)).to eq '+' }
+      specify { expect(CodeBreaker.new(1111).guess(1112)).to eq '+++' }
+      specify { expect(CodeBreaker.new(1113).guess(1121)).to eq '++-' }
+      specify { expect(CodeBreaker.new(3111).guess(1311)).to eq '++--' }
+      specify { expect(CodeBreaker.new(3114).guess(1251)).to eq '--' }
+      specify { expect(CodeBreaker.new(1511).guess(2134)).to eq '-' }
+    end
   end
+  
 end

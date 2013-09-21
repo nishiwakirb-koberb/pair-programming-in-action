@@ -16,12 +16,10 @@ class CodeBreaker
       end
     end
 
-    values.uniq!
-    values.each_with_index do |v, i|
-      next unless v
+    values.compact.each do |v|
       if codes.index(v)
         ret << '-'
-        codes[i] = nil
+        codes[codes.index(v)] = nil
       end
     end
     ret
