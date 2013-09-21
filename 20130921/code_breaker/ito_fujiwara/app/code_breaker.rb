@@ -9,12 +9,12 @@ class CodeBreaker
     answer_array = @answer.to_s.split('')
     code_array = code.to_s.split('')
     
-    ret = []
+    mark = []
     answer_work_array = []
     code_work_array = []
     code_array.each_with_index do |c, i|
       if answer_array[i] == c
-        ret << '+'
+        mark << '+'
       else
         answer_work_array << answer_array[i]
         code_work_array << code_array[i]
@@ -23,10 +23,10 @@ class CodeBreaker
     
     code_work_array.each do |c|
       if index = answer_work_array.index(c)
-        ret << '-'
+        mark << '-'
         answer_work_array.delete_at(index)
       end
     end
-    ret.sort.join
+    mark.sort.join
   end
 end
