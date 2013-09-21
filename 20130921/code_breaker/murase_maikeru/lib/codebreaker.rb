@@ -25,6 +25,7 @@ module Codebreaker
 
       not_matched_guess.split(//).each_with_index do |c,i|
         if not_matched_secret.include? c
+          not_matched_secret.sub!(c, "")
           result += "-"
         end
       end
