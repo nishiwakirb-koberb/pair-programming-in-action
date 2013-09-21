@@ -8,14 +8,13 @@ class CodeBreaker
     code_chars = code.to_s.split('')
     
     ''.tap do |mark|
-  		3.downto(0).each do |i|
-  		  if answer_chars[i] == code_chars[i]
-  			  mark << '+'
-  				answer_chars.delete_at i
-  				code_chars.delete_at i
-  				end
-  		end
-  		
+      3.downto(0).each do |i|
+        if answer_chars[i] == code_chars[i]
+          mark << '+'
+          answer_chars.delete_at i
+          code_chars.delete_at i
+        end
+      end
       
       code_chars.each do |c|
         if index = answer_chars.index(c)
@@ -23,7 +22,6 @@ class CodeBreaker
           answer_chars.delete_at(index)
         end
       end
-  	end
+    end
   end
 end
-a, b = [1, 2]
