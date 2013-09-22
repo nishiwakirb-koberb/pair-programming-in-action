@@ -4,9 +4,9 @@ class CodeBreaker
   end
   
   def guess(code)
-    code_chars = [@answer_code, code].map{|c| to_code_chars(c)}
-    [%w(zip +), %w(product -)].each {|test_params| exec_test(*code_chars, *test_params)}
-    code_chars.first.map(&:mark).sort.join
+    answer_chars, code_chars = [@answer_code, code].map{|c| to_code_chars(c)}
+    [%w(zip +), %w(product -)].each {|test_params| exec_test(answer_chars, code_chars, *test_params)}
+    code_chars.map(&:mark).sort.join
   end
 
   private
@@ -15,7 +15,6 @@ class CodeBreaker
     chars.send(collection_method_name, other_chars) do |char, other_char|
       char.test_match(other_char, mark_char)
     end
-    [chars, other_chars]
   end
 
   def to_code_chars(code)
