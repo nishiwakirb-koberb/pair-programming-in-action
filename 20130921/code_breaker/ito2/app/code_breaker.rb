@@ -11,16 +11,16 @@ class CodeBreaker
   private
 
   def test_exact_match(chars, other_chars)
-    exec_test(chars, other_chars, :zip, :test_exact_match)
+    exec_test(chars, other_chars, :zip, '+')
   end
 
   def test_match(chars, other_chars)
-    exec_test(chars, other_chars, :product, :test_match)
+    exec_test(chars, other_chars, :product, '-')
   end
 
-  def exec_test(chars, other_chars, collection_method_name, test_method_name)
+  def exec_test(chars, other_chars, collection_method_name, mark_char)
     chars.send(collection_method_name, other_chars) do |char, other_char|
-      char.send(test_method_name, other_char)
+      char.test_match(other_char, mark_char)
     end
     [chars, other_chars]
   end
@@ -38,15 +38,9 @@ class CodeBreaker
       @mark = ''
     end
 
-    def test_exact_match(other)
-      if self.char == other.char
-        self.mark = other.mark = '+'
-      end
-    end
-
-    def test_match(other)
+    def test_match(other, mark_char)
       if [self, other].all?(&:not_marked_yet?) and self.char == other.char
-        self.mark = other.mark = '-'
+        self.mark = other.mark = mark_char
       end
     end
 
