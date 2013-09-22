@@ -5,7 +5,9 @@ class CodeBreaker
   
   def guess(answer)
     secret_chars, answer_chars = [@secret, answer].map{|code| to_code_chars(code)}
-    %w(zip + product -).each_slice(2) {|test_params| exec_test(secret_chars, answer_chars, *test_params)}
+    %w(zip + product -).each_slice(2) do |test_params|
+      exec_test(secret_chars, answer_chars, *test_params)
+    end
     answer_chars.map(&:mark).sort.join
   end
 
