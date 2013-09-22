@@ -40,7 +40,7 @@ class CodeBreaker
     end
 
     def not_marked_yet?
-      @mark == ''
+      self.mark == ''
     end
   end
 end
