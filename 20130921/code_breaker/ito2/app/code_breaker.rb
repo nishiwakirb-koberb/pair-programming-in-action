@@ -9,19 +9,19 @@ class CodeBreaker
 
   private
 
-  def test_exact_match(answer_chars, code_chars)
-    exec_test(answer_chars, code_chars, :zip, :test_exact_match)
+  def test_exact_match(chars, other_chars)
+    exec_test(chars, other_chars, :zip, :test_exact_match)
   end
 
-  def test_match(answer_chars, code_chars)
-    exec_test(answer_chars, code_chars, :product, :test_match)
+  def test_match(chars, other_chars)
+    exec_test(chars, other_chars, :product, :test_match)
   end
 
-  def exec_test(answer_chars, code_chars, collection_method_name, test_method_name)
-    answer_chars.send(collection_method_name, code_chars) do |answer_char, code_char|
-      answer_char.send(test_method_name, code_char)
+  def exec_test(chars, other_chars, collection_method_name, test_method_name)
+    chars.send(collection_method_name, other_chars) do |char, other_char|
+      char.send(test_method_name, other_char)
     end
-    [answer_chars, code_chars]
+    [chars, other_chars]
   end
 
   def to_code_chars(code)
