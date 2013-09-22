@@ -5,17 +5,17 @@ class CodeBreaker
   
   def guess(answer)
     secret_chars, answer_chars = [@secret, answer].map{|code| to_code_chars(code)}
-    %w(zip + product -).each_slice(2) do |test_params|
-      exec_test(secret_chars, answer_chars, *test_params)
-    end
+    exec_tests(secret_chars, answer_chars)
     answer_chars.map(&:mark).sort.join
   end
 
   private
 
-  def exec_test(chars, other_chars, collection_method_name, mark_char)
-    chars.send(collection_method_name, other_chars) do |char, other_char|
-      char.test_match(other_char, mark_char)
+  def exec_tests(chars, other_chars)
+    %w(zip + product -).each_slice(2) do |collection_method_name, mark_char|
+      chars.send(collection_method_name, other_chars) do |char, other_char|
+        char.test_match(other_char, mark_char)
+      end
     end
   end
 
