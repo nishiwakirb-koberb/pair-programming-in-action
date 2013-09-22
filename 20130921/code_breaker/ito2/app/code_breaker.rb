@@ -1,12 +1,12 @@
 class CodeBreaker
-  def initialize(answer_code)
-    @answer_code = answer_code
+  def initialize(secret)
+    @secret = secret
   end
   
-  def guess(code)
-    answer_chars, code_chars = [@answer_code, code].map{|c| to_code_chars(c)}
-    [%w(zip +), %w(product -)].each {|test_params| exec_test(answer_chars, code_chars, *test_params)}
-    code_chars.map(&:mark).sort.join
+  def guess(answer)
+    secret_chars, answer_chars = [@secret, answer].map{|code| to_code_chars(code)}
+    %w(zip + product -).each_slice(2) {|test_params| exec_test(secret_chars, answer_chars, *test_params)}
+    answer_chars.map(&:mark).sort.join
   end
 
   private
