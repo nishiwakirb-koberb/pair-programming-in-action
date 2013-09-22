@@ -4,7 +4,8 @@ class CodeBreaker
   end
   
   def guess(code)
-    test_match(*test_exact_match(to_code_chars(@answer_code), to_code_chars(code))).first.map(&:mark).sort.join
+    params = [@answer_code, code].map{|c| to_code_chars(c)}
+    test_match(*test_exact_match(*params)).first.map(&:mark).sort.join
   end
 
   private
