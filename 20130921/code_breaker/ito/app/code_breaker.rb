@@ -33,7 +33,7 @@ class CodeBreaker
     end
 
     def test_match(other)
-      if self.not_marked_yet? and other.not_marked_yet? and self.char == other.char
+      if [self, other].all?(&:not_marked_yet?) and self.char == other.char
         self.mark = other.mark = '-'
       end
     end
