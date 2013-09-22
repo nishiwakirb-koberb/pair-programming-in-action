@@ -12,8 +12,8 @@ class CodeBreaker
   private
 
   def exec_tests(chars, other_chars)
-    %w(zip + product -).each_slice(2) do |collection_method_name, mark_char|
-      chars.send(collection_method_name, other_chars) do |char, other_char|
+    %w(zip + product -).each_slice(2) do |method_name, mark_char|
+      chars.send(method_name, other_chars) do |char, other_char|
         char.test_match(other_char, mark_char)
       end
     end
