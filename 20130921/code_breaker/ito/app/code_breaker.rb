@@ -1,12 +1,13 @@
 class CodeBreaker
   def initialize(answer_code)
-    @answer_chars = to_code_chars(answer_code)
+    @answer_code = answer_code
   end
   
   def guess(code)
+    answer_chars = to_code_chars(@answer_code)
     to_code_chars(code).each_with_index {|code_char, index|
-      @answer_chars[index].test_exact_match(code_char)
-    }.product(@answer_chars) {|code_char, answer_char|
+      answer_chars[index].test_exact_match(code_char)
+    }.product(answer_chars) {|code_char, answer_char|
       answer_char.test_match(code_char)
     }.map(&:mark).sort.join
   end
