@@ -14,7 +14,7 @@ class CodeBreaker
   private
 
   def to_code_chars(code)
-    code.to_s.split('').map{|char| CodeChar.new(char) }
+    code.to_s.each_char.map{|char| CodeChar.new(char) }
   end
 
   class CodeChar
