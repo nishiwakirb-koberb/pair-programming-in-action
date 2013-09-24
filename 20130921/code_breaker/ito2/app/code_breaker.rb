@@ -34,13 +34,17 @@ class CodeBreaker
     end
 
     def test_match(other, mark_char)
-      if [self, other].all?(&:not_marked_yet?) and self.char == other.char
-        self.mark = other.mark = mark_char
-      end
+      self.mark = other.mark = mark_char if can_be_pair?(other)
     end
 
     def not_marked_yet?
       self.mark == ''
+    end
+
+    private
+
+    def can_be_pair?(other)
+      [self, other].all?(&:not_marked_yet?) and self.char == other.char
     end
   end
 end
