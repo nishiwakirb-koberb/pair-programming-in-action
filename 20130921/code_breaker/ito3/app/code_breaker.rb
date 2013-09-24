@@ -3,7 +3,6 @@ class CodeBreaker
     @secret = secret
   end
   
-
   def guess(guess)
     [].tap { |mark|
       secret, guess = *[@secret.to_a, guess.to_a].transpose.reject {|s, g| mark << '+' if s == g }.transpose, []
