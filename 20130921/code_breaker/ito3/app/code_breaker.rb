@@ -5,8 +5,8 @@ class CodeBreaker
   
   def guess(guess)
     [].tap { |mark|
-      secret, guess = *[@secret.to_a, guess.to_a].transpose.reject {|s, g| mark << '+' if s == g }.transpose, []
-      secret.each {|c| mark << '-' if guess.delete_first c }
+      secret, guess = *[@secret.to_a, guess.to_a].transpose.reject {|s, g| mark << '+' if s == g }.transpose
+      secret.each {|c| mark << '-' if guess.delete_first c } unless secret.nil?
     }.join
   end
 end
