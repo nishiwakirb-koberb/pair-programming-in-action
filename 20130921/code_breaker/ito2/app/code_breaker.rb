@@ -4,9 +4,10 @@ class CodeBreaker
   end
   
   def guess(answer)
-    secret_chars, answer_chars = [@secret, answer].map{|code| to_code_chars(code)}
-    exec_tests(secret_chars, answer_chars)
-    answer_chars.map(&:mark).sort.join
+    [@secret, answer].
+      map{|code| to_code_chars(code)}.
+      tap{|secret_chars, answer_chars| exec_tests(secret_chars, answer_chars)}.
+      first.map(&:mark).sort.join
   end
 
   private
