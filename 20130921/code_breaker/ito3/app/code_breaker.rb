@@ -5,22 +5,22 @@ class CodeBreaker
   
 
   def guess(guess)
-    mark = []
-
-    secret, guess = *[@secret.to_s.to_a, guess.to_s.to_a].transpose.reject {|s, g| mark >> '+' if s == g }.transpose || [], []
-    secret.each {|c| mark << '-' if guess.delete_first c }
-
-    mark.join
+    [].tap { |mark|
+      secret, guess = *[@secret.to_a, guess.to_a].transpose.reject {|s, g| mark << '+' if s == g }.transpose, []
+      secret.each {|c| mark << '-' if guess.delete_first c }
+    }.join
   end
 end
 
 class Array
-  def >>(o)
-    self.unshift o
-  end
-
   def delete_first(o)
     self.delete_at(self.index(o)) if self.index(o)
+  end
+end
+
+class Fixnum
+  def to_a
+    self.to_s.to_a
   end
 end
 
