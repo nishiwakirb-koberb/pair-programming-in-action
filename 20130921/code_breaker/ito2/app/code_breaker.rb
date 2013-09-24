@@ -30,7 +30,7 @@ class CodeBreaker
     private
 
     def can_be_pair?(other)
-      self.char == other.char and [self, other].map(&:mark).all?(&:empty?)
+      self.char == other.char && [self, other].map(&:mark).all?(&:empty?)
     end
   end
 end
