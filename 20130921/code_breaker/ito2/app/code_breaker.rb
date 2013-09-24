@@ -4,24 +4,17 @@ class CodeBreaker
   end
   
   def guess(answer)
-    [@secret, answer].
-      map{|code| to_code_chars(code)}.
-      tap{|secret_chars, answer_chars| exec_tests(secret_chars, answer_chars)}.
-      first.map(&:mark).sort.join
-  end
+    to_code_chars = Proc.new{|code| code.to_s.chars.map{|char| CodeChar.new(char) } }
 
-  private
+    exec_tests = Proc.new{|chars, other_chars|
+      %w(zip + product -).each_slice(2){|method_name, mark_char|
+        chars.send(method_name, other_chars){|char, other_char|
+          char.test_match(other_char, mark_char)
+        }
+      }
+    }
 
-  def exec_tests(chars, other_chars)
-    %w(zip + product -).each_slice(2) do |method_name, mark_char|
-      chars.send(method_name, other_chars) do |char, other_char|
-        char.test_match(other_char, mark_char)
-      end
-    end
-  end
-
-  def to_code_chars(code)
-    code.to_s.each_char.map{|char| CodeChar.new(char) }
+    [@secret, answer].map(&to_code_chars).tap(&exec_tests).first.map(&:mark).sort.join
   end
 
   class CodeChar
@@ -37,14 +30,10 @@ class CodeBreaker
       self.mark = other.mark = mark_char if can_be_pair?(other)
     end
 
-    def not_marked_yet?
-      self.mark == ''
-    end
-
     private
 
     def can_be_pair?(other)
-      [self, other].all?(&:not_marked_yet?) and self.char == other.char
+      [self, other].map(&:mark).all?(&:empty?) and self.char == other.char
     end
   end
 end
