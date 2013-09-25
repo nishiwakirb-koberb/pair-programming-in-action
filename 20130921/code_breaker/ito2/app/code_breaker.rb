@@ -33,10 +33,14 @@ class CodeBreaker
       self.mark = other.mark = mark_char if can_be_pair?(other)
     end
 
+    def not_marked_yet?
+      self.mark.empty?
+    end
+
     private
 
     def can_be_pair?(other)
-      self.char == other.char && [self, other].map(&:mark).all?(&:empty?)
+      self.char == other.char && [self, other].all?(&:not_marked_yet?)
     end
   end
 end
