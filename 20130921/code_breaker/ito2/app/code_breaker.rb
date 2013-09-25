@@ -30,7 +30,7 @@ class CodeBreaker
     end
 
     def test_match(other, mark_char)
-      self.mark = other.mark = mark_char if can_be_pair?(other)
+      mark_both(other, mark_char) if can_be_pair?(other)
     end
 
     def not_marked_yet?
@@ -40,7 +40,15 @@ class CodeBreaker
     private
 
     def can_be_pair?(other)
-      self.char == other.char && [self, other].both?(&:not_marked_yet?)
+      same_char?(other) && [self, other].both?(&:not_marked_yet?)
+    end
+
+    def same_char?(other)
+      self.char == other.char
+    end
+
+    def mark_both(other, mark_char)
+      self.mark = other.mark = mark_char
     end
   end
 end
