@@ -2,9 +2,9 @@ class CodeBreaker
   def initialize(secret)
     @secret = secret
 
-    @to_code_chars = proc {|code| code.to_s.chars.map {|char| CodeChar.new(char) } }
+    @to_code_chars = ->(code) {code.to_s.chars.map {|char| CodeChar.new(char) } }
 
-    @exec_tests = proc {|chars, other_chars|
+    @exec_tests = ->((chars, other_chars)) {
       %w(zip + product -).each_slice(2) {|method_name, mark_char|
         chars.send(method_name, other_chars) {|char, other_char|
           char.test_match(other_char, mark_char) } } }
