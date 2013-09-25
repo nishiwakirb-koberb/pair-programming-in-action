@@ -40,7 +40,11 @@ class CodeBreaker
     private
 
     def can_be_pair?(other)
-      self.char == other.char && [self, other].all?(&:not_marked_yet?)
+      self.char == other.char && [self, other].both?(&:not_marked_yet?)
     end
   end
+end
+
+class Array
+  alias_method :both?, :all?
 end
