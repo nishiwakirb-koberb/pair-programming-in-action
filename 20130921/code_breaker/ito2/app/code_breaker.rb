@@ -51,8 +51,8 @@ class CodeBreaker
       self.mark = other.mark = mark_char
     end
   end
-end
 
-class Array
-  alias_method :both?, :all?
+  class ::Array
+    alias_method :both?, :all?
+  end
 end
