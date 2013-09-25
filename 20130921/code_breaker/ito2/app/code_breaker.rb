@@ -1,17 +1,23 @@
 class CodeBreaker
   def initialize(secret)
     @secret = secret
-
-    @to_code_chars = ->(code) { code.to_s.chars.map {|char| CodeChar.new(char) } }
-
-    @exec_tests = ->((chars, other_chars)) {
-      %w(zip + product -).each_slice(2) {|method_name, mark_char|
-        chars.send(method_name, other_chars) {|char, other_char|
-          char.test_match(other_char, mark_char) } } }
   end
   
   def guess(answer)
-    [@secret, answer].map(&@to_code_chars).tap(&@exec_tests).first.map(&:mark).sort.join
+    [@secret, answer].map(&method(:to_code_chars)).
+      tap(&method(:exec_tests)).first.map(&:mark).sort.join
+  end
+
+  private
+
+  def to_code_chars(code)
+    code.to_s.chars.map {|char| CodeChar.new(char) }
+  end
+
+  def exec_tests((chars, other_chars))
+    %w(zip + product -).each_slice(2) {|method_name, mark_char|
+      chars.send(method_name, other_chars) {|char, other_char|
+        char.test_match(other_char, mark_char) } }
   end
 
   class CodeChar
