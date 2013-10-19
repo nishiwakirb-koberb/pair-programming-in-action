@@ -1,6 +1,10 @@
 require 'pp'
 
 def vacant_seat_index(seats)
+  virtual_seats = "-" + seats + "-"
+  if idx = (virtual_seats =~ /---/)
+    return idx
+  end
   seats.index('-')
 end
 

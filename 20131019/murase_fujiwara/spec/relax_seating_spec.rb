@@ -43,4 +43,9 @@ describe "relax_seating" do
     output = relax_seating("2:AZz")
     output.should eq "A-"
   end
+
+  it "3:ABC" do
+    output = relax_seating("3:ABC")
+    output.should eq "ACB"
+  end
 end
