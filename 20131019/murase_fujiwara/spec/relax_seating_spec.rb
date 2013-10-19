@@ -1,9 +1,16 @@
 require 'rspec'
 require File.join(File.dirname(__FILE__), '../src/relax_seating')
 
-describe "test example" do
+describe "relax_seating" do
 
-  it "should be ok" do
-    "hello".should be_a(String)
+  it "returns a String" do
+    output = relax_seating("dummy_input")
+    output.should be_a(String)
+  end
+
+  it "size of the output is the number of seats" do
+    output = relax_seating("4:A")
+    output.size.should eq 4
+    # output.should have(4).items
   end
 end
