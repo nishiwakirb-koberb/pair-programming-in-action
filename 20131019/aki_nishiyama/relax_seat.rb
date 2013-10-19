@@ -28,6 +28,41 @@ class RelaxSeat
     end
   end
 
+  def is_out_of_seats( index )
+    if index < 0 
+      false
+    else
+      !@seats[index]
+    end
+  end
+
+  def is_empty_here( index )
+    is_out_of_seats( index ) || @seats[index] == "-"
+  end
+
+  def is_empty_left( index )
+    is_empty_here( index-1 )
+  end
+
+  def is_empty_right( index )
+    is_empty_here( index+1 )    
+  end
+
+  def is_empty_lr( index )
+    is_empty_left( index ) && is_empty_here( index ) && is_empty_right( index )
+  end
+
+  def search_empty_lr()
+    found = -1
+    @seats.each_index { |index|
+      if is_empty_lr( index )
+        found = index
+        break
+      end
+    }
+    found
+  end
+
   def sit(person)
     @seats[0] = person
   end
