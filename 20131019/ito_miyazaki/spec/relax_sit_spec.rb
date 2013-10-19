@@ -2,20 +2,26 @@ require 'spec_helper'
 
 describe RelaxSit do
   describe "#come_and_go" do
-    context "#2" do
+    subject { RelaxSit.new.come_and_go(input) }
+    shared_examples_for 'valid result' do
       specify do
-        expect(RelaxSit.new.come_and_go("1:A")).to eq "A"
+        expect(subject).to eq result
       end
+    end
+    context "#2" do
+      let(:input) { '1:A' }
+      let(:result) { 'A' }
+      it_behaves_like 'valid result'
     end
     context "#3" do
-      specify do
-        expect(RelaxSit.new.come_and_go("1:Aa")).to eq "-"
-      end
+      let(:input) { '1:Aa' }
+      let(:result) { '-' }
+      it_behaves_like 'valid result'
     end
     context "#4" do
-      specify do
-        expect(RelaxSit.new.come_and_go("2:AB")).to eq "AB"
-      end
+      let(:input) { '2:AB' }
+      let(:result) { 'AB' }
+      it_behaves_like 'valid result'
     end
   end
 end
