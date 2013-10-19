@@ -53,5 +53,18 @@ describe RelaxSit do
       let(:result) { 'ADBC' }
       it_behaves_like 'valid result'
     end
+    specify 'the rest' do
+      expect(RelaxSit.new.come_and_go("4:ABCD")).to eq "ADBC"
+      expect(RelaxSit.new.come_and_go("4:ABCbBD")).to eq "ABDC"
+      expect(RelaxSit.new.come_and_go("4:ABCDabcA")).to eq "-D-A"
+      expect(RelaxSit.new.come_and_go("5:NEXUS")).to eq "NUESX"
+      expect(RelaxSit.new.come_and_go("5:ZYQMyqY")).to eq "ZM-Y-"
+      expect(RelaxSit.new.come_and_go("5:ABCDbdXYc")).to eq "AYX--"
+      expect(RelaxSit.new.come_and_go("6:FUTSAL")).to eq "FAULTS"
+      expect(RelaxSit.new.come_and_go("6:ABCDEbcBC")).to eq "AECB-D"
+      expect(RelaxSit.new.come_and_go("7:FMTOWNS")).to eq "FWMNTSO"
+      expect(RelaxSit.new.come_and_go("7:ABCDEFGabcdfXYZ")).to eq "YE-X-GZ"
+      expect(RelaxSit.new.come_and_go("10:ABCDEFGHIJ")).to eq "AGBHCIDJEF"
+    end
   end
 end
