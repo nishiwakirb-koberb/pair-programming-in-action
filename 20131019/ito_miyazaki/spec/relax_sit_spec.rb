@@ -43,5 +43,10 @@ describe RelaxSit do
       let(:result) { 'ACB' }
       it_behaves_like 'valid result'
     end
+    context "#9" do
+      let(:input) { '3:ABCa' }
+      let(:result) { '-CB' }
+      it_behaves_like 'valid result'
+    end
   end
 end
