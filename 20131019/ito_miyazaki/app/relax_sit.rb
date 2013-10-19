@@ -1,5 +1,5 @@
 class RelaxSit
-  def hello
-    'hello'
+  def come_and_go(input)
+  	"A"
   end
 end
