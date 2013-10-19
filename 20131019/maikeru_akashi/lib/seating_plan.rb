@@ -11,14 +11,28 @@ class SeatingPlan
   private
   def analyze
     bench_size, attendees_raw = @input.split(':')
-    @attendees = Array.new
+    @attendees = Attendees.new
     attendees_raw.each_char do |attendee_name|
-      @attendees << Attendee.new(attendee_name)
+      @attendees.add attendee_name
     end
     @output = ''
     @attendees.each do |attendee|
       @output += attendee.name
     end
+  end
+end
+
+class Attendees
+  def initialize
+    @attendees = Array.new
+  end
+
+  def add attendee_name
+    @attendees << Attendee.new(attendee_name)
+  end
+
+  def each(&block)
+    @attendees.each(&block)
   end
 end
 
