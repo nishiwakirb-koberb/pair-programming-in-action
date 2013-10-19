@@ -93,4 +93,9 @@ describe "relax_seating" do
     output = relax_seating("6:ABCDEbcBC")
     output.should eq "AECB-D"
   end
+  
+  it "7:FMTOWNS" do
+    output = relax_seating("7:FMTOWNS")
+    output.should eq "FWMNTSO"
+  end
 end
