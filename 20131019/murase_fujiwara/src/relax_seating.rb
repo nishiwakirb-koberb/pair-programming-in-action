@@ -5,7 +5,7 @@ def vacant_seat_index(seats)
   if idx = (virtual_seats =~ /---/)
     return idx
   end
-  if idx = (virtual_seats =~ /\w--/)
+  if idx = (virtual_seats =~ /--\w|\w--/)
     return idx
   end
   seats.index('-')
