@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe RelaxSit do
-  describe "#come_and_go" do
-    subject { RelaxSit.come_and_go(input) }
+describe SeatingPlan do
+  describe "#sit_and_leave" do
+    subject { SeatingPlan.sit_and_leave(input) }
     shared_examples_for 'valid result' do
       specify do
         expect(subject).to eq result
@@ -54,17 +54,17 @@ describe RelaxSit do
       it_behaves_like 'valid result'
     end
     specify 'the rest' do
-      expect(RelaxSit.come_and_go("4:ABCD")).to eq "ADBC"
-      expect(RelaxSit.come_and_go("4:ABCbBD")).to eq "ABDC"
-      expect(RelaxSit.come_and_go("4:ABCDabcA")).to eq "-D-A"
-      expect(RelaxSit.come_and_go("5:NEXUS")).to eq "NUESX"
-      expect(RelaxSit.come_and_go("5:ZYQMyqY")).to eq "ZM-Y-"
-      expect(RelaxSit.come_and_go("5:ABCDbdXYc")).to eq "AYX--"
-      expect(RelaxSit.come_and_go("6:FUTSAL")).to eq "FAULTS"
-      expect(RelaxSit.come_and_go("6:ABCDEbcBC")).to eq "AECB-D"
-      expect(RelaxSit.come_and_go("7:FMTOWNS")).to eq "FWMNTSO"
-      expect(RelaxSit.come_and_go("7:ABCDEFGabcdfXYZ")).to eq "YE-X-GZ"
-      expect(RelaxSit.come_and_go("10:ABCDEFGHIJ")).to eq "AGBHCIDJEF"
+      expect(SeatingPlan.sit_and_leave("4:ABCD")).to eq "ADBC"
+      expect(SeatingPlan.sit_and_leave("4:ABCbBD")).to eq "ABDC"
+      expect(SeatingPlan.sit_and_leave("4:ABCDabcA")).to eq "-D-A"
+      expect(SeatingPlan.sit_and_leave("5:NEXUS")).to eq "NUESX"
+      expect(SeatingPlan.sit_and_leave("5:ZYQMyqY")).to eq "ZM-Y-"
+      expect(SeatingPlan.sit_and_leave("5:ABCDbdXYc")).to eq "AYX--"
+      expect(SeatingPlan.sit_and_leave("6:FUTSAL")).to eq "FAULTS"
+      expect(SeatingPlan.sit_and_leave("6:ABCDEbcBC")).to eq "AECB-D"
+      expect(SeatingPlan.sit_and_leave("7:FMTOWNS")).to eq "FWMNTSO"
+      expect(SeatingPlan.sit_and_leave("7:ABCDEFGabcdfXYZ")).to eq "YE-X-GZ"
+      expect(SeatingPlan.sit_and_leave("10:ABCDEFGHIJ")).to eq "AGBHCIDJEF"
     end
   end
 end

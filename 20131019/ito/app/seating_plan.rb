@@ -1,5 +1,5 @@
-class RelaxSit
-  def self.come_and_go(input)
+class SeatingPlan
+  def self.sit_and_leave(input)
     self.new(*input.split(':')).process
   end
 
