@@ -1,6 +1,7 @@
 require 'chair_rule'
 
 describe ChairRule do
+  specify{ expect(ChairRule.new('6:ABCabc').result).to eq '------' }
   specify{ expect(ChairRule.new('1:A').result).to eq 'A' }
   specify{ expect(ChairRule.new('1:Aa').result).to eq '-' }
   specify{ expect(ChairRule.new('2:AB').result).to eq 'AB' }
