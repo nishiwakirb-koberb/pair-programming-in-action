@@ -83,4 +83,9 @@ describe "relax_seating" do
     output = relax_seating("5:ABCDbdXYc")
     output.should eq "AYX--"
   end
+  
+  it "6:FUTSAL" do
+    output = relax_seating("6:FUTSAL")
+    output.should eq "FAULTS"
+  end
 end
