@@ -103,4 +103,9 @@ describe "relax_seating" do
     output = relax_seating("7:ABCDEFGabcdfXYZ")
     output.should eq "YE-X-GZ"
   end
+  
+  it "10:ABCDEFGHIF" do
+    output = relax_seating("10:ABCDEFGHIJ")
+    output.should eq "AGBHCIDJEF"
+  end
 end
