@@ -78,4 +78,9 @@ describe "relax_seating" do
     output = relax_seating("5:ZYQMyqY")
     output.should eq "ZM-Y-"
   end
+
+  it "5:ABCDbdXYc" do
+    output = relax_seating("5:ABCDbdXYc")
+    output.should eq "AYX--"
+  end
 end
