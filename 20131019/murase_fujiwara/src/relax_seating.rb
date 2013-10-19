@@ -2,13 +2,18 @@ require 'pp'
 
 def vacant_seat_index(seats)
   virtual_seats = "-" + seats + "-"
-  if idx = (virtual_seats =~ /---/)
-    return idx
-  end
-  if idx = (virtual_seats =~ /--\w|\w--/)
-    return idx
-  end
+
+  (virtual_seats =~ /---/) or
+  (virtual_seats =~ /--\w|\w--/) or
   seats.index('-')
+
+  # if idx = (virtual_seats =~ /---/)
+  #   return idx
+  # end
+  # if idx = (virtual_seats =~ /--\w|\w--/)
+  #   return idx
+  # end
+  # seats.index('-')
 end
 
 def relax_seating(input)
