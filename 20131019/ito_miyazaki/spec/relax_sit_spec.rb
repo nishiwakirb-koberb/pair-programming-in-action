@@ -23,5 +23,15 @@ describe RelaxSit do
       let(:result) { 'AB' }
       it_behaves_like 'valid result'
     end
+    context "#5" do
+      let(:input) { '2:AaB' }
+      let(:result) { 'B-' }
+      it_behaves_like 'valid result'
+    end
+    context "#6" do
+      let(:input) { '2:AZa' }
+      let(:result) { '-Z' }
+      it_behaves_like 'valid result'
+    end
   end
 end
