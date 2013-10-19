@@ -19,4 +19,8 @@ describe "relax_seating" do
     output.should eq "A"
   end
   
+  it "1:Aa" do
+    output = relax_seating("1:Aa")
+    output.should eq "-"
+  end
 end
