@@ -23,4 +23,9 @@ describe "relax_seating" do
     output = relax_seating("1:Aa")
     output.should eq "-"
   end
+
+  it "2:AB" do
+    output  = relax_seating("2:AB")
+    output.should eq "AB"
+  end
 end
