@@ -1,6 +1,6 @@
 class SeatingPlan
   def self.sit_and_leave(input)
-    self.new(*input.split(':')).process
+    self.new(*input.split(':')).sit_and_leave
   end
 
   def initialize(chair_count, people)
@@ -8,7 +8,7 @@ class SeatingPlan
     @people = people.chars
   end
 
-  def process
+  def sit_and_leave
     @people.each {|person| sit_or_leave(person) }
     @chairs.join
   end
@@ -16,7 +16,7 @@ class SeatingPlan
   private
 
   def sit_or_leave(person)
-    love_to_sit?(person) ? best_vacant_chair.sit(person) : chair_seated_by(person).leave
+    person.love_to_sit? ? find_best_vacant_chair.sit(person) : find_seated_chair(person).leave
   end
 
   def create_chairs(chair_count)
@@ -30,16 +30,18 @@ class SeatingPlan
     end
   end
 
-  def love_to_sit?(person)
-    person.match(/[A-Z]/)
-  end
-
-  def best_vacant_chair
+  def find_best_vacant_chair
     @chairs.reject(&:seated?).max_by(&:side_vacant_count)
   end
 
-  def chair_seated_by(person)
+  def find_seated_chair(person)
     @chairs.find{|chair| chair.seated_by?(person) }
+  end
+
+  class ::String
+    def love_to_sit?
+      self.match(/[A-Z]/)
+    end
   end
 
   class Chair
