@@ -4,11 +4,11 @@ class RelaxSit
   	@chairs = Array.new(chair_count, "-")
   	steps = input[/[a-zA-Z]+/].chars
   	steps.each do |step|
-  		index=find_empty_chair_index
-  		if step=~/[A-Z]/
-  			@chairs[index]=step
+  		index = find_empty_chair_index
+  		if step =~ /[A-Z]/
+  			@chairs[index] = step
   		else
-  			@chairs[index]="-"
+  			@chairs[index] = "-"
   		end
   	end
   	@chairs.join
@@ -16,5 +16,4 @@ class RelaxSit
   def find_empty_chair_index
   	0
   end
-
 end
