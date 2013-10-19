@@ -33,7 +33,12 @@ describe RelaxSit do
       let(:result) { '-Z' }
       it_behaves_like 'valid result'
     end
-    context "#7" do
+     context "#7" do
+      let(:input) { '2:AZz' }
+      let(:result) { 'A-' }
+      it_behaves_like 'valid result'
+    end
+    context "#8" do
       let(:input) { '3:ABC' }
       let(:result) { 'ACB' }
       it_behaves_like 'valid result'
