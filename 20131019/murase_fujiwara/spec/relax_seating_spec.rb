@@ -68,4 +68,9 @@ describe "relax_seating" do
     output = relax_seating("4:ABCDabcA")
     output.should eq "-D-A"
   end
+
+  it "5:NEXUS" do
+    output = relax_seating("5:NEXUS")
+    output.should eq "NUESX"
+  end
 end
