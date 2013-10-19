@@ -1,10 +1,12 @@
 class RelaxSit
   def come_and_go(input)
     chair_count = input[/\d+/].to_i
+
     @chairs = []
     chair_count.times do
       @chairs << Chair.new
     end
+
     @chairs.each_with_index do |chair, index|
       prev_exists = true
       next_exists = true
@@ -34,13 +36,13 @@ class RelaxSit
     end
     @chairs.map{|chair| chair.to_s }.join
   end
+
   def find_empty_chair
     empty_chairs = @chairs.select{|chair| chair.empty? }
-    raise "No empty chairs!: #{@chairs.inspect}" if empty_chairs.length == 0
-    # empty_chairs.max_by{|chair| chair.side_empty_count }
     max_count = empty_chairs.map{|chair| chair.side_empty_count }.max
     empty_chairs.select{|chair| chair.side_empty_count == max_count }.first
   end
+
   def find_seated_chair(person)
     @chairs.select{|chair| chair.seated_person == person.upcase}.first
   end
