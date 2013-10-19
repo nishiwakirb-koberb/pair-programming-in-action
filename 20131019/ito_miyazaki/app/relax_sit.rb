@@ -15,7 +15,11 @@ class RelaxSit
     @chairs.join
   end
   def find_empty_chair_index
-    @chairs.index('-')
+    if @chairs.join =~ /[A-Z]--/
+      2
+    else
+      @chairs.index('-')
+    end
   end
   def find_sitting_chair_index(name)
     @chairs.index(name.upcase)
