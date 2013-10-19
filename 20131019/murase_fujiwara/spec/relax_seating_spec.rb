@@ -4,7 +4,7 @@ require File.join(File.dirname(__FILE__), '../src/relax_seating')
 describe "relax_seating" do
 
   it "returns a String" do
-    output = relax_seating("dummy_input")
+    output = relax_seating("1:A")
     output.should be_a(String)
   end
 
@@ -13,4 +13,10 @@ describe "relax_seating" do
     output.size.should eq 4
     # output.should have(4).items
   end
+  
+  it "1:A" do
+    output = relax_seating("1:A")
+    output.should eq "A"
+  end
+  
 end
