@@ -35,8 +35,12 @@ describe "relax_seating" do
   end
   
   it "2:AZa" do
-    output =relax_seating("2:AZa")
+    output = relax_seating("2:AZa")
     output.should eq "-Z"
   end
   
+  it "2:AZz" do
+    output = relax_seating("2:AZz")
+    output.should eq "A-"
+  end
 end
