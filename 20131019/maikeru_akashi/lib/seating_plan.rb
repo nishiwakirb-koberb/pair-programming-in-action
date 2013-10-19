@@ -1,0 +1,2 @@
+class SeatingPlan
+end
