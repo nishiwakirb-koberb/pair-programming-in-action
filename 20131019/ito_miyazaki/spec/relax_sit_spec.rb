@@ -12,5 +12,10 @@ describe RelaxSit do
         expect(RelaxSit.new.come_and_go("1:Aa")).to eq "-"
       end
     end
+    context "#4" do
+      specify do
+        expect(RelaxSit.new.come_and_go("2:AB")).to eq "AB"
+      end
+    end
   end
 end
