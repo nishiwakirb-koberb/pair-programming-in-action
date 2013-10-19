@@ -28,11 +28,36 @@ class Attendees
   end
 
   def add attendee_name
-    @attendees << Attendee.new(attendee_name)
+    unless include?(attendee_name)
+      @attendees << Attendee.new(attendee_name)
+    else
+      delete(attendee_name)
+    end
+  end
+
+  def delete attendee_name
+    tmp = Array.new
+    @attendees.each do |attendee|
+      unless attendee.name == attendee_name.upcase
+        tmp << attendee
+      else
+        tmp << Attendee.new('-')
+      end
+    end
+    @attendees = tmp
   end
 
   def each(&block)
     @attendees.each(&block)
+  end
+
+  def include? attendee_name
+    @attendees.each do |attendee|
+      if attendee.name == attendee_name.upcase
+        return true
+      end
+    end
+    false
   end
 end
 
@@ -42,4 +67,3 @@ class Attendee
     @name = name
   end
 end
-
