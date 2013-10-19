@@ -4,108 +4,86 @@ require File.join(File.dirname(__FILE__), '../src/relax_seating')
 describe "relax_seating" do
 
   it "returns a String" do
-    output = relax_seating("1:A")
-    output.should be_a(String)
+    relax_seating("1:A").should be_a(String)
   end
 
-  it "size of the output is the number of seats" do
-    output = relax_seating("4:A")
-    output.size.should eq 4
-    # output.should have(4).items
+  it "size of the  is the number of seats" do
+    relax_seating("4:A").size.should eq 4
   end
-  
+
   it "1:A" do
-    output = relax_seating("1:A")
-    output.should eq "A"
+    relax_seating("1:A").should eq "A"
   end
   
   it "1:Aa" do
-    output = relax_seating("1:Aa")
-    output.should eq "-"
+    relax_seating("1:Aa").should eq "-"
   end
 
   it "2:AB" do
-    output  = relax_seating("2:AB")
-    output.should eq "AB"
+    relax_seating("2:AB").should eq "AB"
   end
   
   it "2:AaB" do
-    output = relax_seating("2:AaB")
-    output.should eq "B-"
+    relax_seating("2:AaB").should eq "B-"
   end
   
   it "2:AZa" do
-    output = relax_seating("2:AZa")
-    output.should eq "-Z"
+    relax_seating("2:AZa").should eq "-Z"
   end
   
   it "2:AZz" do
-    output = relax_seating("2:AZz")
-    output.should eq "A-"
+    relax_seating("2:AZz").should eq "A-"
   end
 
   it "3:ABC" do
-    output = relax_seating("3:ABC")
-    output.should eq "ACB"
+    relax_seating("3:ABC").should eq "ACB"
   end
 
   it "3:ABCa" do
-    output = relax_seating("3:ABCa")
-    output.should eq "-CB"
+    relax_seating("3:ABCa").should eq "-CB"
   end
 
   it "4:ABCD" do
-    output = relax_seating("4:ABCD")
-    output.should eq "ADBC"
+    relax_seating("4:ABCD").should eq "ADBC"
   end
 
   it "4:ABCbBD" do
-    output = relax_seating("4:ABCbBD")
-    output.should eq "ABDC"
+    relax_seating("4:ABCbBD").should eq "ABDC"
   end
 
   it "4:ABCDabcA" do
-    output = relax_seating("4:ABCDabcA")
-    output.should eq "-D-A"
+    relax_seating("4:ABCDabcA").should eq "-D-A"
   end
 
   it "5:NEXUS" do
-    output = relax_seating("5:NEXUS")
-    output.should eq "NUESX"
+    relax_seating("5:NEXUS").should eq "NUESX"
   end
 
   it "5:ZYQMyqY" do
-    output = relax_seating("5:ZYQMyqY")
-    output.should eq "ZM-Y-"
+    relax_seating("5:ZYQMyqY").should eq "ZM-Y-"
   end
 
   it "5:ABCDbdXYc" do
-    output = relax_seating("5:ABCDbdXYc")
-    output.should eq "AYX--"
+    relax_seating("5:ABCDbdXYc").should eq "AYX--"
   end
   
   it "6:FUTSAL" do
-    output = relax_seating("6:FUTSAL")
-    output.should eq "FAULTS"
+    relax_seating("6:FUTSAL").should eq "FAULTS"
   end
   
   it "6:ABCDEbcBC" do
-    output = relax_seating("6:ABCDEbcBC")
-    output.should eq "AECB-D"
+    relax_seating("6:ABCDEbcBC").should eq "AECB-D"
   end
   
   it "7:FMTOWNS" do
-    output = relax_seating("7:FMTOWNS")
-    output.should eq "FWMNTSO"
+    relax_seating("7:FMTOWNS").should eq "FWMNTSO"
   end
   
   it "7:ABCDEFGabcdfXYZ" do
-    output = relax_seating("7:ABCDEFGabcdfXYZ")
-    output.should eq "YE-X-GZ"
+    relax_seating("7:ABCDEFGabcdfXYZ").should eq "YE-X-GZ"
   end
   
   it "10:ABCDEFGHIF" do
-    output = relax_seating("10:ABCDEFGHIJ")
-    output.should eq "AGBHCIDJEF"
+    relax_seating("10:ABCDEFGHIJ").should eq "AGBHCIDJEF"
   end
 end
