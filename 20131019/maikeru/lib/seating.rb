@@ -20,8 +20,7 @@ class Seating
   private
 
   def occupy_seat occupant
-    seat = best_available_seat
-    seat.occupant = occupant
+    best_available_seat.occupant = occupant
   end
 
   def best_available_seat
