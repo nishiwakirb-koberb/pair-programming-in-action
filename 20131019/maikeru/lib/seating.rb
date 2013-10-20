@@ -6,15 +6,23 @@ class Seating
 
     in_out_record.each_char do |record|
       if is_entry_record? record
-        @seats[first_empty_seat_index] = record
+        occupy_seat record
       else
-        @seats[seat_index(record)] = '-'
+        vacate_seat record
       end
     end
     @result = @seats.join
   end
 
   private
+
+  def occupy_seat occupant
+    @seats[first_empty_seat_index] = occupant
+  end
+
+  def vacate_seat occupant
+    @seats[seat_index(occupant)] = '-'
+  end
 
   def first_empty_seat_index
     @seats.index('-').to_i
