@@ -27,7 +27,9 @@ class SeatingPlan
   end
 
   def sit_or_leave(person)
-    person.love_to_sit? ? find_best_vacant_chair.sit(person) : find_seated_chair(person).leave
+    person.love_to_sit? ?
+      find_best_vacant_chair.sit(person) :
+      find_seated_chair(person).leave
   end
 
   def find_best_vacant_chair
