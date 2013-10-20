@@ -9,15 +9,11 @@ class SeatingPlan
   end
 
   def sit_and_leave
-    @people.each {|person| sit_or_leave(person) }
+    @people.each(&method(:sit_or_leave))
     @chairs.join
   end
 
   private
-
-  def sit_or_leave(person)
-    person.love_to_sit? ? find_best_vacant_chair.sit(person) : find_seated_chair(person).leave
-  end
 
   def create_chairs(chair_count)
     Array.new(chair_count){ Chair.new }.tap(&method(:refer_neighbors))
@@ -28,6 +24,10 @@ class SeatingPlan
       right_chair.prev_chair = left_chair
       left_chair.next_chair = right_chair
     end
+  end
+
+  def sit_or_leave(person)
+    person.love_to_sit? ? find_best_vacant_chair.sit(person) : find_seated_chair(person).leave
   end
 
   def find_best_vacant_chair
@@ -66,7 +66,11 @@ class SeatingPlan
 
     # 両側空き = 2, 片側空き = 1, 両側空きなし = 0
     def side_vacant_count
-      [prev_chair, next_chair].count{|chair| chair.nil? || !chair.seated? }
+      [prev_chair, next_chair].count(&method(:vacant?))
+    end
+    
+    def vacant?(chair)
+      chair.nil? || !chair.seated?
     end
 
     def to_s
