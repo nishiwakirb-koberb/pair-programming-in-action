@@ -25,13 +25,12 @@ class Seating
   end
 
   def best_available_seat
-    seat ||= seat_with_empty_neighbour_count 2
-    seat ||= seat_with_empty_neighbour_count 1
-    seat ||= seat_with_empty_neighbour_count 0
-    return seat
+    first_seat_with_empty_neighbour_count(2) || 
+      first_seat_with_empty_neighbour_count(1) ||
+      first_seat_with_empty_neighbour_count(0)
   end
 
-  def seat_with_empty_neighbour_count count
+  def first_seat_with_empty_neighbour_count count
     virtual_seats = [Seat.new] + @seats + [Seat.new]
     virtual_seats.each_cons(3) do |seat_block|
       middle_unoccupied = seat_block[1].unoccupied?
@@ -46,10 +45,9 @@ class Seating
   end
 
   def vacate_seat occupant
-    seat_to_vacate = @seats.find do |seat|
+    @seats.find do |seat|
       seat.occupant == occupant.upcase
-    end
-    seat_to_vacate.vacate!
+    end.vacate!
   end
 
   def is_entry_record? string
