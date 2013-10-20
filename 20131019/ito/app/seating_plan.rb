@@ -1,11 +1,11 @@
 class SeatingPlan
-  def self.sit_and_leave(input)
-    self.new(*input.split(':')).sit_and_leave
-  end
-
   def initialize(chair_count, people)
     @chairs = create_chairs(chair_count.to_i)
     @people = people.chars
+  end
+
+  def self.sit_and_leave(input)
+    self.new(*input.split(':')).sit_and_leave
   end
 
   def sit_and_leave
@@ -20,10 +20,12 @@ class SeatingPlan
   end
   
   def refer_neighbors(chairs)
-    chairs.each_cons(2) do |left_chair, right_chair|
-      right_chair.prev_chair = left_chair
-      left_chair.next_chair = right_chair
-    end
+    chairs.each_cons(2, &method(:refer_each_other))
+  end
+
+  def refer_each_other((left_chair, right_chair))
+    right_chair.prev_chair = left_chair
+    left_chair.next_chair = right_chair
   end
 
   def sit_or_leave(person)
