@@ -25,19 +25,16 @@ class Seating
   end
 
   def best_available_seat
-    seat ||= matching_seat do |left, right|
-      left && right
+    seat ||= matching_seat do |left_is_empty, right_is_empty|
+      left_is_empty && right_is_empty
     end
-    seat ||= matching_seat do |left, right|
-      left
+    seat ||= matching_seat do |left_is_empty, right_is_empty|
+      left_is_empty
     end
-    seat ||= matching_seat do |left, right|
-      left
+    seat ||= matching_seat do |left_is_empty, right_is_empty|
+      right_is_empty
     end
-    seat ||= matching_seat do |left, right|
-      right
-    end
-    seat ||= matching_seat do |left, right| 
+    seat ||= matching_seat do |left_is_empty, right_is_empty| 
       true
     end
     return seat
