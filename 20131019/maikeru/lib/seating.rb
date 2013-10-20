@@ -35,7 +35,7 @@ class Seating
       right_is_empty
     end
     seat ||= matching_seat do |left_is_empty, right_is_empty| 
-      true
+      !left_is_empty && !right_is_empty
     end
     return seat
   end
