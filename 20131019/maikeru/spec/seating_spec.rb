@@ -12,4 +12,5 @@ describe Seating do
   specify { expect(Seating.new('3:ABCa').result).to eq '-CB' }
   specify { expect(Seating.new('4:ABCD').result).to eq 'ADBC' }
   specify { expect(Seating.new('4:ABCbBD').result).to eq 'ABDC' }
+  specify { expect(Seating.new('4:ABCDabcA').result).to eq '-D-A' }
 end
