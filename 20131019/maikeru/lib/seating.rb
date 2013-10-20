@@ -20,6 +20,11 @@ class Seating
   private
 
   def occupy_seat occupant
+    seat = best_available_seat
+    seat.occupant = occupant
+  end
+
+  def best_available_seat
     virtual_seats = [Seat.new] + @seats + [Seat.new]
     virtual_seats.each_cons(3) do |seat_block|
       left_unoccupied = seat_block[0].unoccupied?
@@ -28,11 +33,9 @@ class Seating
       both_unoccupied = left_unoccupied && right_unoccupied
 
       if (middle_unoccupied && both_unoccupied)
-        seat_block[1].occupant = occupant
-        break
+        return seat_block[1]
       elsif (middle_unoccupied && right_unoccupied)
-        seat_block[1].occupant = occupant
-        break
+        return seat_block[1]
       end
     end
   end
