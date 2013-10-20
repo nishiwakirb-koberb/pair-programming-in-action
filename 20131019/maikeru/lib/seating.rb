@@ -25,6 +25,25 @@ class Seating
   end
 
   def best_available_seat
+    seat ||= matching_seat do |left, middle, right, both|
+      middle && both
+    end
+    seat ||= matching_seat do |left, middle, right, both|
+      middle && left
+    end
+    seat ||= matching_seat do |left, middle, right, both|
+      middle && left
+    end
+    seat ||= matching_seat do |left, middle, right, both|
+      middle && right
+    end
+    seat ||= matching_seat do |left, middle, right, both| 
+      middle
+    end
+    return seat
+  end
+
+  def matching_seat
     virtual_seats = [Seat.new] + @seats + [Seat.new]
     virtual_seats.each_cons(3) do |seat_block|
       left_unoccupied = seat_block[0].unoccupied?
@@ -32,41 +51,8 @@ class Seating
       right_unoccupied = seat_block[2].unoccupied?
       both_unoccupied = left_unoccupied && right_unoccupied
 
-      if (middle_unoccupied && both_unoccupied)
-        return seat_block[1]
-      end
+      return seat_block[1] if yield left_unoccupied, middle_unoccupied, right_unoccupied, both_unoccupied
     end
-    virtual_seats.each_cons(3) do |seat_block|
-      left_unoccupied = seat_block[0].unoccupied?
-      middle_unoccupied = seat_block[1].unoccupied?
-      right_unoccupied = seat_block[2].unoccupied?
-      both_unoccupied = left_unoccupied && right_unoccupied
-
-      if (middle_unoccupied && left_unoccupied)
-        return seat_block[1]
-      end
-    end
-    virtual_seats.each_cons(3) do |seat_block|
-      left_unoccupied = seat_block[0].unoccupied?
-      middle_unoccupied = seat_block[1].unoccupied?
-      right_unoccupied = seat_block[2].unoccupied?
-      both_unoccupied = left_unoccupied && right_unoccupied
-
-      if (middle_unoccupied && right_unoccupied)
-        return seat_block[1]
-      end
-    end
-    virtual_seats.each_cons(3) do |seat_block|
-      left_unoccupied = seat_block[0].unoccupied?
-      middle_unoccupied = seat_block[1].unoccupied?
-      right_unoccupied = seat_block[2].unoccupied?
-      both_unoccupied = left_unoccupied && right_unoccupied
-
-      if (middle_unoccupied)
-        return seat_block[1]
-      end
-    end
-    return Seat.new
   end
 
   def vacate_seat occupant
