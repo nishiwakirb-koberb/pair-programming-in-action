@@ -57,10 +57,10 @@ class Seating
   end
 
   def vacate_seat occupant
-    seat_to_vacate = @seats.find do
-      |seat| seat.occupant == occupant.upcase
+    seat_to_vacate = @seats.find do |seat|
+      seat.occupant == occupant.upcase
     end
-    seat_to_vacate.occupant = '-'
+    seat_to_vacate.vacate!
   end
 
   def is_entry_record? string
@@ -71,10 +71,14 @@ end
 class Seat
   attr_accessor :occupant
   def initialize
-    @occupant = '-'
+    vacate!
   end
 
   def unoccupied?
     @occupant == '-'
+  end
+
+  def vacate!
+    @occupant = '-'
   end
 end
