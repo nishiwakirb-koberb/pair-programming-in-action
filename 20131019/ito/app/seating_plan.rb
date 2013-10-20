@@ -33,7 +33,7 @@ class SeatingPlan
   end
 
   def find_best_vacant_chair
-    @chairs.reject(&:seated?).max_by(&:side_vacant_count)
+    @chairs.reject(&:seated?).max_by(&:neighbors_vacant_count)
   end
 
   def find_seated_chair(person)
@@ -48,7 +48,6 @@ class SeatingPlan
 
   class Chair
     attr_accessor :prev_chair, :next_chair
-    attr_reader :seated_person
 
     def sit(person)
       @seated_person = person
@@ -59,24 +58,30 @@ class SeatingPlan
     end
 
     def seated?
-      !seated_person.nil?
+      !@seated_person.nil?
     end
 
     def seated_by?(person)
-      seated_person == person.upcase
+      @seated_person == person.upcase
     end
 
-    # 両側空き = 2, 片側空き = 1, 両側空きなし = 0
-    def side_vacant_count
-      [prev_chair, next_chair].count(&method(:vacant?))
+    def neighbors_vacant_count
+      # 両側空き = 2, 片側空き = 1, 両側空きなし = 0
+      neighbors.count(&method(:vacant?))
+    end
+
+    def to_s
+      @seated_person || '-'
+    end
+
+    private
+
+    def neighbors
+      [prev_chair, next_chair]
     end
     
     def vacant?(chair)
       chair.nil? || !chair.seated?
-    end
-
-    def to_s
-      seated_person || '-'
     end
   end
 end
