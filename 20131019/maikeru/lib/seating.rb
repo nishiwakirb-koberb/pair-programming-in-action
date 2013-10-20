@@ -25,20 +25,20 @@ class Seating
   end
 
   def best_available_seat
-    seat ||= matching_seat do |left, middle, right, both|
-      middle && both
+    seat ||= matching_seat do |left, right|
+      left && right
     end
-    seat ||= matching_seat do |left, middle, right, both|
-      middle && left
+    seat ||= matching_seat do |left, right|
+      left
     end
-    seat ||= matching_seat do |left, middle, right, both|
-      middle && left
+    seat ||= matching_seat do |left, right|
+      left
     end
-    seat ||= matching_seat do |left, middle, right, both|
-      middle && right
+    seat ||= matching_seat do |left, right|
+      right
     end
-    seat ||= matching_seat do |left, middle, right, both| 
-      middle
+    seat ||= matching_seat do |left, right| 
+      true
     end
     return seat
   end
@@ -49,9 +49,10 @@ class Seating
       left_unoccupied = seat_block[0].unoccupied?
       middle_unoccupied = seat_block[1].unoccupied?
       right_unoccupied = seat_block[2].unoccupied?
-      both_unoccupied = left_unoccupied && right_unoccupied
 
-      return seat_block[1] if yield left_unoccupied, middle_unoccupied, right_unoccupied, both_unoccupied
+      next unless middle_unoccupied
+
+      return seat_block[1] if yield left_unoccupied, right_unoccupied
     end
   end
 
