@@ -29,10 +29,10 @@ class Seating
       left_is_empty && right_is_empty
     end
     seat ||= matching_seat do |left_is_empty, right_is_empty|
-      left_is_empty
+      right_is_empty
     end
     seat ||= matching_seat do |left_is_empty, right_is_empty|
-      right_is_empty
+      left_is_empty
     end
     seat ||= matching_seat do |left_is_empty, right_is_empty| 
       !left_is_empty && !right_is_empty
