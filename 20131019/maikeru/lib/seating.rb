@@ -34,10 +34,39 @@ class Seating
 
       if (middle_unoccupied && both_unoccupied)
         return seat_block[1]
-      elsif (middle_unoccupied && right_unoccupied)
+      end
+    end
+    virtual_seats.each_cons(3) do |seat_block|
+      left_unoccupied = seat_block[0].unoccupied?
+      middle_unoccupied = seat_block[1].unoccupied?
+      right_unoccupied = seat_block[2].unoccupied?
+      both_unoccupied = left_unoccupied && right_unoccupied
+
+      if (middle_unoccupied && left_unoccupied)
         return seat_block[1]
       end
     end
+    virtual_seats.each_cons(3) do |seat_block|
+      left_unoccupied = seat_block[0].unoccupied?
+      middle_unoccupied = seat_block[1].unoccupied?
+      right_unoccupied = seat_block[2].unoccupied?
+      both_unoccupied = left_unoccupied && right_unoccupied
+
+      if (middle_unoccupied && right_unoccupied)
+        return seat_block[1]
+      end
+    end
+    virtual_seats.each_cons(3) do |seat_block|
+      left_unoccupied = seat_block[0].unoccupied?
+      middle_unoccupied = seat_block[1].unoccupied?
+      right_unoccupied = seat_block[2].unoccupied?
+      both_unoccupied = left_unoccupied && right_unoccupied
+
+      if (middle_unoccupied)
+        return seat_block[1]
+      end
+    end
+    return Seat.new
   end
 
   def vacate_seat occupant
