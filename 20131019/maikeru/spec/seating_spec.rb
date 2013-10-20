@@ -19,4 +19,5 @@ describe Seating do
   specify { expect(Seating.new('6:FUTSAL').result).to eq 'FAULTS' }
   specify { expect(Seating.new('6:ABCDEbcBC').result).to eq 'AECB-D' }
   specify { expect(Seating.new('7:FMTOWNS').result).to eq 'FWMNTSO' }
+  specify { expect(Seating.new('7:ABCDEFGabcdfXYZ').result).to eq 'YE-X-GZ' }
 end

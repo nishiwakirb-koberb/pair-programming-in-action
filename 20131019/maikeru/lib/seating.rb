@@ -25,31 +25,23 @@ class Seating
   end
 
   def best_available_seat
-    seat ||= matching_seat do |left_is_empty, right_is_empty|
-      left_is_empty && right_is_empty
-    end
-    seat ||= matching_seat do |left_is_empty, right_is_empty|
-      right_is_empty
-    end
-    seat ||= matching_seat do |left_is_empty, right_is_empty|
-      left_is_empty
-    end
-    seat ||= matching_seat do |left_is_empty, right_is_empty| 
-      !left_is_empty && !right_is_empty
-    end
+    seat ||= seat_with_empty_neighbour_count 2
+    seat ||= seat_with_empty_neighbour_count 1
+    seat ||= seat_with_empty_neighbour_count 0
     return seat
   end
 
-  def matching_seat
+  def seat_with_empty_neighbour_count count
     virtual_seats = [Seat.new] + @seats + [Seat.new]
     virtual_seats.each_cons(3) do |seat_block|
-      left_unoccupied = seat_block[0].unoccupied?
       middle_unoccupied = seat_block[1].unoccupied?
-      right_unoccupied = seat_block[2].unoccupied?
-
       next unless middle_unoccupied
 
-      return seat_block[1] if yield left_unoccupied, right_unoccupied
+      empty_count = 0
+      empty_count += seat_block[0].unoccupied? ? 1 : 0
+      empty_count += seat_block[2].unoccupied? ? 1 : 0
+
+      return seat_block[1] if empty_count == count
     end
   end
 
