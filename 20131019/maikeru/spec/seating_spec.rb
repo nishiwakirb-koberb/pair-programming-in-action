@@ -13,4 +13,10 @@ describe Seating do
   specify { expect(Seating.new('4:ABCD').result).to eq 'ADBC' }
   specify { expect(Seating.new('4:ABCbBD').result).to eq 'ABDC' }
   specify { expect(Seating.new('4:ABCDabcA').result).to eq '-D-A' }
+  specify { expect(Seating.new('5:NEXUS').result).to eq 'NUESX' }
+  specify { expect(Seating.new('5:ZYQMyqY').result).to eq 'ZM-Y-' }
+  specify { expect(Seating.new('5:ABCDbdXYc').result).to eq 'AYX--' }
+  specify { expect(Seating.new('6:FUTSAL').result).to eq 'FAULTS' }
+  specify { expect(Seating.new('6:ABCDEbcBC').result).to eq 'AECB-D' }
+  specify { expect(Seating.new('7:FMTOWNS').result).to eq 'FWMNTSO' }
 end
