@@ -5,7 +5,7 @@ class Seating
     @seats = Array.new(seat_count.to_i, '-')
 
     in_out_record.each_char do |record|
-      if is_upper_case? record
+      if is_entry_record? record
         @seats[first_empty_seat_index] = record
       else
         @seats[seat_index(record)] = '-'
@@ -24,7 +24,7 @@ class Seating
     @seats.index record.upcase
   end
 
-  def is_upper_case? string
+  def is_entry_record? string
     string.upcase == string
   end
 end
