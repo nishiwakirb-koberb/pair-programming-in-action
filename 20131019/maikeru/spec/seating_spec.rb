@@ -20,4 +20,5 @@ describe Seating do
   specify { expect(Seating.new('6:ABCDEbcBC').result).to eq 'AECB-D' }
   specify { expect(Seating.new('7:FMTOWNS').result).to eq 'FWMNTSO' }
   specify { expect(Seating.new('7:ABCDEFGabcdfXYZ').result).to eq 'YE-X-GZ' }
+  specify { expect(Seating.new('10:ABCDEFGHIJ').result).to eq 'AGBHCIDJEF' }
 end
