@@ -32,10 +32,11 @@ class SeatingPlan
 
   def sit_or_leave(person)
     person.love_to_sit? ?
-      find_best_vacant_chair.sit(person) : find_seated_chair(person).leave
+      find_most_comfortable_chair.sit(person) :
+      find_seated_chair(person).leave
   end
 
-  def find_best_vacant_chair
+  def find_most_comfortable_chair
     @chairs.reject(&:seated?).max_by(&:neighbors_vacant_count)
   end
 
