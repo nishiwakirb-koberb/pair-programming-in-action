@@ -71,7 +71,7 @@ class SeatingPlan
 
     def neighbors_vacant_count
       # 両側空き = 2, 片側空き = 1, 両側空きなし = 0
-      neighbors.count(&method(:vacant?))
+      2 - neighbors.compact.select(&:seated?).count
     end
 
     def to_s
@@ -82,10 +82,6 @@ class SeatingPlan
 
     def neighbors
       [prev_chair, next_chair]
-    end
-    
-    def vacant?(chair)
-      chair.nil? || !chair.seated?
     end
   end
 end
