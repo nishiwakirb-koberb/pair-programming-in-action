@@ -3,6 +3,7 @@ require 'pry-nav'
 
 class Seating
   attr_reader :result
+
   def initialize input
     @seat_count, seating_record = input.split(':')
     @seats = Array.new(@seat_count.to_i) { Seat.new }
@@ -24,22 +25,17 @@ class Seating
   end
 
   def best_available_seat
-    first_seat_with_empty_neighbour_count(2) || 
+    first_seat_with_empty_neighbour_count(2) ||
       first_seat_with_empty_neighbour_count(1) ||
       first_seat_with_empty_neighbour_count(0)
   end
 
   def first_seat_with_empty_neighbour_count count
-    virtual_seats = [Seat.new] + @seats + [Seat.new]
-    virtual_seats.each_cons(3) do |seat_block|
-      middle_unoccupied = seat_block[1].unoccupied?
-      next unless middle_unoccupied
+    virtual_seats = [Seat.new, *@seats, Seat.new]
+    virtual_seats.each_cons(3).find do |left_seat, center_seat, right_seat|
+      empty_count = [left_seat, right_seat].count(&:unoccupied?)
 
-      empty_count = 0
-      empty_count += seat_block[0].unoccupied? ? 1 : 0
-      empty_count += seat_block[2].unoccupied? ? 1 : 0
-
-      return seat_block[1] if empty_count == count
+      return center_seat if center_seat.unoccupied? && empty_count == count
     end
   end
 
