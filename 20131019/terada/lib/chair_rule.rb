@@ -8,7 +8,7 @@ class ChairRule
     number, people = parse orders
     chairs = Array.new(number) { Chair.new }
     update_chairs people, chairs
-    @result = chairs.map(&:state).join
+    @result = chairs.map(&:person).join
   end
 
   def parse orders
@@ -27,7 +27,7 @@ class ChairRule
   end
 
   def search_chair chairs, person
-    chairs.find{|chair| chair.state == person.upcase }
+    chairs.find{|chair| chair.person == person.upcase }
   end
 
   def empty_chair chairs
@@ -35,22 +35,22 @@ class ChairRule
   end
 
   class Chair
-    attr_reader :state
+    attr_reader :person
 
     def initialize
       empty!
     end
 
     def update! person
-      @state = person
+      @person = person
     end
 
     def empty!
-      @state = '-'
+      @person = '-'
     end
 
     def empty?
-      @state == '-'
+      @person == '-'
     end
   end
 end
