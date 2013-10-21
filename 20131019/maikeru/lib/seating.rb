@@ -1,6 +1,3 @@
-require 'pry'
-require 'pry-nav'
-
 class Seating
   def initialize input
     @seat_count, @seating_record = input.split(':')
