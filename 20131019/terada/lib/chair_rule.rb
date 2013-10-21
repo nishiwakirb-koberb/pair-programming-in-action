@@ -16,20 +16,29 @@ class ChairRule
   end
 
   def update_chairs people, chairs
-    people.zip(chairs) do |person, chair|
-      chair.update! person
+    people.each do |person|
+      exit?(person) ?
+        chairs.first.empty! : chairs.first.update!(person)
     end
+  end
+
+  def exit? person
+    person == person.downcase
   end
 
   class Chair
     attr_reader :state
 
     def initialize
-      @state = '-'
+      empty!
     end
 
     def update! person
       @state = person
+    end
+
+    def empty!
+      @state = '-'
     end
   end
 end
