@@ -10,12 +10,9 @@ class Seating
     @seats = Array.new(@seat_count.to_i) { Seat.new }
 
     @seating_record.each_char do |record|
-      if is_entry_record? record
-        occupy_seat record
-      else
-        vacate_seat record
-      end
+      is_entry_record?(record) ? occupy_seat(record) : vacate_seat(record)
     end
+
     @seats.map { |seat| seat.occupant }.join
   end
 
