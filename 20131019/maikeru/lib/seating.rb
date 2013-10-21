@@ -25,9 +25,11 @@ class Seating
   end
 
   def best_available_seat
-    first_seat_with_empty_neighbour_count(2) ||
-      first_seat_with_empty_neighbour_count(1) ||
-      first_seat_with_empty_neighbour_count(0)
+    2.downto(0).each do |count|
+      if seat = first_seat_with_empty_neighbour_count(count)
+        return seat
+      end
+    end
   end
 
   def first_seat_with_empty_neighbour_count count
