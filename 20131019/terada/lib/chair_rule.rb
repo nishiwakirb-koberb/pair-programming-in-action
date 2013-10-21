@@ -18,12 +18,20 @@ class ChairRule
   def update_chairs people, chairs
     people.each do |person|
       exit?(person) ?
-        chairs.first.empty! : chairs.first.update!(person)
+        search_chair(chairs, person).empty! : empty_chair(chairs).update!(person)
     end
   end
 
   def exit? person
     person == person.downcase
+  end
+
+  def search_chair chairs, person
+    chairs.find{|chair| chair.state == person.upcase }
+  end
+
+  def empty_chair chairs
+    chairs.find{ |chair| chair.empty? }
   end
 
   class Chair
@@ -39,6 +47,10 @@ class ChairRule
 
     def empty!
       @state = '-'
+    end
+
+    def empty?
+      @state == '-'
     end
   end
 end
