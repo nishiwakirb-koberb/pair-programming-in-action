@@ -20,16 +20,16 @@ class Seating
   end
 
   def best_available_seat
-    2.downto(0).map{|count| first_seat_with_empty_neighbour_count(count)}.compact.first
+    2.downto(0).map{|count| first_seat_with_empty_neighbour_count(count)}.find_non_nil
   end
 
   def first_seat_with_empty_neighbour_count count
     virtual_seats = [Seat.new, *@seats, Seat.new]
-    virtual_seats.each_cons(3).find do |left_seat, center_seat, right_seat|
+    virtual_seats.each_cons(3).map {|left_seat, center_seat, right_seat|
       empty_count = [left_seat, right_seat].count(&:unoccupied?)
 
-      return center_seat if center_seat.unoccupied? && empty_count == count
-    end
+      center_seat if center_seat.unoccupied? && empty_count == count
+    }.find_non_nil
   end
 
   def vacate_seat occupant
@@ -39,9 +39,16 @@ class Seating
   def is_entry_record? string
     string.upcase == string
   end
+
+  class ::Array
+    def find_non_nil
+      self.find{|item| !item.nil? }
+    end
+  end
 end
 
 class Seat
+  UNOCCUPIED = '-'
   attr_reader :occupant
 
   def initialize
@@ -49,11 +56,11 @@ class Seat
   end
 
   def unoccupied?
-    @occupant == '-'
+    @occupant == UNOCCUPIED
   end
 
   def vacate!
-    @occupant = '-'
+    @occupant = UNOCCUPIED
   end
 
   def occupy!(occupant)
