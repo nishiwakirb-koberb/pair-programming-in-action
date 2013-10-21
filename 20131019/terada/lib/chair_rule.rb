@@ -17,8 +17,9 @@ class ChairRule
 
   def update_chairs people, chairs
     people.each do |person|
+      next_chair = good_chair chairs
       exit?(person) ?
-        search_chair(chairs, person).empty! : empty_chair(chairs).update!(person)
+        search_chair(chairs, person).empty! : next_chair.update!(person)
     end
   end
 
@@ -32,6 +33,18 @@ class ChairRule
 
   def empty_chair chairs
     chairs.find{ |chair| chair.empty? }
+  end
+
+  def good_chair chairs
+    if chairs.size < 3
+      empty_chair chairs
+    elsif chairs.first.empty? and chairs[1].empty?
+      chairs.first
+    elsif !chairs.first.empty? and chairs[2].empty?
+      chairs[2]
+    else
+      empty_chair chairs
+    end
   end
 
   class Chair
