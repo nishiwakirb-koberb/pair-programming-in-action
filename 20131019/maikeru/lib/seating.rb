@@ -13,13 +13,13 @@ class Seating
       is_entry_record?(record) ? occupy_seat(record) : vacate_seat(record)
     end
 
-    @seats.map { |seat| seat.occupant }.join
+    @seats.map {|seat| seat.occupant }.join
   end
 
   private
 
   def occupy_seat occupant
-    best_available_seat.occupant = occupant
+    best_available_seat.occupy!(occupant)
   end
 
   def best_available_seat
@@ -40,9 +40,7 @@ class Seating
   end
 
   def vacate_seat occupant
-    @seats.find do |seat|
-      seat.occupant == occupant.upcase
-    end.vacate!
+    @seats.find {|seat| seat.occupant == occupant.upcase }.vacate!
   end
 
   def is_entry_record? string
@@ -51,7 +49,8 @@ class Seating
 end
 
 class Seat
-  attr_accessor :occupant
+  attr_reader :occupant
+
   def initialize
     vacate!
   end
@@ -62,5 +61,9 @@ class Seat
 
   def vacate!
     @occupant = '-'
+  end
+
+  def occupy!(occupant)
+    @occupant = occupant
   end
 end
