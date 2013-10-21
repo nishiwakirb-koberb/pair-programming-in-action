@@ -2,20 +2,21 @@ require 'pry'
 require 'pry-nav'
 
 class Seating
-  attr_reader :result
-
   def initialize input
-    @seat_count, seating_record = input.split(':')
+    @seat_count, @seating_record = input.split(':')
+  end
+
+  def result
     @seats = Array.new(@seat_count.to_i) { Seat.new }
 
-    seating_record.each_char do |record|
+    @seating_record.each_char do |record|
       if is_entry_record? record
         occupy_seat record
       else
         vacate_seat record
       end
     end
-    @result = @seats.map { |seat| seat.occupant }.join
+    @seats.map { |seat| seat.occupant }.join
   end
 
   private
