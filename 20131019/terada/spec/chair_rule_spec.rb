@@ -16,9 +16,9 @@ describe ChairRule do
   specify{ expect(ChairRule.new('5:NEXUS').result).to eq 'NUESX' }
   specify{ expect(ChairRule.new('5:ZYQMyqY').result).to eq 'ZM-Y-' }
   specify{ expect(ChairRule.new('5:ABCDbdXYc').result).to eq 'AYX--' }
-  # specify{ expect(ChairRule.new('6:FUTSAL').result).to eq 'FAULTS' }
-  # specify{ expect(ChairRule.new('6:ABCDEbcBC').result).to eq 'AECB-D' }
-  # specify{ expect(ChairRule.new('7:FMTOWNS').result).to eq 'FWMNTSO' }
+  specify{ expect(ChairRule.new('6:FUTSAL').result).to eq 'FAULTS' }
+  specify{ expect(ChairRule.new('6:ABCDEbcBC').result).to eq 'AECB-D' }
+  specify{ expect(ChairRule.new('7:FMTOWNS').result).to eq 'FWMNTSO' }
   # specify{ expect(ChairRule.new('7:ABCDEFGabcdfXYZ').result).to eq 'YE-X-GZ' }
   # specify{ expect(ChairRule.new('10:ABCDEFGHIJ').result).to eq 'AGBHCIDJEF' }
   # specify{ expect(ChairRule.new('6:NABEbBZn').result).to eq '-ZAB-E' }
