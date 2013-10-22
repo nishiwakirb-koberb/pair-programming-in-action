@@ -1,8 +1,9 @@
+REGEX_ARRAY = [/(?<=-)-(?=-)/, /(?<=-)-(?=\w)|(?<=\w)-(?=-)/, /(?<=\w)-(?=\w)/]
+
 def replace(seats, c)
   virtual_seats = "-#{seats}-"
   
-  rs = [/(?<=-)-(?=-)/, /(?<=-)-(?=\w)|(?<=\w)-(?=-)/, /(?<=\w)-(?=\w)/]
-  virtual_seats.sub(rs.find{|r| virtual_seats.match(r) }, c)[1...-1]
+  REGEX_ARRAY.map{|r| virtual_seats.sub(r, c) }.find{|s| s != virtual_seats}[1...-1]
 end
 
 def relax_seating(input)
