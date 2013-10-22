@@ -20,16 +20,9 @@ class Seating
   end
 
   def best_available_seat
-    2.downto(0).map{|count| first_seat_with_empty_neighbour_count(count)}.find_non_nil
-  end
-
-  def first_seat_with_empty_neighbour_count count
-    virtual_seats = [Seat.new, *@seats, Seat.new]
-    virtual_seats.each_cons(3).map {|left_seat, center_seat, right_seat|
-      empty_count = [left_seat, right_seat].count(&:unoccupied?)
-
-      center_seat if center_seat.unoccupied? && empty_count == count
-    }.find_non_nil
+    [Seat.new, *@seats, Seat.new].each_cons(3).max_by {|left, center, right|
+      center.unoccupied? ? [left, right].count(&:unoccupied?) : -1
+    }[1]
   end
 
   def vacate_seat occupant
@@ -38,12 +31,6 @@ class Seating
 
   def is_entry_record? string
     string.upcase == string
-  end
-
-  class ::Array
-    def find_non_nil
-      self.find{|item| !item.nil? }
-    end
   end
 end
 
