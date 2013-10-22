@@ -15,7 +15,7 @@ class ChairRule
   private
 
   def parse orders
-    [orders.split(':').first.to_i, orders.split(':').last.split(//)]
+    [orders.split(':').first.to_i, orders.split(':').last.chars]
   end
 
   def update_chairs people
@@ -40,22 +40,20 @@ class ChairRule
 
   def both_side_empty
     empties.each do |chair|
-      return chair if have_both_side?(chair.id) and right_chair(chair).empty? and left_chair(chair).empty?
+      return chair if has_sides?(chair) and right_chair(chair).empty? and left_chair(chair).empty?
     end
     false
   end
 
   def oneside_empty
     empties.each do |chair|
-      if have_both_side?(chair.id)
+      if has_sides?(chair)
         if right_chair(chair).empty?
-          if is_last?(right_chair(chair).id)
+          if is_last?(right_chair(chair))
             return right_chair(chair)
           else
             return chair
           end
-        elsif left_chair(chair).empty?
-          return chair
         end
       end
     end
@@ -64,7 +62,7 @@ class ChairRule
 
   def final_chair
     empties.each do |chair|
-      return chair if is_last?(chair.id) and left_chair(chair).empty?
+      return chair if is_last?(chair) and left_chair(chair).empty?
     end
     false
   end
@@ -73,7 +71,7 @@ class ChairRule
     empties.each do |chair|
       if chair.id == 0
         return chair
-      elsif is_last?(chair.id)
+      elsif is_last?(chair)
         return chair
       end
     end
@@ -100,12 +98,12 @@ class ChairRule
     find_by_id(chair.id - 1)
   end
 
-  def is_last? id
-    id == chairs.size - 1
+  def is_last? chair
+    chair.id == chairs.size - 1
   end
 
-  def have_both_side? id
-    (1..(chairs.size - 2)).include? id
+  def has_sides? chair
+    (1..(chairs.size - 2)).include? chair.id
   end
 
   class Chair
