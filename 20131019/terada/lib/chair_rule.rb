@@ -24,25 +24,37 @@ class ChairRule
   end
 
   def next_chair
+    # byebug
+    only1_chair or both_side_empty or last_chair or primary_last_chair or empties.first
+  end
+
+  def only1_chair
+    (@chairs.size < 3 or empties.size == 1 or empties.size == @chairs.size) ?
+      empties.first : false
+  end
+
+  def both_side_empty
     last_id = @chairs.size - 1
-    ret = nil
     empties.each do |chair|
-      # byebug
-      if @chairs.size < 3 or empties.size == 1 or empties.size == @chairs.size
-        return empties.first
-      elsif (1..(last_id - 1)).include? chair.id
-        if right_chair(chair).empty? and left_chair(chair).empty?
-          return chair
-        elsif right_chair(chair).empty?
-          return chair if empties.size < last_id and !find_by_id(last_id).empty?
-        elsif left_chair(chair).empty?
-          return chair unless chair.id == 1
-        end
-      elsif chair.id == last_id
-        return chair
-      end
+      return chair if (1..(last_id - 1)).include? chair.id and right_chair(chair).empty? and left_chair(chair).empty?
     end
-    empties.first
+    false
+  end
+
+  def last_chair
+    last_id = @chairs.size - 1
+    empties.each do |chair|
+      return chair if chair.id == last_id and left_chair(chair).empty?
+    end
+    false
+  end
+
+  def primary_last_chair
+    last_id = @chairs.size - 1
+    empties.each do |chair|
+      return chair if chair.id == last_id
+    end
+    false
   end
 
   def exit? person
