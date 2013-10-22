@@ -13,8 +13,8 @@ describe ChairRule do
   specify{ expect(ChairRule.new('4:ABCD').result).to eq 'ADBC' }
   specify{ expect(ChairRule.new('4:ABCbBD').result).to eq 'ABDC' }
   specify{ expect(ChairRule.new('4:ABCDabcA').result).to eq '-D-A' }
-  # specify{ expect(ChairRule.new('5:NEXUS').result).to eq 'NUESX' }
-  # specify{ expect(ChairRule.new('5:ZYQMyqY').result).to eq 'ZM-Y-' }
+  specify{ expect(ChairRule.new('5:NEXUS').result).to eq 'NUESX' }
+  specify{ expect(ChairRule.new('5:ZYQMyqY').result).to eq 'ZM-Y-' }
   # specify{ expect(ChairRule.new('5:ABCDbdXYc').result).to eq 'AYX--' }
   # specify{ expect(ChairRule.new('6:FUTSAL').result).to eq 'FAULTS' }
   # specify{ expect(ChairRule.new('6:ABCDEbcBC').result).to eq 'AECB-D' }

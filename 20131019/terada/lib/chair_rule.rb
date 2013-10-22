@@ -34,7 +34,7 @@ class ChairRule
         if right_chair(chair).empty? and left_chair(chair).empty?
           return chair
         elsif right_chair(chair).empty?
-          return chair if empties.size < last_id
+          return chair if empties.size < last_id and !find_by_id(last_id).empty?
         elsif left_chair(chair).empty?
           return chair unless chair.id == 1
         end
