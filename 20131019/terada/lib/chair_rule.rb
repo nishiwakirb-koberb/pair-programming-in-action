@@ -24,8 +24,11 @@ class ChairRule
   end
 
   def next_chair
-    # byebug
-    only1_chair or both_side_empty or last_chair or primary_last_chair or empties.first
+    only1_chair or both_side_empty or last_chair or primary_side_of_chairs or empties.first
+  end
+
+  def chairs
+    @chairs.map(&:person)
   end
 
   def only1_chair
@@ -49,10 +52,14 @@ class ChairRule
     false
   end
 
-  def primary_last_chair
+  def primary_side_of_chairs
     last_id = @chairs.size - 1
     empties.each do |chair|
-      return chair if chair.id == last_id
+      if chair.id == 0
+        return chair
+      elsif chair.id == last_id
+        return chair
+      end
     end
     false
   end
