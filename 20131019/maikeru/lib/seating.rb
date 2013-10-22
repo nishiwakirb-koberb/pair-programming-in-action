@@ -17,8 +17,8 @@ class Seating
 
   private
 
-  def is_entry_record? string
-    string.upcase == string
+  def is_entry_record? record
+    record.upcase == record
   end
 
   def occupy_seat occupant
