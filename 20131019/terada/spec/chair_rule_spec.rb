@@ -10,9 +10,9 @@ describe ChairRule do
   specify{ expect(ChairRule.new('2:AZz').result).to eq 'A-' }
   specify{ expect(ChairRule.new('3:ABC').result).to eq 'ACB' }
   specify{ expect(ChairRule.new('3:ABCa').result).to eq '-CB' }
-  # specify{ expect(ChairRule.new('4:ABCD').result).to eq 'ADBC' }
-  # specify{ expect(ChairRule.new('4:ABCbBD').result).to eq 'ABDC' }
-  # specify{ expect(ChairRule.new('4:ABCDabcA').result).to eq '-D-A' }
+  specify{ expect(ChairRule.new('4:ABCD').result).to eq 'ADBC' }
+  specify{ expect(ChairRule.new('4:ABCbBD').result).to eq 'ABDC' }
+  specify{ expect(ChairRule.new('4:ABCDabcA').result).to eq '-D-A' }
   # specify{ expect(ChairRule.new('5:NEXUS').result).to eq 'NUESX' }
   # specify{ expect(ChairRule.new('5:ZYQMyqY').result).to eq 'ZM-Y-' }
   # specify{ expect(ChairRule.new('5:ABCDbdXYc').result).to eq 'AYX--' }

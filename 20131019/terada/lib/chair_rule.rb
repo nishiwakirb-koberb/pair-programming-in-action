@@ -6,52 +6,75 @@ class ChairRule
 
   def initialize orders
     number, people = parse orders
-    chairs = Array.new(number) { Chair.new }
-    update_chairs people, chairs
-    @result = chairs.map(&:person).join
+    @chairs = Array.new(number) { |i| Chair.new(i) }
+    update_chairs people
+    @result = @chairs.map(&:person).join
   end
 
   def parse orders
     [orders.split(':').first.to_i, orders.split(':').last.split(//)]
   end
 
-  def update_chairs people, chairs
+  def update_chairs people
     people.each do |person|
-      next_chair = good_chair chairs
+      # byebug
       exit?(person) ?
-        search_chair(chairs, person).empty! : next_chair.update!(person)
+        find_by_person(person).empty! : next_chair.update!(person)
     end
+  end
+
+  def next_chair
+    last_id = @chairs.size - 1
+    ret = nil
+    empties.each do |chair|
+      # byebug
+      if @chairs.size < 3 or empties.size == 1 or empties.size == @chairs.size
+        return empties.first
+      elsif (1..(last_id - 1)).include? chair.id
+        if right_chair(chair).empty? and left_chair(chair).empty?
+          return chair
+        elsif right_chair(chair).empty?
+          return chair if empties.size < last_id
+        elsif left_chair(chair).empty?
+          return chair unless chair.id == 1
+        end
+      elsif chair.id == last_id
+        return chair
+      end
+    end
+    empties.first
   end
 
   def exit? person
     person == person.downcase
   end
 
-  def search_chair chairs, person
-    chairs.find{|chair| chair.person == person.upcase }
+  def find_by_id id
+    @chairs.find{ |chair| chair.id == id }
   end
 
-  def empty_chair chairs
-    chairs.find{ |chair| chair.empty? }
+  def find_by_person person
+    @chairs.find{ |chair| chair.person == person.upcase }
   end
 
-  def good_chair chairs
-    if chairs.size < 3
-      empty_chair chairs
-    elsif chairs.first.empty? and chairs[1].empty?
-      chairs.first
-    elsif !chairs.first.empty? and chairs[2].empty?
-      chairs[2]
-    else
-      empty_chair chairs
-    end
+  def empties
+    @chairs.select{ |chair| chair.empty? }
+  end
+
+  def right_chair chair
+    find_by_id(chair.id + 1)
+  end
+
+  def left_chair chair
+    find_by_id(chair.id - 1)
   end
 
   class Chair
-    attr_reader :person
+    attr_reader :person, :id
 
-    def initialize
+    def initialize id
       empty!
+      @id = id
     end
 
     def update! person
@@ -67,4 +90,5 @@ class ChairRule
     end
   end
 end
+
 
