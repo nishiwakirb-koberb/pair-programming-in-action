@@ -1,19 +1,13 @@
-require 'pp'
-
-def vacant_seat_index(seats)
+def x(seats, c)
   virtual_seats = "-" + seats + "-"
-
-  (virtual_seats =~ /---/) or
-  (virtual_seats =~ /--\w|\w--/) or
-  seats.index('-')
-
-  # if idx = (virtual_seats =~ /---/)
-  #   return idx
-  # end
-  # if idx = (virtual_seats =~ /--\w|\w--/)
-  #   return idx
-  # end
-  # seats.index('-')
+  
+  rs = [/(?<=-)-(?=-)/, /(?<=-)-(?=\w)|(?<=\w)-(?=-)/, /(?<=\w)-(?=\w)/]
+  rs.each do |r|
+    if virtual_seats =~ r
+      replaced = virtual_seats.sub r, c
+      return replaced[1...-1]
+    end
+  end
 end
 
 def relax_seating(input)
@@ -21,11 +15,9 @@ def relax_seating(input)
   seats = "-" * num.to_i
   sequence.each_char do |c|
     if c.upcase == c
-      idx = vacant_seat_index(seats)
-      seats[idx] = c
+      seats = x(seats, c)
     else
-      idx = seats.index(c.upcase)
-      seats[idx] = '-'
+      seats = seats.sub(c.upcase, '-')
     end
   end
   seats
