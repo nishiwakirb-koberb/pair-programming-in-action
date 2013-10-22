@@ -32,6 +32,6 @@ class Seating
   end
 
   def vacate_seat occupant
-    @seats.find {|seat| seat == occupant.upcase }.sub!(/./, UNOCCUPIED)
+    @seats.find {|seat| seat == occupant.upcase }.sub!(/[A-Z]/, UNOCCUPIED)
   end
 end
