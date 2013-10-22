@@ -20,7 +20,7 @@ class ChairRule
 
   def update_chairs people
     people.each do |person|
-      exit?(person) ?
+      person == person.downcase ?
         find_by_person(person).empty! : next_chair.update!(person)
     end
   end
@@ -34,7 +34,7 @@ class ChairRule
   end
 
   def only1_chair
-    (chairs.size < 3 or empties.size == 1 or empties.size == chairs.size) ?
+    empties.size == chairs.size ?
       empties.first : false
   end
 
@@ -78,10 +78,6 @@ class ChairRule
       end
     end
     false
-  end
-
-  def exit? person
-    person == person.downcase
   end
 
   def find_by_id id
