@@ -17,14 +17,13 @@ class ChairRule
 
   def update_chairs people
     people.each do |person|
-      # byebug
       exit?(person) ?
         find_by_person(person).empty! : next_chair.update!(person)
     end
   end
 
   def next_chair
-    only1_chair or both_side_empty or last_chair or primary_side_of_chairs or empties.first
+    only1_chair or both_side_empty or oneside_empty or last_chair or primary_side_of_chairs or empties.first
   end
 
   def chairs
@@ -40,6 +39,24 @@ class ChairRule
     last_id = @chairs.size - 1
     empties.each do |chair|
       return chair if (1..(last_id - 1)).include? chair.id and right_chair(chair).empty? and left_chair(chair).empty?
+    end
+    false
+  end
+
+  def oneside_empty
+    last_id = @chairs.size - 1
+    empties.each do |chair|
+      if (1..(last_id - 1)).include? chair.id
+        if right_chair(chair).empty?
+          if right_chair(chair).id == last_id
+            return right_chair(chair)
+          else
+            return chair
+          end
+        elsif left_chair(chair).empty?
+          return chair
+        end
+      end
     end
     false
   end
