@@ -5,7 +5,7 @@ class ChairRule
   attr_reader :result
 
   def initialize orders
-    number, people = parse orders
+    number, people = [orders.split(':').first.to_i, orders.split(':').last.chars]
     @chairs = Array.new(number) { |i| Chair.new(i) }
     update_chairs people
     @result = chairs.map(&:person).join
@@ -13,10 +13,6 @@ class ChairRule
 
 
   private
-
-  def parse orders
-    [orders.split(':').first.to_i, orders.split(':').last.chars]
-  end
 
   def update_chairs people
     people.each do |person|
@@ -30,7 +26,7 @@ class ChairRule
   end
 
   def chairs
-    @chairs ||= []
+    @chairs
   end
 
   def only1_chair
@@ -38,36 +34,26 @@ class ChairRule
       empties.first : false
   end
 
-  def both_side_empty
-    empties.each do |chair|
-      return chair if has_sides?(chair) and right_chair(chair).empty? and left_chair(chair).empty?
-    end
-    false
+  def both_sides_empty
+    empties.find { |chair| has_sides?(chair) and right_chair(chair).empty? and left_chair(chair).empty? } || false
   end
 
   def oneside_empty
-    empties.each do |chair|
-      if has_sides?(chair)
-        if right_chair(chair).empty?
-          if is_last?(right_chair(chair))
-            return right_chair(chair)
-          else
-            return chair
-          end
-        end
+    empties.select{ |chair| has_sides?(chair) and right_chair(chair).empty? }.each do |chair|
+      if is_last?(right_chair(chair))
+        return right_chair(chair)
+      else
+        return chair
       end
     end
     false
   end
 
   def final_chair
-    empties.each do |chair|
-      return chair if is_last?(chair) and left_chair(chair).empty?
-    end
-    false
+    empties.find { |chair| is_last?(chair) and left_chair(chair).empty? } || false
   end
 
-  def primary_side_of_chairs
+  def primary_sides_of_chairs
     empties.each do |chair|
       if chair.id == 0
         return chair
