@@ -29,37 +29,28 @@ class ChairRule
   end
 
   def next_chair
-    both_sides_vacant_chair or
-      one_side_vacant_chair or
-      first_or_last_chair or
-      first_vacant_chair
+    both_sides_vacant_chair or one_side_vacant_chair or @chairs.find(&:vacant?)
   end
 
-  # Called by next_chair in this order ===================
   def both_sides_vacant_chair
-    # l, c, r = left, center, right
-    if @chairs.all?(&:vacant?)
+    if @chairs[0..1].all?(&:vacant?)
       @chairs.first
     elsif lcr = @chairs.each_cons(3).find {|lcr| lcr.all?(&:vacant?) }
       lcr[1]
+    elsif @chairs[-2..-1].all?(&:vacant?)
+      @chairs.last
     end
   end
 
   def one_side_vacant_chair
-    if lcr = @chairs.each_cons(3).find {|_, c, r| [c, r].all?(&:vacant?) }
-      _, c, r = lcr
-      @chairs.last == r ? r : c
+    if @chairs.first.vacant?
+      @chairs.first
+    elsif lcr = @chairs.each_cons(3).find {|l, c, r| c.vacant? and [l, r].any?(&:vacant?) }
+      lcr[1]
+    elsif @chairs.last.vacant?
+      @chairs.last
     end
   end
-
-  def first_or_last_chair
-    [@chairs.first, @chairs.last].find(&:vacant?)
-  end
-
-  def first_vacant_chair
-    @chairs.find(&:vacant?)
-  end
-  # Called by next_chair in this order ===================
 
   class ::String
     def vacant?
