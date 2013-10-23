@@ -7,17 +7,21 @@ class ChairRule
   end
 
   def result
-    @chairs = Array.new(@number.to_i) { Chair.new }
+    @chairs = ('-' * @number.to_i).chars
     update_chairs @people.chars
-    @chairs.map(&:person).join
+    @chairs.join
   end
 
   private
 
   def update_chairs people
     people.each do |person|
-      person =~ /[a-z]/ ? find_by_person(person).empty! : next_chair.update!(person)
+      person =~ /[a-z]/ ? vacant!(person) : next_chair.sub!('-', person)
     end
+  end
+
+  def vacant! person
+    @chairs.find{|c| c == person.upcase }.sub!(/[A-Z]/, '-')
   end
 
   def find_by_person person
@@ -25,58 +29,44 @@ class ChairRule
   end
 
   def next_chair
-    first_chair_of_all_empty_chairs or
-      both_sides_empty_chair or
-      one_side_empty_chair or
+    first_chair_of_all_vacant_chairs or
+      both_sides_vacant_chair or
+      one_side_vacant_chair or
       first_or_last_chair or
-      first_empty_chair
+      first_vacant_chair
   end
 
   # Called by next_chair in this order ===================
-  def first_chair_of_all_empty_chairs
-    @chairs.first if @chairs.all?(&:empty?)
+  def first_chair_of_all_vacant_chairs
+    @chairs.first if @chairs.all?(&:vacant?)
   end
 
-  def both_sides_empty_chair
+  def both_sides_vacant_chair
     # l, c, r = left, center, right
-    if lcr = @chairs.each_cons(3).find {|lcr| lcr.all?(&:empty?) }
+    if lcr = @chairs.each_cons(3).find {|lcr| lcr.all?(&:vacant?) }
       lcr[1]
     end
   end
 
-  def one_side_empty_chair
-    if lcr = @chairs.each_cons(3).find {|_, c, r| [c, r].all?(&:empty?) }
+  def one_side_vacant_chair
+    if lcr = @chairs.each_cons(3).find {|_, c, r| [c, r].all?(&:vacant?) }
       _, c, r = lcr
       @chairs.last == r ? r : c
     end
   end
 
   def first_or_last_chair
-    [@chairs.first, @chairs.last].find(&:empty?)
+    [@chairs.first, @chairs.last].find(&:vacant?)
   end
 
-  def first_empty_chair
-    @chairs.find(&:empty?)
+  def first_vacant_chair
+    @chairs.find(&:vacant?)
   end
   # Called by next_chair in this order ===================
 
-  class Chair
-    attr_reader :person
-
-    def initialize
-      empty!
-    end
-
-    def update! person
-      @person = person
-    end
-
-    def empty!
-      @person = '-'
-    end
-
-    def empty?
-      @person == '-'
+  class ::String
+    def vacant?
+      self == '-'
     end
   end
 end
