@@ -20,14 +20,14 @@ class ChairRule
   end
 
   def next_chair
-    only1_chair or both_sides_empty or oneside_empty or final_chair or primary_sides_of_chairs or empties.first
+    only_one_chair or both_sides_empty or oneside_empty or final_chair or primary_sides_of_chairs or empties.first
   end
 
   def chairs
     @chairs
   end
 
-  def only1_chair
+  def only_one_chair
     empties.size == chairs.size ?
       empties.first : false
   end
