@@ -45,7 +45,7 @@ class ChairRule
   end
 
   def one_side_empty_chair
-    empty_chairs.select {|chair| between_chairs?(chair) and right_chair(chair).empty? }.each do |chair|
+    right_side_empty_chairs.each do |chair|
       r_chair = right_chair(chair)
       return last_chair?(r_chair) ? r_chair : chair
     end
@@ -87,8 +87,8 @@ class ChairRule
     @chairs.last == chair
   end
 
-  def between_chairs? chair
-    @chairs[1...-1].include? chair
+  def right_side_empty_chairs
+    @chairs.each_cons(3).select {|_, c, r| [c, r].all?(&:empty?) }.map{|lcr| lcr[1]}
   end
 
   class Chair
