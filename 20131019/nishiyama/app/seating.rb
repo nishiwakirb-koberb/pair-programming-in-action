@@ -60,7 +60,7 @@ class Seating
 
   def seating()
     @people.each {|person|
-      if person.match( /[A-Z]/ )
+      if person =~ /[A-Z]/
         index = ChairRecommender.best_index(@chairs)
         @chairs[index] = person
       else
