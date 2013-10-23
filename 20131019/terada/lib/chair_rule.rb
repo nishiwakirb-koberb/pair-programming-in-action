@@ -69,7 +69,7 @@ class ChairRule
   end
 
   def is_last? chair
-    chair.index == @chairs.size - 1
+    @chairs.last == chair
   end
 
   def has_sides? chair
