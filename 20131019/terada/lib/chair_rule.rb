@@ -48,11 +48,11 @@ class ChairRule
   end
 
   def primary_sides_of_chairs
-    empties.find {|chair| chair.id == 0 or is_last?(chair) }
+    empties.find {|chair| chair.index == 0 or is_last?(chair) }
   end
 
-  def find_by_id id
-    chairs.find {|chair| chair.id == id }
+  def find_by_index index
+    chairs.find {|chair| chair.index == index }
   end
 
   def find_by_person person
@@ -64,27 +64,27 @@ class ChairRule
   end
 
   def right_chair chair
-    find_by_id(chair.id + 1)
+    find_by_index(chair.index + 1)
   end
 
   def left_chair chair
-    find_by_id(chair.id - 1)
+    find_by_index(chair.index - 1)
   end
 
   def is_last? chair
-    chair.id == chairs.size - 1
+    chair.index == chairs.size - 1
   end
 
   def has_sides? chair
-    (1..(chairs.size - 2)).include? chair.id
+    (1..(chairs.size - 2)).include? chair.index
   end
 
   class Chair
-    attr_reader :person, :id
+    attr_reader :person, :index
 
-    def initialize id
+    def initialize index
       empty!
-      @id = id
+      @index = index
     end
 
     def update! person
