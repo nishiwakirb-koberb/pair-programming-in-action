@@ -13,12 +13,11 @@ class ChairRecommender
   end
 
   def self.calc_levels(chairs)
-    arr = chairs.chars.to_a # to_a is not required in Ruby 2.0
+    arr         = chairs.chars.to_a # to_a is not required in Ruby 2.0
     left_arr    = [ "#" ] + arr[0...-1]
-    center_arr  =           arr
-    right_arr   =           arr[1..-1] + [ "#" ]
+    right_arr   = arr[1..-1] + [ "#" ]
 
-    left_arr.zip(center_arr, right_arr).map(&method(:calc_sides))
+    left_arr.zip(arr, right_arr).map(&method(:calc_sides))
   end
 
   def self.best_index(chairs)
