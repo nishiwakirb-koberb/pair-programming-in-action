@@ -2,13 +2,16 @@ require 'pry-byebug'
 require 'byebug'
 
 class ChairRule
-  attr_reader :result, :chairs
+  attr_reader :chairs
 
   def initialize orders
-    number, people = orders.split(':')
-    @chairs = Array.new(number.to_i) {|i| Chair.new(i) }
-    update_chairs people.chars
-    @result = chairs.map(&:person).join
+    @number, @people = orders.split(':')
+  end
+
+  def result
+    @chairs = Array.new(@number.to_i) {|i| Chair.new(i) }
+    update_chairs @people.chars
+    chairs.map(&:person).join
   end
 
   private
