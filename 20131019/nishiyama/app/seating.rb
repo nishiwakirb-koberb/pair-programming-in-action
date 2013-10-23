@@ -22,7 +22,7 @@ class ChairRecommender
 
   def self.best_index(chairs)
     arr = self.levels(chairs)
-    max_level = arr.sort.reverse.first
+    max_level = arr.max
     index = 0
     arr.map.with_index {|x,i|
       if max_level == x
