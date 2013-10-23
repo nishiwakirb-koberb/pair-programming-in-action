@@ -34,13 +34,14 @@ class ChairRule
 
   # Called by next_chair in this order ===================
   def first_chair_of_all_empty_chairs
-    empty_chairs.first if @chairs.all?(&:empty?)
+    @chairs.first if @chairs.all?(&:empty?)
   end
 
   def both_sides_empty_chair
-    empty_chairs.find {|chair|
-      between_chairs?(chair) and [left_chair(chair), right_chair(chair)].all?(&:empty?)
-    }
+    # l, c, r = left, center, right
+    if lcr = @chairs.each_cons(3).find {|lcr| lcr.all?(&:empty?) }
+      lcr[1]
+    end
   end
 
   def one_side_empty_chair
