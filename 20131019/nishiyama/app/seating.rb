@@ -20,7 +20,7 @@ class ChairRecommender
   end
 
   def self.levels(chairs)
-    arr = chairs.split( "" )
+    arr = chairs.chars.to_a # to_a is not required in Ruby 2.0
     left_arr    = [ "#" ] + arr[0...-1]
     center_arr  =           arr
     right_arr   =           arr[1..-1] + [ "#" ]
