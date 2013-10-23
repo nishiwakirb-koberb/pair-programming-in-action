@@ -8,10 +8,11 @@
 class ChairRecommender
 
   def self.calc_sides(lhr)
-    lhr[1] == "-" ? lhr.zip([/[-#]/, /-/, /[-#]/]).count{|c, r| c =~ r} : 0
+    regex_arr = [/[-#]/, /-/, /[-#]/]
+    lhr[1] == "-" ? lhr.zip(regex_arr).count{|c, r| c =~ r} : 0
   end
 
-  def self.levels(chairs)
+  def self.calc_levels(chairs)
     arr = chairs.chars.to_a # to_a is not required in Ruby 2.0
     left_arr    = [ "#" ] + arr[0...-1]
     center_arr  =           arr
@@ -21,8 +22,8 @@ class ChairRecommender
   end
 
   def self.best_index(chairs)
-    level_arr = self.levels(chairs)
-    level_arr.find_index{|level| level == level_arr.max}
+    levels = self.calc_levels(chairs)
+    levels.find_index{|level| level == levels.max}
   end
 
 end

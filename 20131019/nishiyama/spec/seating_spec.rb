@@ -13,13 +13,13 @@ describe ChairRecommender do
     end
   end
 
-  describe "#levels" do
+  describe "#calc_levels" do
     it "should" do
-      expect( ChairRecommender.levels( "---"  )).to eq [3,3,3]
-      expect( ChairRecommender.levels( "----" )).to eq [3,3,3,3]
-      expect( ChairRecommender.levels( "A---" )).to eq [0,2,3,3]
-      expect( ChairRecommender.levels( "A-B"  )).to eq [0,1,0]
-      expect( ChairRecommender.levels( "ABC"  )).to eq [0,0,0]
+      expect( ChairRecommender.calc_levels( "---"  )).to eq [3,3,3]
+      expect( ChairRecommender.calc_levels( "----" )).to eq [3,3,3,3]
+      expect( ChairRecommender.calc_levels( "A---" )).to eq [0,2,3,3]
+      expect( ChairRecommender.calc_levels( "A-B"  )).to eq [0,1,0]
+      expect( ChairRecommender.calc_levels( "ABC"  )).to eq [0,0,0]
     end
   end
 
