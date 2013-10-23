@@ -13,7 +13,7 @@ class ChairRule
 
   def update_chairs people
     people.each do |person|
-      person =~ /[a-z]/ ? vacant!(person) : occupy!(person)
+      person =~ /[A-Z]/ ? occupy!(person) : vacant!(person)
     end
   end
 
