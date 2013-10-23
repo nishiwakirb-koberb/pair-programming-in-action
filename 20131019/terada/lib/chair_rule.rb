@@ -1,6 +1,3 @@
-require 'pry-byebug'
-require 'byebug'
-
 class ChairRule
   def initialize orders
     @number, @people = orders.split(':')
