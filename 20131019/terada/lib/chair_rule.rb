@@ -11,7 +11,6 @@ class ChairRule
     @result = chairs.map(&:person).join
   end
 
-
   private
 
   def update_chairs people
@@ -113,5 +112,3 @@ class ChairRule
     end
   end
 end
-
-
