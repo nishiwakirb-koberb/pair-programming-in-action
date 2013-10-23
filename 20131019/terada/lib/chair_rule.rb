@@ -37,11 +37,8 @@ class ChairRule
 
   def oneside_empty
     empties.select{ |chair| has_sides?(chair) and right_chair(chair).empty? }.each do |chair|
-      if is_last?(right_chair(chair))
-        return right_chair(chair)
-      else
-        return chair
-      end
+      r_chair = right_chair(chair)
+      return is_last?(r_chair) ? r_chair : chair
     end
     false
   end
