@@ -22,10 +22,10 @@ class ChairRule
   end
 
   def occupy! person
-    next_chair.sub!('-', person)
+    best_vacant_chair.sub!('-', person)
   end
 
-  def next_chair
+  def best_vacant_chair
     both_sides_vacant_chair or one_side_vacant_chair or @chairs.find(&:vacant?)
   end
 
