@@ -1,10 +1,12 @@
 class ChairRule
+  VACANT = '-'
+
   def initialize orders
     @number, @people = orders.split(':')
   end
 
   def result
-    @chairs = ('-' * @number.to_i).chars
+    @chairs = (VACANT * @number.to_i).chars
     update_chairs!
     @chairs.join
   end
@@ -18,11 +20,11 @@ class ChairRule
   end
 
   def vacant! person
-    @chairs.find{|c| c == person.upcase }.sub!(/[A-Z]/, '-')
+    @chairs.find{|c| c == person.upcase }.sub!(/[A-Z]/, VACANT)
   end
 
   def occupy! person
-    best_vacant_chair.sub!('-', person)
+    best_vacant_chair.sub!(VACANT, person)
   end
 
   def best_vacant_chair
@@ -51,7 +53,7 @@ class ChairRule
 
   class ::String
     def vacant?
-      self == '-'
+      self == VACANT
     end
   end
 end
