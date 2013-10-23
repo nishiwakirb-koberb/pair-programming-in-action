@@ -21,9 +21,9 @@ class ChairRecommender
 
   def self.levels(chairs)
     arr = chairs.split( "" )
-    left_arr    = [ "#" ] + arr[0...(arr.size-1)]
+    left_arr    = [ "#" ] + arr[0...-1]
     center_arr  =           arr
-    right_arr   =           arr[1...(arr.size  )] + [ "#" ]
+    right_arr   =           arr[1..-1] + [ "#" ]
 
     left_arr.zip(center_arr, right_arr).map {|x|
       calc_sides(x[0],x[1],x[2])
