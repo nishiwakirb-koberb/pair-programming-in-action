@@ -7,7 +7,7 @@ class ChairRule
   end
 
   def result
-    @chairs = Array.new(@number.to_i) {|i| Chair.new(i) }
+    @chairs = Array.new(@number.to_i) { Chair.new }
     update_chairs @people.chars
     @chairs.map(&:person).join
   end
@@ -68,15 +68,15 @@ class ChairRule
   end
 
   def right_chair chair
-    find_by_index(chair.index + 1)
+    @chairs[chair_index(chair) + 1]
   end
 
   def left_chair chair
-    find_by_index(chair.index - 1)
+    @chairs[chair_index(chair) - 1]
   end
 
-  def find_by_index index
-    @chairs.find {|chair| chair.index == index }
+  def chair_index(chair)
+    @chairs.index(chair)
   end
 
   def first_chair? chair
@@ -92,11 +92,10 @@ class ChairRule
   end
 
   class Chair
-    attr_reader :person, :index
+    attr_reader :person
 
-    def initialize index
+    def initialize
       empty!
-      @index = index
     end
 
     def update! person
