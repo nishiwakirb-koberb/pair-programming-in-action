@@ -21,10 +21,6 @@ class ChairRule
     @chairs.find{|c| c == person.upcase }.sub!(/[A-Z]/, '-')
   end
 
-  def find_by_person person
-    @chairs.find {|chair| chair.person == person.upcase }
-  end
-
   def next_chair
     both_sides_vacant_chair or one_side_vacant_chair or @chairs.find(&:vacant?)
   end
