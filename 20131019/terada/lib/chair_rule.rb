@@ -13,12 +13,16 @@ class ChairRule
 
   def update_chairs people
     people.each do |person|
-      person =~ /[a-z]/ ? vacant!(person) : next_chair.sub!('-', person)
+      person =~ /[a-z]/ ? vacant!(person) : occupy!(person)
     end
   end
 
   def vacant! person
     @chairs.find{|c| c == person.upcase }.sub!(/[A-Z]/, '-')
+  end
+
+  def occupy! person
+    next_chair.sub!('-', person)
   end
 
   def next_chair
