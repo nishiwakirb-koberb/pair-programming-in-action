@@ -52,39 +52,13 @@ class ChairRule
   end
 
   def first_or_last_chair
-    empty_chairs.find {|chair|
-      first_chair?(chair) or last_chair?(chair)
-    }
+    [@chairs.first, @chairs.last].find(&:empty?)
   end
 
   def first_empty_chair
-    empty_chairs.first
+    @chairs.find(&:empty?)
   end
   # Called by next_chair in this order ===================
-
-  def empty_chairs
-    @chairs.select {|chair| chair.empty? }
-  end
-
-  def left_chair chair
-    @chairs[chair_index(chair) - 1]
-  end
-
-  def right_chair chair
-    @chairs[chair_index(chair) + 1]
-  end
-
-  def chair_index(chair)
-    @chairs.index(chair)
-  end
-
-  def first_chair? chair
-    @chairs.first == chair
-  end
-
-  def last_chair? chair
-    @chairs.last == chair
-  end
 
   class Chair
     attr_reader :person
