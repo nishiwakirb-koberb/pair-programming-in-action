@@ -2,8 +2,6 @@ require 'pry-byebug'
 require 'byebug'
 
 class ChairRule
-  attr_reader :chairs
-
   def initialize orders
     @number, @people = orders.split(':')
   end
@@ -11,7 +9,7 @@ class ChairRule
   def result
     @chairs = Array.new(@number.to_i) {|i| Chair.new(i) }
     update_chairs @people.chars
-    chairs.map(&:person).join
+    @chairs.map(&:person).join
   end
 
   private
@@ -27,7 +25,7 @@ class ChairRule
   end
 
   def only_one_chair
-    empties.first if empties.size == chairs.size
+    empties.first if empties.size == @chairs.size
   end
 
   def both_sides_empty
@@ -51,15 +49,15 @@ class ChairRule
   end
 
   def find_by_index index
-    chairs.find {|chair| chair.index == index }
+    @chairs.find {|chair| chair.index == index }
   end
 
   def find_by_person person
-    chairs.find {|chair| chair.person == person.upcase }
+    @chairs.find {|chair| chair.person == person.upcase }
   end
 
   def empties
-    chairs.select {|chair| chair.empty? }
+    @chairs.select {|chair| chair.empty? }
   end
 
   def right_chair chair
@@ -71,11 +69,11 @@ class ChairRule
   end
 
   def is_last? chair
-    chair.index == chairs.size - 1
+    chair.index == @chairs.size - 1
   end
 
   def has_sides? chair
-    (1..(chairs.size - 2)).include? chair.index
+    (1..(@chairs.size - 2)).include? chair.index
   end
 
   class Chair
