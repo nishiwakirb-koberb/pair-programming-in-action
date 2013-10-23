@@ -9,11 +9,7 @@ class ChairRecommender
 
   def self.calc_sides(left, here, right)
     if here == "-"
-      level = 0
-      level += 1   if left.match(/[-#]/)
-      level += 1   if here == "-"
-      level += 1   if right.match(/[-#]/)
-      level
+      [left, here, right].zip([/[-#]/, /-/, /[-#]/]).count{|c, r| c =~ r}
     else
       0
     end
