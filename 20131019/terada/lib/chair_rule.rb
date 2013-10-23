@@ -15,8 +15,7 @@ class ChairRule
 
   def update_chairs people
     people.each do |person|
-      person == person.downcase ?
-        find_by_person(person).empty! : next_chair.update!(person)
+      person =~ /[a-z]/ ? find_by_person(person).empty! : next_chair.update!(person)
     end
   end
 
