@@ -21,9 +21,8 @@ class ChairRecommender
   end
 
   def self.best_index(chairs)
-    arr = self.levels(chairs)
-    max_level = arr.max
-    arr.find_index{|x| x == max_level}
+    level_arr = self.levels(chairs)
+    level_arr.find_index{|level| level == level_arr.max}
   end
 
 end
