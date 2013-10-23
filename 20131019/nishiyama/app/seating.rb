@@ -7,9 +7,9 @@
 
 class ChairRecommender
 
-  def self.calc_sides(lhr)
+  def self.calc_sides(lcr)
     regex_arr = [/[-#]/, /-/, /[-#]/]
-    lhr[1] == "-" ? lhr.zip(regex_arr).count{|c, r| c =~ r} : 0
+    lcr[1] == "-" ? lcr.zip(regex_arr).count{|c, r| c =~ r} : 0
   end
 
   def self.calc_levels(chairs)
