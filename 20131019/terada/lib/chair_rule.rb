@@ -55,7 +55,7 @@ class ChairRule
 
   def primary_sides_of_chairs
     empty_chairs.find {|chair|
-      chair.index == 0 or last_chair?(chair)
+      first_chair?(chair) or last_chair?(chair)
     }
   end
 
@@ -77,6 +77,10 @@ class ChairRule
 
   def find_by_index index
     @chairs.find {|chair| chair.index == index }
+  end
+
+  def first_chair? chair
+    @chairs.first == chair
   end
 
   def last_chair? chair
