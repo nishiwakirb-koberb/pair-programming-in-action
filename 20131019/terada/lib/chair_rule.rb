@@ -5,9 +5,9 @@ class ChairRule
   attr_reader :result
 
   def initialize orders
-    number, people = [orders.split(':').first.to_i, orders.split(':').last.chars]
-    @chairs = Array.new(number) { |i| Chair.new(i) }
-    update_chairs people
+    number, people = orders.split(':')
+    @chairs = Array.new(number.to_i) { |i| Chair.new(i) }
+    update_chairs people.chars
     @result = chairs.map(&:person).join
   end
 
