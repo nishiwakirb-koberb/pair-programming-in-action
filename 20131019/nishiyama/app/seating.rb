@@ -12,7 +12,7 @@ class ChairRecommender
       0
     else
       level = 0
-      level += 1   if left.match(/[-#]/) 
+      level += 1   if left.match(/[-#]/)
       level += 1   if here == "-"
       level += 1   if right.match(/[-#]/)
       level
@@ -35,7 +35,7 @@ class ChairRecommender
     max_level = arr.sort.reverse.first
     index = 0
     arr.map.with_index {|x,i|
-      if max_level == x 
+      if max_level == x
         index = i
         break
       end
@@ -49,8 +49,8 @@ end
 class Seating
 
   def self.init_and_go(input)
-    arr = input.split(':')
-    self.new(arr[0].to_i, arr[1]).seating()
+    chair_count, people = input.split(':')
+    self.new(chair_count.to_i, people).seating()
   end
 
   def initialize(chair_count,people)
