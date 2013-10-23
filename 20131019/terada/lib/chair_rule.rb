@@ -6,7 +6,7 @@ class ChairRule
 
   def initialize orders
     number, people = orders.split(':')
-    @chairs = Array.new(number.to_i) { |i| Chair.new(i) }
+    @chairs = Array.new(number.to_i) {|i| Chair.new(i) }
     update_chairs people.chars
     @result = chairs.map(&:person).join
   end
@@ -36,7 +36,7 @@ class ChairRule
   end
 
   def oneside_empty
-    empties.select{ |chair| has_sides?(chair) and right_chair(chair).empty? }.each do |chair|
+    empties.select {|chair| has_sides?(chair) and right_chair(chair).empty? }.each do |chair|
       r_chair = right_chair(chair)
       return is_last?(r_chair) ? r_chair : chair
     end
@@ -52,15 +52,15 @@ class ChairRule
   end
 
   def find_by_id id
-    chairs.find{ |chair| chair.id == id }
+    chairs.find {|chair| chair.id == id }
   end
 
   def find_by_person person
-    chairs.find{ |chair| chair.person == person.upcase }
+    chairs.find {|chair| chair.person == person.upcase }
   end
 
   def empties
-    chairs.select{ |chair| chair.empty? }
+    chairs.select {|chair| chair.empty? }
   end
 
   def right_chair chair
