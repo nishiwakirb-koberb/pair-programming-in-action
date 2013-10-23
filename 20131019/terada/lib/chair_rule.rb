@@ -51,14 +51,7 @@ class ChairRule
   end
 
   def primary_sides_of_chairs
-    empties.each do |chair|
-      if chair.id == 0
-        return chair
-      elsif is_last?(chair)
-        return chair
-      end
-    end
-    false
+    empties.find {|chair| chair.id == 0 or is_last?(chair) }
   end
 
   def find_by_id id
