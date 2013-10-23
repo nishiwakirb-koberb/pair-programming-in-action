@@ -42,20 +42,20 @@ class ChairRule
   def one_side_empty
     empty_chairs.select {|chair| has_sides?(chair) and right_chair(chair).empty? }.each do |chair|
       r_chair = right_chair(chair)
-      return is_last?(r_chair) ? r_chair : chair
+      return last_chair?(r_chair) ? r_chair : chair
     end
     false
   end
 
   def final_chair
     empty_chairs.find {|chair|
-      is_last?(chair) and left_chair(chair).empty?
+      last_chair?(chair) and left_chair(chair).empty?
     }
   end
 
   def primary_sides_of_chairs
     empty_chairs.find {|chair|
-      chair.index == 0 or is_last?(chair)
+      chair.index == 0 or last_chair?(chair)
     }
   end
 
@@ -79,7 +79,7 @@ class ChairRule
     @chairs.find {|chair| chair.index == index }
   end
 
-  def is_last? chair
+  def last_chair? chair
     @chairs.last == chair
   end
 
