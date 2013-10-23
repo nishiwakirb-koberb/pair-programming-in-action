@@ -7,12 +7,8 @@
 
 class ChairRecommender
 
-  def self.calc_sides(left, here, right)
-    if here == "-"
-      [left, here, right].zip([/[-#]/, /-/, /[-#]/]).count{|c, r| c =~ r}
-    else
-      0
-    end
+  def self.calc_sides(lhr)
+    lhr[1] == "-" ? lhr.zip([/[-#]/, /-/, /[-#]/]).count{|c, r| c =~ r} : 0
   end
 
   def self.levels(chairs)
@@ -21,9 +17,7 @@ class ChairRecommender
     center_arr  =           arr
     right_arr   =           arr[1..-1] + [ "#" ]
 
-    left_arr.zip(center_arr, right_arr).map {|l, c, r|
-      calc_sides(l, c, r)
-    }
+    left_arr.zip(center_arr, right_arr).map(&method(:calc_sides))
   end
 
   def self.best_index(chairs)
