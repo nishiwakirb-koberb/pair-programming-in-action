@@ -25,8 +25,8 @@ class ChairRecommender
     center_arr  =           arr
     right_arr   =           arr[1..-1] + [ "#" ]
 
-    left_arr.zip(center_arr, right_arr).map {|x|
-      calc_sides(x[0],x[1],x[2])
+    left_arr.zip(center_arr, right_arr).map {|l, c, r|
+      calc_sides(l, c, r)
     }
   end
 
