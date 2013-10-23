@@ -23,7 +23,7 @@ class ChairRule
   def next_chair
     only_one_chair or
       both_sides_empty or
-      oneside_empty or
+      one_side_empty or
       final_chair or
       primary_sides_of_chairs or
       empty_chairs.first
@@ -39,7 +39,7 @@ class ChairRule
     }
   end
 
-  def oneside_empty
+  def one_side_empty
     empty_chairs.select {|chair| has_sides?(chair) and right_chair(chair).empty? }.each do |chair|
       r_chair = right_chair(chair)
       return is_last?(r_chair) ? r_chair : chair
