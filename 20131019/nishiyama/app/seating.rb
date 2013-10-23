@@ -38,14 +38,20 @@ class Seating
   end
 
   def seating()
-    @people.each_with_object(@chairs) {|person, chairs|
-      if person =~ /[A-Z]/
-        index = ChairRecommender.best_index(chairs)
-        chairs[index] = person
-      else
-        chairs.sub!(person.upcase, "-")
-      end
+    @people.each_with_object(@chairs) {|person, _|
+      person =~ /[A-Z]/ ? occupy(person) : vacate(person)
     }
+  end
+
+  private
+
+  def occupy(person)
+    index = ChairRecommender.best_index(@chairs)
+    @chairs[index] = person
+  end
+
+  def vacate(person)
+    @chairs.sub!(person.upcase, "-")
   end
 
 end
