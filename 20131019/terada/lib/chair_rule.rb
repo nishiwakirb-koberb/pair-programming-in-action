@@ -48,10 +48,6 @@ class ChairRule
     empty_chairs.find {|chair| chair.index == 0 or is_last?(chair) }
   end
 
-  def find_by_index index
-    @chairs.find {|chair| chair.index == index }
-  end
-
   def find_by_person person
     @chairs.find {|chair| chair.person == person.upcase }
   end
@@ -68,12 +64,16 @@ class ChairRule
     find_by_index(chair.index - 1)
   end
 
+  def find_by_index index
+    @chairs.find {|chair| chair.index == index }
+  end
+
   def is_last? chair
     chair.index == @chairs.size - 1
   end
 
   def has_sides? chair
-    (1..(@chairs.size - 2)).include? chair.index
+    @chairs[1...-1].include? chair
   end
 
   class Chair
