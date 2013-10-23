@@ -7,15 +7,15 @@
 
 class ChairRecommender
 
-  def self.calc_sides(left,here,right)
-    if "-" != here
-      0
-    else
+  def self.calc_sides(left, here, right)
+    if here == "-"
       level = 0
       level += 1   if left.match(/[-#]/)
       level += 1   if here == "-"
       level += 1   if right.match(/[-#]/)
       level
+    else
+      0
     end
   end
 
