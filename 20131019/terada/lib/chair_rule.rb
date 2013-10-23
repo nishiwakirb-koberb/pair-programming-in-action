@@ -28,12 +28,11 @@ class ChairRule
   end
 
   def only_one_chair
-    empties.size == chairs.size ?
-      empties.first : false
+    empties.first if empties.size == chairs.size
   end
 
   def both_sides_empty
-    empties.find { |chair| has_sides?(chair) and right_chair(chair).empty? and left_chair(chair).empty? } || false
+    empties.find {|chair| has_sides?(chair) and right_chair(chair).empty? and left_chair(chair).empty? }
   end
 
   def oneside_empty
@@ -48,7 +47,7 @@ class ChairRule
   end
 
   def final_chair
-    empties.find { |chair| is_last?(chair) and left_chair(chair).empty? } || false
+    empties.find {|chair| is_last?(chair) and left_chair(chair).empty? }
   end
 
   def primary_sides_of_chairs
