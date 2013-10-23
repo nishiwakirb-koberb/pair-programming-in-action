@@ -21,7 +21,12 @@ class ChairRule
   end
 
   def next_chair
-    only_one_chair or both_sides_empty or oneside_empty or final_chair or primary_sides_of_chairs or empty_chairs.first
+    only_one_chair or
+      both_sides_empty or
+      oneside_empty or
+      final_chair or
+      primary_sides_of_chairs or
+      empty_chairs.first
   end
 
   def only_one_chair
@@ -29,7 +34,9 @@ class ChairRule
   end
 
   def both_sides_empty
-    empty_chairs.find {|chair| has_sides?(chair) and right_chair(chair).empty? and left_chair(chair).empty? }
+    empty_chairs.find {|chair|
+      has_sides?(chair) and right_chair(chair).empty? and left_chair(chair).empty?
+    }
   end
 
   def oneside_empty
@@ -41,11 +48,15 @@ class ChairRule
   end
 
   def final_chair
-    empty_chairs.find {|chair| is_last?(chair) and left_chair(chair).empty? }
+    empty_chairs.find {|chair|
+      is_last?(chair) and left_chair(chair).empty?
+    }
   end
 
   def primary_sides_of_chairs
-    empty_chairs.find {|chair| chair.index == 0 or is_last?(chair) }
+    empty_chairs.find {|chair|
+      chair.index == 0 or is_last?(chair)
+    }
   end
 
   def find_by_person person
