@@ -27,14 +27,14 @@ end
 
 class Seating
 
-  def initialize(chair_count,people)
+  def initialize(chair_count, people)
     @chairs = "-" * chair_count
-    @people = people.chars
+    @people = people
   end
 
   def self.init_and_go(input)
     chair_count, people = input.split(':')
-    self.new(chair_count.to_i, people).seating()
+    self.new(chair_count.to_i, people.chars).seating()
   end
 
   def seating()
