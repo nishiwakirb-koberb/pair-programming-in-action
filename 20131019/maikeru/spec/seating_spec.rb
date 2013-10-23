@@ -21,4 +21,11 @@ describe Seating do
   specify { expect(Seating.new('7:FMTOWNS').result).to eq 'FWMNTSO' }
   specify { expect(Seating.new('7:ABCDEFGabcdfXYZ').result).to eq 'YE-X-GZ' }
   specify { expect(Seating.new('10:ABCDEFGHIJ').result).to eq 'AGBHCIDJEF' }
+  context 'when called twice' do
+    it 'returns same result' do
+      seating = Seating.new('7:ABCDEFGabcdfXYZ')
+      expect(seating.result).to eq 'YE-X-GZ'
+      expect(seating.result).to eq 'YE-X-GZ'
+    end
+  end
 end
