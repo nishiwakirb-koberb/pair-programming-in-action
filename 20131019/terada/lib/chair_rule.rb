@@ -5,14 +5,14 @@ class ChairRule
 
   def result
     @chairs = ('-' * @number.to_i).chars
-    update_chairs @people.chars
+    update_chairs!
     @chairs.join
   end
 
   private
 
-  def update_chairs people
-    people.each do |person|
+  def update_chairs!
+    @people.chars.each do |person|
       person =~ /[A-Z]/ ? occupy!(person) : vacant!(person)
     end
   end
