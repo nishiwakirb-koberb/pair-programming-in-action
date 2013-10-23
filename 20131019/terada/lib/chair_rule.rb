@@ -2,7 +2,7 @@ require 'pry-byebug'
 require 'byebug'
 
 class ChairRule
-  attr_reader :result
+  attr_reader :result, :chairs
 
   def initialize orders
     number, people = orders.split(':')
@@ -21,10 +21,6 @@ class ChairRule
 
   def next_chair
     only_one_chair or both_sides_empty or oneside_empty or final_chair or primary_sides_of_chairs or empties.first
-  end
-
-  def chairs
-    @chairs
   end
 
   def only_one_chair
