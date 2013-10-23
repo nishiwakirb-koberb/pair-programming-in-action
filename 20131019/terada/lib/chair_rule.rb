@@ -20,27 +20,32 @@ class ChairRule
     end
   end
 
-  def next_chair
-    only_one_chair or
-      both_sides_empty or
-      one_side_empty or
-      final_chair or
-      primary_sides_of_chairs or
-      empty_chairs.first
+  def find_by_person person
+    @chairs.find {|chair| chair.person == person.upcase }
   end
 
+  def next_chair
+    only_one_chair or
+      both_sides_empty_chair or
+      one_side_empty_chair or
+      final_chair or
+      both_ends_chair or
+      first_empty_chair
+  end
+
+  # Called by next_chair in this order ===================
   def only_one_chair
     empty_chairs.first if empty_chairs.size == @chairs.size
   end
 
-  def both_sides_empty
+  def both_sides_empty_chair
     empty_chairs.find {|chair|
-      has_sides?(chair) and right_chair(chair).empty? and left_chair(chair).empty?
+      between_chairs?(chair) and right_chair(chair).empty? and left_chair(chair).empty?
     }
   end
 
-  def one_side_empty
-    empty_chairs.select {|chair| has_sides?(chair) and right_chair(chair).empty? }.each do |chair|
+  def one_side_empty_chair
+    empty_chairs.select {|chair| between_chairs?(chair) and right_chair(chair).empty? }.each do |chair|
       r_chair = right_chair(chair)
       return last_chair?(r_chair) ? r_chair : chair
     end
@@ -53,26 +58,27 @@ class ChairRule
     }
   end
 
-  def primary_sides_of_chairs
+  def both_ends_chair
     empty_chairs.find {|chair|
       first_chair?(chair) or last_chair?(chair)
     }
   end
 
-  def find_by_person person
-    @chairs.find {|chair| chair.person == person.upcase }
+  def first_empty_chair
+    empty_chairs.first
   end
+  # Called by next_chair in this order ===================
 
   def empty_chairs
     @chairs.select {|chair| chair.empty? }
   end
 
-  def right_chair chair
-    @chairs[chair_index(chair) + 1]
-  end
-
   def left_chair chair
     @chairs[chair_index(chair) - 1]
+  end
+
+  def right_chair chair
+    @chairs[chair_index(chair) + 1]
   end
 
   def chair_index(chair)
@@ -87,7 +93,7 @@ class ChairRule
     @chairs.last == chair
   end
 
-  def has_sides? chair
+  def between_chairs? chair
     @chairs[1...-1].include? chair
   end
 
