@@ -54,7 +54,7 @@ class Seating
   end
 
   def initialize(chair_count,people)
-    @chairs = Array.new(chair_count.to_i, "-").join
+    @chairs = "-" * chair_count
     @people = people.split("")
   end
 
