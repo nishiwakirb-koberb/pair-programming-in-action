@@ -55,7 +55,7 @@ class Seating
 
   def initialize(chair_count,people)
     @chairs = "-" * chair_count
-    @people = people.split("")
+    @people = people.chars
   end
 
   def seating()
