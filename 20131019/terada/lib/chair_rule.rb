@@ -25,22 +25,21 @@ class ChairRule
   end
 
   def next_chair
-    only_one_chair or
+    first_chair_of_all_empty_chairs or
       both_sides_empty_chair or
       one_side_empty_chair or
-      final_chair or
-      both_ends_chair or
+      first_or_last_chair or
       first_empty_chair
   end
 
   # Called by next_chair in this order ===================
-  def only_one_chair
-    empty_chairs.first if empty_chairs.size == @chairs.size
+  def first_chair_of_all_empty_chairs
+    empty_chairs.first if @chairs.all?(&:empty?)
   end
 
   def both_sides_empty_chair
     empty_chairs.find {|chair|
-      between_chairs?(chair) and right_chair(chair).empty? and left_chair(chair).empty?
+      between_chairs?(chair) and [left_chair(chair), right_chair(chair)].all?(&:empty?)
     }
   end
 
@@ -52,13 +51,7 @@ class ChairRule
     false
   end
 
-  def final_chair
-    empty_chairs.find {|chair|
-      last_chair?(chair) and left_chair(chair).empty?
-    }
-  end
-
-  def both_ends_chair
+  def first_or_last_chair
     empty_chairs.find {|chair|
       first_chair?(chair) or last_chair?(chair)
     }
