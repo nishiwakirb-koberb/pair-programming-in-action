@@ -29,21 +29,18 @@ class ChairRule
   end
 
   def next_chair
-    first_chair_of_all_vacant_chairs or
-      both_sides_vacant_chair or
+    both_sides_vacant_chair or
       one_side_vacant_chair or
       first_or_last_chair or
       first_vacant_chair
   end
 
   # Called by next_chair in this order ===================
-  def first_chair_of_all_vacant_chairs
-    @chairs.first if @chairs.all?(&:vacant?)
-  end
-
   def both_sides_vacant_chair
     # l, c, r = left, center, right
-    if lcr = @chairs.each_cons(3).find {|lcr| lcr.all?(&:vacant?) }
+    if @chairs.all?(&:vacant?)
+      @chairs.first
+    elsif lcr = @chairs.each_cons(3).find {|lcr| lcr.all?(&:vacant?) }
       lcr[1]
     end
   end
