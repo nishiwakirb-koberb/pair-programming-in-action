@@ -7,13 +7,9 @@
 
 class ChairRecommender
 
-  def self.calc_sides(lcr)
-    lcr[1] == "-" ? lcr.count('-') : 0
-  end
-
   def self.calc_levels(chairs)
     left, center, right = ["-" + chairs[0...-1], chairs, chairs[1..-1] + "-"].map(&:chars)
-    left.zip(center, right).map(&method(:calc_sides))
+    left.zip(center, right).map{|lcr| lcr[1] == "-" ? lcr.count('-') : 0 }
   end
 
   def self.best_index(chairs)

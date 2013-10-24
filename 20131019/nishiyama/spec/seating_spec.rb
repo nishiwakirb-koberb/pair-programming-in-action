@@ -1,16 +1,6 @@
 require './app/seating'
 
 describe ChairRecommender do
-  describe "#calc_sides" do
-    it "should" do
-      expect( ChairRecommender.calc_sides( ["-","-","-"] )).to be 3
-      expect( ChairRecommender.calc_sides( ["A","-","-"] )).to be 2
-      expect( ChairRecommender.calc_sides( ["A","-","B"] )).to be 1
-      expect( ChairRecommender.calc_sides( ["A","B","C"] )).to be 0
-      expect( ChairRecommender.calc_sides( ["-","D","-"] )).to be 0
-    end
-  end
-
   describe "#calc_levels" do
     it "should" do
       expect( ChairRecommender.calc_levels( "---"  )).to eq [3,3,3]
