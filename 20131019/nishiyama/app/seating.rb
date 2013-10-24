@@ -10,8 +10,7 @@ VACANT = '-'
 class ChairRecommender
 
   def self.calc_vacant_levels(chairs)
-    [VACANT + chairs[0...-1], chairs, chairs[1..-1] + VACANT].
-      map(&:chars).map(&:to_a).transpose.
+    (VACANT + chairs + VACANT).chars.to_a.each_cons(3).
       map {|l, c, r| c == VACANT ? [l, c, r].count(VACANT) : 0 }
   end
 
