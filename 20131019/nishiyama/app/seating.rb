@@ -5,11 +5,13 @@
 #   「のんびり座りたい 」 問題
 #
 
+VACANT = '-'
+
 class ChairRecommender
 
   def self.calc_vacant_levels(chairs)
-    left, center, right = ["-" + chairs[0...-1], chairs, chairs[1..-1] + "-"].map(&:chars)
-    left.zip(center, right).map{|lcr| lcr[1] == "-" ? lcr.count('-') : 0 }
+    left, center, right = [VACANT + chairs[0...-1], chairs, chairs[1..-1] + VACANT].map(&:chars)
+    left.zip(center, right).map{|lcr| lcr[1] == VACANT ? lcr.count(VACANT) : 0 }
   end
 
   def self.best_index(chairs)
@@ -23,7 +25,7 @@ end
 class Seating
 
   def initialize(chair_count, people)
-    @chairs = "-" * chair_count
+    @chairs = VACANT * chair_count
     @people = people
   end
 
@@ -46,7 +48,7 @@ class Seating
   end
 
   def vacate(person)
-    @chairs.sub!(person.upcase, "-")
+    @chairs.sub!(person.upcase, VACANT)
   end
 
 end
