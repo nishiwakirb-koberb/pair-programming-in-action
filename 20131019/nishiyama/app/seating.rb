@@ -35,9 +35,8 @@ class Seating
   end
 
   def seating()
-    @people.each_with_object(@chairs) {|person, _|
-      person =~ /[A-Z]/ ? occupy(person) : vacate(person)
-    }
+    @people.each {|person| person =~ /[A-Z]/ ? occupy(person) : vacate(person) }
+    @chairs
   end
 
   private
