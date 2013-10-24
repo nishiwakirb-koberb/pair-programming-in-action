@@ -1,117 +1,59 @@
-require 'pry-byebug'
-require 'byebug'
-
 class ChairRule
-  attr_reader :result
+  VACANT = '-'
 
   def initialize orders
-    number, people = [orders.split(':').first.to_i, orders.split(':').last.chars]
-    @chairs = Array.new(number) { |i| Chair.new(i) }
-    update_chairs people
-    @result = chairs.map(&:person).join
+    @number, @people = orders.split(':')
   end
 
+  def result
+    @chairs = (VACANT * @number.to_i).chars
+    update_chairs!
+    @chairs.join
+  end
 
   private
 
-  def update_chairs people
-    people.each do |person|
-      person == person.downcase ?
-        find_by_person(person).empty! : next_chair.update!(person)
+  def update_chairs!
+    @people.chars.each do |person|
+      person =~ /[A-Z]/ ? occupy!(person) : vacant!(person)
     end
   end
 
-  def next_chair
-    only1_chair or both_side_empty or oneside_empty or final_chair or primary_side_of_chairs or empties.first
+  def vacant! person
+    @chairs.find{|c| c == person.upcase }.sub!(/[A-Z]/, VACANT)
   end
 
-  def chairs
-    @chairs
+  def occupy! person
+    best_vacant_chair.sub!(VACANT, person)
   end
 
-  def only1_chair
-    empties.size == chairs.size ?
-      empties.first : false
+  def best_vacant_chair
+    both_sides_vacant_chair or one_side_vacant_chair or @chairs.find(&:vacant?)
   end
 
-  def both_sides_empty
-    empties.find { |chair| has_sides?(chair) and right_chair(chair).empty? and left_chair(chair).empty? } || false
-  end
-
-  def oneside_empty
-    empties.select{ |chair| has_sides?(chair) and right_chair(chair).empty? }.each do |chair|
-      if is_last?(right_chair(chair))
-        return right_chair(chair)
-      else
-        return chair
-      end
+  def both_sides_vacant_chair
+    if @chairs[0..1].all?(&:vacant?)
+      @chairs.first
+    elsif lcr = @chairs.each_cons(3).find {|lcr| lcr.all?(&:vacant?) }
+      lcr[1]
+    elsif @chairs[-2..-1].all?(&:vacant?)
+      @chairs.last
     end
-    false
   end
 
-  def final_chair
-    empties.find { |chair| is_last?(chair) and left_chair(chair).empty? } || false
-  end
-
-  def primary_sides_of_chairs
-    empties.each do |chair|
-      if chair.id == 0
-        return chair
-      elsif is_last?(chair)
-        return chair
-      end
+  def one_side_vacant_chair
+    if @chairs.first.vacant?
+      @chairs.first
+    elsif lcr = @chairs.each_cons(3).find {|l, c, r| c.vacant? and [l, r].any?(&:vacant?) }
+      lcr[1]
+    elsif @chairs.last.vacant?
+      @chairs.last
     end
-    false
   end
 
-  def find_by_id id
-    chairs.find{ |chair| chair.id == id }
-  end
-
-  def find_by_person person
-    chairs.find{ |chair| chair.person == person.upcase }
-  end
-
-  def empties
-    chairs.select{ |chair| chair.empty? }
-  end
-
-  def right_chair chair
-    find_by_id(chair.id + 1)
-  end
-
-  def left_chair chair
-    find_by_id(chair.id - 1)
-  end
-
-  def is_last? chair
-    chair.id == chairs.size - 1
-  end
-
-  def has_sides? chair
-    (1..(chairs.size - 2)).include? chair.id
-  end
-
-  class Chair
-    attr_reader :person, :id
-
-    def initialize id
-      empty!
-      @id = id
-    end
-
-    def update! person
-      @person = person
-    end
-
-    def empty!
-      @person = '-'
-    end
-
-    def empty?
-      @person == '-'
+  class ::String
+    def vacant?
+      self == VACANT
     end
   end
 end
-
-
