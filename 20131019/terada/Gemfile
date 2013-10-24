@@ -3,5 +3,4 @@ source "https://rubygems.org"
 
 gem 'rspec'
 gem 'guard-rspec'
-gem 'byebug'
 gem 'pry-byebug'
