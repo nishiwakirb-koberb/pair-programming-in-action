@@ -8,12 +8,11 @@
 class ChairRecommender
 
   def self.calc_sides(lcr)
-    regex_arr = [/[-#]/, /-/, /[-#]/]
-    lcr[1] == "-" ? lcr.zip(regex_arr).count {|char, r| char =~ r } : 0
+    lcr[1] == "-" ? lcr.count('-') : 0
   end
 
   def self.calc_levels(chairs)
-    left, center, right = ["#" + chairs[0...-1], chairs, chairs[1..-1] + "#"].map(&:chars)
+    left, center, right = ["-" + chairs[0...-1], chairs, chairs[1..-1] + "-"].map(&:chars)
     left.zip(center, right).map(&method(:calc_sides))
   end
 

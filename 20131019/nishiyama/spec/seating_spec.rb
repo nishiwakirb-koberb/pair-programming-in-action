@@ -7,8 +7,6 @@ describe ChairRecommender do
       expect( ChairRecommender.calc_sides( ["A","-","-"] )).to be 2
       expect( ChairRecommender.calc_sides( ["A","-","B"] )).to be 1
       expect( ChairRecommender.calc_sides( ["A","B","C"] )).to be 0
-      expect( ChairRecommender.calc_sides( ["#","-","-"] )).to be 3
-      expect( ChairRecommender.calc_sides( ["#","-","#"] )).to be 3
       expect( ChairRecommender.calc_sides( ["-","D","-"] )).to be 0
     end
   end
