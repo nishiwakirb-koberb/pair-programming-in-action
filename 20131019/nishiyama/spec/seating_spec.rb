@@ -1,13 +1,13 @@
 require './app/seating'
 
 describe ChairRecommender do
-  describe "#calc_levels" do
+  describe "#calc_vacant_levels" do
     it "should" do
-      expect( ChairRecommender.calc_levels( "---"  )).to eq [3,3,3]
-      expect( ChairRecommender.calc_levels( "----" )).to eq [3,3,3,3]
-      expect( ChairRecommender.calc_levels( "A---" )).to eq [0,2,3,3]
-      expect( ChairRecommender.calc_levels( "A-B"  )).to eq [0,1,0]
-      expect( ChairRecommender.calc_levels( "ABC"  )).to eq [0,0,0]
+      expect( ChairRecommender.calc_vacant_levels( "---"  )).to eq [3,3,3]
+      expect( ChairRecommender.calc_vacant_levels( "----" )).to eq [3,3,3,3]
+      expect( ChairRecommender.calc_vacant_levels( "A---" )).to eq [0,2,3,3]
+      expect( ChairRecommender.calc_vacant_levels( "A-B"  )).to eq [0,1,0]
+      expect( ChairRecommender.calc_vacant_levels( "ABC"  )).to eq [0,0,0]
     end
   end
 

@@ -7,13 +7,13 @@
 
 class ChairRecommender
 
-  def self.calc_levels(chairs)
+  def self.calc_vacant_levels(chairs)
     left, center, right = ["-" + chairs[0...-1], chairs, chairs[1..-1] + "-"].map(&:chars)
     left.zip(center, right).map{|lcr| lcr[1] == "-" ? lcr.count('-') : 0 }
   end
 
   def self.best_index(chairs)
-    levels = self.calc_levels(chairs)
+    levels = self.calc_vacant_levels(chairs)
     levels.index(levels.max)
   end
 
