@@ -1,4 +1,4 @@
-REGEX_ARRAY = [/(?<=-)-(?=-)/, /(?<=-)-(?=\w)|(?<=\w)-(?=-)/, /(?<=\w)-(?=\w)/].freeze
+REGEX_ARRAY = [/(-)-(-)/, /(-)-(\w)|(\w)-(-)/, /(\w)-(\w)/].freeze
 ESCAPE_FROM_VIRTUAL = (1...-1).freeze
 
 def relax_seating(input)
@@ -8,5 +8,6 @@ end
 
 def replace(seats, c)
   virtual_seats = "-#{seats}-"
-  REGEX_ARRAY.map {|r| virtual_seats.sub(r, c) }.find {|s| s != virtual_seats }[ESCAPE_FROM_VIRTUAL]
+  REGEX_ARRAY.find{|r| r =~ virtual_seats}
+  virtual_seats.sub( $&, "#{$1||$3}#{c}#{$2||$4}")[ESCAPE_FROM_VIRTUAL]
 end
