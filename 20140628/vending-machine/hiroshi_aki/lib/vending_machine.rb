@@ -6,7 +6,7 @@ class VendingMachine
   end
 
   def insert amount
-    @total += amount
+    currency_check(amount) ? @total += amount : amount
   end
 
   def refund
@@ -17,10 +17,6 @@ class VendingMachine
 
   def currency_check amount
     usable_currencies = [10, 50, 100, 500, 1000]
-    if usable_currencies.include?(amount)
-      insert amount
-    else
-      amount
-    end
+    usable_currencies.include?(amount)
   end
 end
