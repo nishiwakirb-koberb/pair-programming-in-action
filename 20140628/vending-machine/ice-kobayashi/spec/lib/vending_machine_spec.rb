@@ -14,8 +14,16 @@ describe VendingMachine do
     it { expect(subject.insert(100)).to  eq 0 }
     it { expect(subject.insert(500)).to  eq 0 }
     it { expect(subject.insert(1000)).to eq 0 }
+  end
 
-    pending "need to check total amount and etc..."
+  describe "#amount" do
+    subject { VendingMachine.new }
+    it { expect(subject.amount).to eq 0 }
+    it do
+      subject.insert(10)
+      expect(subject.amount).to eq 10
+    end
+
   end
 
 end
