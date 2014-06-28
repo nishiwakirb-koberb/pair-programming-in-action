@@ -57,4 +57,13 @@ describe VendingMachine do
       end
     end
   end
+
+  context "Step 2" do
+    let(:vm) { VendingMachine.new }
+    it "returns information of the stock" do
+      expect(vm.juice_name).to eq("コーラ")
+      expect(vm.juice_price).to eq(120)
+      expect(vm.juice_stock).to eq(5)
+    end
+  end
 end
