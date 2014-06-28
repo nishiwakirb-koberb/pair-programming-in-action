@@ -65,3 +65,4 @@ describe VendingMachine do
       end
     end
   end
+end
