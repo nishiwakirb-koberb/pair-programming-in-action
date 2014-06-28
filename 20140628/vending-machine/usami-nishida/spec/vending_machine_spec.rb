@@ -4,7 +4,7 @@ describe VendingMachine do
   let(:machine) { VendingMachine.new }
 
   shared_examples_for "insert n yen coin" do |coin|
-    specify "insert correct coin" do 
+    specify "insert correct coin" do
       machine.insert(coin)
     end
   end
@@ -16,7 +16,7 @@ describe VendingMachine do
   include_examples "insert n yen coin", 1000
 
   shared_examples_for "insert irregular coin" do |coin|
-    specify "insert irregular coin" do 
+    specify "insert irregular coin" do
       machine.insert(coin)
       expect(machine.amount).to eq(0)
     end
@@ -26,8 +26,6 @@ describe VendingMachine do
   include_examples "insert irregular coin", 5
   include_examples "insert irregular coin", 5000
   include_examples "insert irregular coin", 10000
-
-
 
   specify "get total" do
     machine.insert(10)
