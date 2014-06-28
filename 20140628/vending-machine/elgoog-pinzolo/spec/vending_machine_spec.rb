@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'vending_machine'
 
 describe VendingMachine do
   subject { VendingMachine.new }
