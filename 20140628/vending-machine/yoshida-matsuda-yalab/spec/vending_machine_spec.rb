@@ -67,4 +67,9 @@ RSpec.describe VendingMachine do
     expect(vending_machine.total).to eq answer
   end
 
+  it "2000円冊が投入されたら金額に加算しない" do
+    answer = 0
+    expect(vending_machine.input(2000)).to eq false
+    expect(vending_machine.total).to eq answer
+  end
 end
