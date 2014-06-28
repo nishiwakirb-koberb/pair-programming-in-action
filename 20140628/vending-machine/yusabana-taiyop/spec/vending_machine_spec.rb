@@ -4,10 +4,22 @@ describe VendingMachine do
   let (:vending_machine) { VendingMachine.new }
 
   describe "#add" do
-    it "100YEN + 10YEN return 110YEN" do
-      vending_machine.add 100
-      vending_machine.add 10
-      expect(vending_machine.amount).to eq 110
+    context "money is valid?" do
+      it "100YEN + 10YEN return 110YEN" do
+        vending_machine.add 100
+        vending_machine.add 10
+        expect(vending_machine.amount).to eq 110
+      end
+
+      it "return nil" do
+        expect(vending_machine.add(10)).to be_nil
+      end
+    end
+
+    context "money is invalid?" do
+      it "return money with no aciton" do
+        expect(vending_machine.add(2000)).to eq 2000
+      end
     end
   end
 
