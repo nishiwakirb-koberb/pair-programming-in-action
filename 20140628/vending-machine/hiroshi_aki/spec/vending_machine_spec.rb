@@ -31,5 +31,14 @@ describe 'VendingMachine' do
         expect(refund).to eq 10
       end
     end
+
+    context '#currency_check' do
+      it ('invalid'){ expect(machine.currency_check(1)).to eq 1 }
+
+      it 'valid' do
+        machine.currency_check(10)
+        expect(machine.total).to eq 10
+      end
+    end
   end
 end
