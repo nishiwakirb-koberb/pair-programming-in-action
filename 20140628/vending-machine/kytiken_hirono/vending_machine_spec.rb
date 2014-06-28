@@ -1,5 +1,5 @@
 require 'rspec'
-require 'vending_machine'
+require './vending_machine'
 
 describe VendingMachine do
   context "Step 0" do
