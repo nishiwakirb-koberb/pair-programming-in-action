@@ -162,6 +162,4 @@ describe VendingMachine do
       end
     end
   end
-
-  describe '#sale_amount'
 end
