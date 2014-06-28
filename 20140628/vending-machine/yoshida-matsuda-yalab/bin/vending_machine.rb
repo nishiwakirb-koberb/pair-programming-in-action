@@ -19,12 +19,14 @@ class VendingMachine
   end
 
   # 合計金額を返す
-  def total()
-    return @total
+  def total
+    @total
   end
 
   # 払い戻し操作を行う
-  def refound()
-    return @total
+  def refound
+    pay_back = @total
+    @total = 0
+    pay_back
   end
 end
