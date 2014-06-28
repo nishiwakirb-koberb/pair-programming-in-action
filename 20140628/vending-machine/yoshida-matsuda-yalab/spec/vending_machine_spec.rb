@@ -60,4 +60,11 @@ RSpec.describe VendingMachine do
     vending_machine.input(1)
     expect(vending_machine.total).to eq answer
   end
+
+  it "5円玉が投入されたら金額に加算しない" do
+    answer = 0
+    vending_machine.input(5)
+    expect(vending_machine.total).to eq answer
+  end
+
 end

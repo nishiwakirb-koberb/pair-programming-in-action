@@ -9,7 +9,7 @@ class VendingMachine
 
   # コインを投入する
   def input(coin)
-    if coin == 1
+    if coin == 1 || coin == 5
       return false
     end
     
