@@ -1,6 +1,8 @@
 class VendingMachine
   attr_reader :total
 
+  USABLE_CURRENCIES = [10, 50, 100, 500, 1000].freeze
+
   def initialize
     @total = 0
   end
@@ -16,7 +18,6 @@ class VendingMachine
   end
 
   def currency_check amount
-    usable_currencies = [10, 50, 100, 500, 1000]
-    usable_currencies.include?(amount)
+    USABLE_CURRENCIES.include?(amount)
   end
 end
