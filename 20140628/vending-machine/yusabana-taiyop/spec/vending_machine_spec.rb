@@ -44,7 +44,4 @@ describe VendingMachine do
   end
 
 
-  describe "" do
-    it { VendingMachine.new.abc}
-  end
 end

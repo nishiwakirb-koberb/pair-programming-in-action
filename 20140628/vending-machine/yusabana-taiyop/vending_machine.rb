@@ -19,9 +19,8 @@ class VendingMachine
   end
 
   def repay
-    tmp = amount
-    @amount = 0
-    tmp
+    repay_money, @amount = @amount, 0
+    repay_money
   end
 
   private
