@@ -18,10 +18,24 @@ describe VendingMachine do
 
   describe "#amount" do
     subject { VendingMachine.new }
+
     it { expect(subject.amount).to eq 0 }
     it do
       subject.insert(10)
       expect(subject.amount).to eq 10
+    end
+    it do
+      subject.insert(10)
+      subject.insert(10)
+      expect(subject.amount).to eq 20
+    end
+    it do
+      subject.insert(10)
+      subject.insert(50)
+      subject.insert(100)
+      subject.insert(500)
+      subject.insert(1000)
+      expect(subject.amount).to eq 1660
     end
 
   end
