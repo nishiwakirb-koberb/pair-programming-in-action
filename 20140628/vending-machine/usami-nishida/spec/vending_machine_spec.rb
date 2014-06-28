@@ -39,4 +39,11 @@ describe VendingMachine do
     expect(machine.refund).to eq(150)
   end
 
+  describe "list stock" do
+    specify "default stocks" do
+      expect(machine.stocks).to eq [
+        { price: 120, name: "cola", amount: 5 }
+      ]
+    end
+  end
 end
