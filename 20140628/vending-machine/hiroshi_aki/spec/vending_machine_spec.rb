@@ -12,7 +12,7 @@ describe 'VendingMachine' do
       expect(machine.total).to eq 10
     end
 
-    it 'insert 10,10 yen' do
+    it 'insert 2 times' do
       machine.insert 10
       machine.insert 10
       expect(machine.total).to eq 20
