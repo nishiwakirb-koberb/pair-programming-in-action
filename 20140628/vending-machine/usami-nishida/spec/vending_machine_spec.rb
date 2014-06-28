@@ -15,6 +15,12 @@ describe VendingMachine do
   include_examples "insert n yen coin", 500
   include_examples "insert n yen coin", 1000
 
+  specify "irregular coin" do
+    machine.insert(1)
+    expect(machine.amount).to eq(0)
+  end
+
+
   specify "get total" do
     machine.insert(10)
     machine.insert(100)
