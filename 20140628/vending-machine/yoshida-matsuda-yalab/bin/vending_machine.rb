@@ -4,7 +4,7 @@
 # 自動販売機クラス
 class VendingMachine
   ACCEPTABLE_MONEY = [10, 50, 100, 500, 1000]
-  attr_reader :stock
+  attr_reader :stock, :total
   def initialize
     @total = 0
     @stock = Array.new(5, Drink.new(name: "cola", price: 120))
@@ -18,11 +18,6 @@ class VendingMachine
     else
       false
     end
-  end
-
-  # 合計金額を返す
-  def total
-    @total
   end
 
   # 払い戻し操作を行う
