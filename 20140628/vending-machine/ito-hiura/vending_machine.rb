@@ -1,14 +1,12 @@
 class VendingMachine
+  attr_reader :total
+  
   def initialize
     @total = 0
   end
   
   def insert(money)
     @total += money
-  end
-
-  def total
-    @total
   end
   
   def refund
