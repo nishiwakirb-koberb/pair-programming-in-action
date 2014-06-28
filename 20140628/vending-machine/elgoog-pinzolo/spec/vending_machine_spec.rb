@@ -85,7 +85,7 @@ describe VendingMachine do
     end
   end
 
-  describe 'can_buy?' do
+  describe '#can_buy?' do
     context 'when given drink name that is not stored in machine' do
       it 'returns false' do
         expect(subject.can_buy?('fanta')).to eq false
@@ -117,7 +117,7 @@ describe VendingMachine do
     end
   end
 
-  describe 'buy' do
+  describe '#buy' do
     context 'when given drink name that is not stored in machine' do
       it 'returns nil' do
         expect(subject.buy('fanta')).to be_nil
@@ -162,4 +162,6 @@ describe VendingMachine do
       end
     end
   end
+
+  describe '#sale_amount'
 end
