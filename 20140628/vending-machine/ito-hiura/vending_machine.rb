@@ -1,6 +1,7 @@
 class VendingMachine
   def initialize
     @total = 0
+    @money = 0
   end
   def insert(money)
     @total = @total + money
@@ -8,6 +9,12 @@ class VendingMachine
 
   def total
     @total
+  end
+  
+  def refund
+    @money = @total
+    @total = 0
+    @money
   end
 
 end
@@ -20,5 +27,7 @@ describe 'VendingMachine' do
     machine.insert 1000
 
     expect(machine.total).to eq 1010
+    expect(machine.refund).to eq 1010
+    expect(machine.total).to eq 0
   end
 end
