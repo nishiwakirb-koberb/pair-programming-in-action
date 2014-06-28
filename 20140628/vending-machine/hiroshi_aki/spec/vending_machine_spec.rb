@@ -18,5 +18,17 @@ describe 'VendingMachine' do
       expect(machine.total).to eq 20
     end
 
+    context '#refund' do
+      it 'clear' do
+        machine.insert 10
+        machine.refund
+        expect(machine.total).to eq 0
+      end
+
+      it 'payback' do
+        machine.insert 10
+        expect(machine.refund).to eq 10
+      end
+    end
   end
 end

@@ -9,4 +9,9 @@ class VendingMachine
     @total += amount
   end
 
+  def refund
+    refund_amount = @total
+    @total = 0
+    refund_amount
+  end
 end
