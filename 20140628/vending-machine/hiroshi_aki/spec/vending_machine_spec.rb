@@ -53,11 +53,11 @@ describe 'VendingMachine' do
     end
 
     describe 'invalid' do
-      it ('coin 1'){ expect(machine.currency_check(1)).to be_falsey }
-      it ('coin 5'){ expect(machine.currency_check(1)).to be_falsey }
-      it ('coin 2000'){ expect(machine.currency_check(2000)).to be_falsey }
-      it ('coin 5000'){ expect(machine.currency_check(5000)).to be_falsey }
-      it ('coin 10,000'){ expect(machine.currency_check(10_000)).to be_falsey }
+      invalid_coins = [1, 5, 2000, 5000, 10000]
+
+      invalid_coins.each do |coin|
+        it ("#{coin} yen"){ expect(machine.currency_check(coin)).to be_falsey }
+      end
     end
   end
 
