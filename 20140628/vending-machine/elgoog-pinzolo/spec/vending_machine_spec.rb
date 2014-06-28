@@ -35,4 +35,27 @@ describe VendingMachine do
       end
     end
   end
+  describe '#refund' do
+    context 'when inserted no money' do
+      it 'returns empty array' do
+        expect(subject.refund).to eq []
+      end
+    end
+    context 'when inserted 1 money' do
+      before { subject.insert(10) }
+      it 'returns array that contains 10' do
+        expect(subject.amount).to eq [10]
+      end
+    end
+    context 'when inserted plural money' do
+      before do
+        subject.insert(10)
+        subject.insert(50)
+        subject.insert(500)
+      end
+      it 'returns array that contains inserted conins' do
+        expect(subject.amount).to eq [10, 50, 500]
+      end
+    end
+  end
 end
