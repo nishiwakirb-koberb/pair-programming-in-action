@@ -4,6 +4,7 @@ class VendingMachine
   def initialize
     @inserted_moneies = []
     @juices = [{name: 'cola', price: 120, amount: 5}]
+    @sales_amount = 0
   end
 
   def insert(money)
@@ -28,4 +29,21 @@ class VendingMachine
   def juice_info
     @juices.map(&:dup)
   end
+
+  def can_buy?(juice_name)
+    target_juice_info = @juices.find { |juice_info| juice_info[:name] == juice_name }
+    return false if target_juice_info == nil
+    amount >= target_juice_info[:price]
+  end
+
+  def buy(juice_name)
+    return unless can_buy?(juice_name)
+    target_juice_info = @juices.find { |juice_info| juice_info[:name] == juice_name }
+
+    @sales_amount += target_juice_info[:price]
+    @juices.delete(target_juice_info)
+  end
+
+  
+  
 end
