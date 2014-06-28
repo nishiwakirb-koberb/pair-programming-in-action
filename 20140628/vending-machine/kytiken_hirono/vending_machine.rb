@@ -1,8 +1,11 @@
 class VendingMachine
-  attr_accessor :paid_amount
+  attr_reader :paid_amount, :juice_name, :juice_price, :juice_stock
 
   def initialize
     @paid_amount = 0
+    @juice_name = "コーラ"
+    @juice_price = 120
+    @juice_stock = 5
   end
 
   def payment_insert payment
