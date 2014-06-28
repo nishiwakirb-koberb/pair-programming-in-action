@@ -14,6 +14,14 @@ describe VendingMachine do
     it { expect(subject.insert(100)).to  eq 0 }
     it { expect(subject.insert(500)).to  eq 0 }
     it { expect(subject.insert(1000)).to eq 0 }
+
+    # 想定外のもの（硬貨：１円玉、５円玉。お札：千円札以外のお札）
+    context "with unexpected coins or bills" do
+      it { expect(subject.insert(1)).to eq 1 }
+      it { expect(subject.insert(5)).to eq 5 }
+      it { expect(subject.insert(2000)).to eq 2000 }
+      it { expect(subject.insert(10000)).to eq 10000 }
+    end
   end
 
   describe "#amount" do

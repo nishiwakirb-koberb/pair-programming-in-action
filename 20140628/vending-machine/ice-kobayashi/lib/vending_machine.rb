@@ -8,7 +8,9 @@ class VendingMachine
   def insert(money)
     case money
     when 10, 50, 100, 500, 1000
-      0
+      # acceptable coin or bill
+    else
+      return money
     end
 
     @amount += money
