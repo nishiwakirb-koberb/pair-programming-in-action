@@ -52,7 +52,7 @@ RSpec.describe VendingMachine do
     answer = 60
     vending_machine.input(10)
     vending_machine.input(50)
-    expect(vending_machine.refound).to eq answer
+    expect(vending_machine.refund).to eq answer
     expect(vending_machine.total).to eq 0
   end
 

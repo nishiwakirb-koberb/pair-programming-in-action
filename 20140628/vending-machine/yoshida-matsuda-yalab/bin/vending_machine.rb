@@ -24,7 +24,7 @@ class VendingMachine
   end
 
   # 払い戻し操作を行う
-  def refound
+  def refund
     pay_back = @total
     @total = 0
     pay_back
