@@ -116,4 +116,50 @@ describe VendingMachine do
       end
     end
   end
+
+  describe 'buy' do
+    context 'when given drink name that is not stored in machine' do
+      it 'returns nil' do
+        expect(subject.buy('fanta')).to be_nil
+      end
+    end
+    context 'when given dring name that is stored in machine' do
+      context 'when stock is 0' do
+        before do
+          subject.insert(100)
+          subject.insert(500)
+          5.times { subject.buy('cola') }
+        end
+        it 'returns nil' do
+          expect(subject.buy('cola')).to be_nil
+        end
+      end
+      context 'when stock is not 0' do
+        context 'when have been inserted enough money' do
+          before do
+            subject.insert(100)
+            subject.insert(100)
+          end
+          it 'returns juice' do
+            expected = { name: 'cola' }
+            expect(subject.buy('cola')).to eq expected
+          end
+          context 'after bought' do
+            it 'stock has decreased 1' do
+              before_amount = subject.juice_info.find { |drink| drind[:name] == 'cola' }[:amount]
+              subject.buy('cola')
+              after_amount = subject.juice_info.find { |drink| drind[:name] == 'cola' }[:amount]
+              expect(before_amount - after_amount).to eq 1
+            end
+          end
+        end
+        context 'when have not been inserted encoding money' do
+          before { subject.insert(100) }
+          it 'returns nil' do
+            expect(subject.buy('cola')).to be_nil
+          end
+        end
+      end
+    end
+  end
 end
