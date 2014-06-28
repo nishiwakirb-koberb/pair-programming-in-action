@@ -73,4 +73,13 @@ RSpec.describe VendingMachine do
     expect(vending_machine.input(2000)).to eq false
     expect(vending_machine.total).to eq answer
   end
+
+  it "1本120円のコーラが5本入ってる" do
+    stock = vending_machine.stock
+    expect(stock.size).to eq 5
+    stock.each do |drink|
+      expect(drink.name).to eq 'cola'
+      expect(drink.price).to eq 120
+    end
+  end
 end
