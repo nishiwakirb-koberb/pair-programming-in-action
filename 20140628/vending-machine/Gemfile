@@ -1,0 +1,7 @@
+# A sample Gemfile
+source "https://rubygems.org"
+
+gem "awesome_print"
+gem "rspec"
+gem "pry"
+gem "pry-doc"
