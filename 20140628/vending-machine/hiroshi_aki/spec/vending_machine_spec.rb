@@ -19,15 +19,16 @@ describe 'VendingMachine' do
     end
 
     context '#refund' do
+      before { machine.insert 10 }
+      let(:refund) { machine.refund }
+
       it 'clear' do
-        machine.insert 10
-        machine.refund
+        refund
         expect(machine.total).to eq 0
       end
 
       it 'payback' do
-        machine.insert 10
-        expect(machine.refund).to eq 10
+        expect(refund).to eq 10
       end
     end
   end
