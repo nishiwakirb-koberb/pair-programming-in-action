@@ -43,4 +43,18 @@ describe VendingMachine do
       expect(vm.paid_amount).to eq(0)
     end
   end
+
+  context "Step 1" do
+    let(:vm) { VendingMachine.new }
+    [1, 5, 5000, 10000, 100000].each do |amount|
+      it "returns #{amount} yen coin for inserting #{amount} yen coin" do
+        expect(vm.payment_insert amount).to eq(amount)
+      end
+    end
+    [10, 50, 100, 500, 1000].each do |amount|
+      it "returns nil coint for inserting #{amount} yen coin" do
+        expect(vm.payment_insert amount).to be_nil
+      end
+    end
+  end
 end
