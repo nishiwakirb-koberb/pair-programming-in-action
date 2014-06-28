@@ -1,10 +1,15 @@
+require './drink'
+
 class VendingMachine
   attr_reader :amount
+  attr_reader :drinks
 
   def initialize
     @amount = 0
-  end
+    @drinks =[]
 
+    5.times {@drinks << Drink.coke}
+  end
 
   def add(money)
     return money if invalid? money
@@ -23,5 +28,4 @@ class VendingMachine
   def invalid?(money)
     ![10, 50, 100, 500, 1000].include?(money)
   end
-
 end
