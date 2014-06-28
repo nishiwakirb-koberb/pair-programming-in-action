@@ -64,5 +64,14 @@ describe VendingMachine do
         end
       end
     end
+
+    describe '#jouce_info' do
+      context 'when initial state' do
+        it 'returns 5 colas whose price is 120 yen' do
+          expect(subject.jouce_info).to eq [{name: 'cola', price: 120, amount: 5}]
+        end
+      end
+    end
+    
   end
 end
