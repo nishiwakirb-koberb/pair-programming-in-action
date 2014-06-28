@@ -7,7 +7,7 @@ class VendingMachine
   end
 
   def insert(money)
-    if ACCEPTABLE_MONEY.include? money
+    if ACCEPTABLE_MONEY.include?(money)
       @inserted_moneies << money
       nil
     else
@@ -20,10 +20,12 @@ class VendingMachine
   end
 
   def refund
-    @inserted_moneies
+    moneies = @inserted_moneies.dup
+    @inserted_moneies.clear
+    moneies
   end
 
-  def jouce_info
-    @juices.dup
+  def juice_info
+    @juices.map(&:dup)
   end
 end

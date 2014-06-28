@@ -52,6 +52,10 @@ describe VendingMachine do
         it 'returns array that contains 10' do
           expect(subject.refund).to eq [10]
         end
+        it 'amount is 0' do
+          subject.refund
+          expect(subject.amount).to eq 0
+        end
       end
       context 'when inserted plural money' do
         before do
@@ -62,16 +66,19 @@ describe VendingMachine do
         it 'returns array that contains inserted conins' do
           expect(subject.refund).to eq [10, 50, 500]
         end
-      end
-    end
-
-    describe '#jouce_info' do
-      context 'when initial state' do
-        it 'returns 5 colas whose price is 120 yen' do
-          expect(subject.jouce_info).to eq [{name: 'cola', price: 120, amount: 5}]
+        it 'amount is 0' do
+          subject.refund
+          expect(subject.amount).to eq 0
         end
       end
     end
-    
+
+    describe '#juice_info' do
+      context 'when initial state' do
+        it 'returns 5 colas whose price is 120 yen' do
+          expect(subject.juice_info).to eq [{name: 'cola', price: 120, amount: 5}]
+        end
+      end
+    end
   end
 end
