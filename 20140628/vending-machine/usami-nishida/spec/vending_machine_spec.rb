@@ -1,30 +1,25 @@
-require 'vending_machine'
+require 'spec_helper'
 
 describe VendingMachine do
-
   let(:machine) { VendingMachine.new }
 
-  specify "insert 10 yen coin" do
-    machine.insert(10)
+  shared_examples_for "insert n yen coin" do |coin|
+    specify do
+      machine.insert(coin)
+    end
   end
-  specify "insert 50 yen coin" do
-    machine.insert(50)
-  end
-  specify "insert 100 yen coin" do
-    machine.insert(100)
-  end
-  specify "insert 500 yen coin" do
-    machine.insert(500)
-  end
-  specify "insert 1000 yen coin" do
-    machine.insert(1000)
-  end
+
+  it_behaves_like "insert n yen coin", 10
+  include_examples "insert n yen coin", 50
+  include_examples "insert n yen coin", 100
+  include_examples "insert n yen coin", 500
+  include_examples "insert n yen coin", 1000
 
   specify "get total" do
     machine.insert(10)
     machine.insert(100)
     expect(machine.amount).to eq(110)
-  end  
+  end
 
   specify "refund" do
     machine.insert(50)
