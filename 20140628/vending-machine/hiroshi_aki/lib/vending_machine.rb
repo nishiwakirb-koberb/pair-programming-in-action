@@ -1,7 +1,12 @@
 class VendingMachine
-  def insert
-    total = 0
+  attr_reader :total
 
-
+  def initialize
+    @total = 0
   end
+
+  def insert amount
+    @total += amount
+  end
+
 end
