@@ -48,14 +48,14 @@ describe 'VendingMachine' do
 
 
   context '#currency_check' do
-    describe 'valid' do
-      it ('valid'){ expect(machine.currency_check(10)).to be_truthy }
+    describe 'valid currencies' do
+      [10, 50, 100, 500, 1000].each do |coin|
+        it ("#{coin} yen"){ expect(machine.currency_check(coin)).to be_truthy }
+      end
     end
 
-    describe 'invalid' do
-      invalid_coins = [1, 5, 2000, 5000, 10000]
-
-      invalid_coins.each do |coin|
+    describe 'invalid currencies' do
+      [1, 5, 2000, 5000, 10000].each do |coin|
         it ("#{coin} yen"){ expect(machine.currency_check(coin)).to be_falsey }
       end
     end
