@@ -3,6 +3,9 @@
 class VendingMachine
   def initialize
     @amount = 0
+    @stock_name  = "コーラ"
+    @stock_price = 120
+    @stock_num   = 5
   end
 
   def insert(money)
@@ -25,5 +28,14 @@ class VendingMachine
     change = @amount
     @amount = 0
     change
+  end
+
+  def stock
+    {
+      @stock_name => {
+        price: @stock_price,
+        num: @stock_num,
+      },
+    }
   end
 end

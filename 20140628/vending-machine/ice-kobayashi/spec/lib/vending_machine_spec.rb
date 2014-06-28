@@ -65,4 +65,8 @@ describe VendingMachine do
     end
   end
 
+  describe "#stock" do
+    it { expect(subject.stock).to eq({ "コーラ" => { price: 120, num: 5 } }) }
+  end
+
 end
