@@ -6,13 +6,11 @@ class VendingMachine
 
   def initialize
     @amount = 0
-    @drinks =[]
-
-    5.times {@drinks << Drink.coke}
+    @drinks = Array.new(5){Drink.coke}
   end
 
   def add(money)
-    return money if invalid? money
+    return money if invalid?(money)
 
     @amount += money
     nil
