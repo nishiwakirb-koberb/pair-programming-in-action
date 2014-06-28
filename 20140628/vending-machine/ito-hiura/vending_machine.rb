@@ -3,6 +3,7 @@ class VendingMachine
     @total = 0
     @money = 0
   end
+  
   def insert(money)
     @total += money
   end
@@ -16,7 +17,6 @@ class VendingMachine
     @total = 0
     @money
   end
-
 end
 
 describe 'VendingMachine' do
