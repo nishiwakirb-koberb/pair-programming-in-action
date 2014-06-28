@@ -162,4 +162,35 @@ describe VendingMachine do
       end
     end
   end
+
+  describe '#sale_amount' do
+    context 'when initial state' do
+      it 'returns 0' do
+        expect(subject.sale_amount).to eq 0
+      end
+    end
+    context 'when 1 drink is bought' do
+      before do
+        subject.insert(100)
+        subject.insert(100)
+        subject.buy('cola')
+      end
+      it 'returns drink price' do
+        expect(subject.sale_amount).to eq 120
+      end
+    end
+    context 'when plural drinks are bought' do
+      before do
+        subject.insert(500)
+        subject.buy('cola')
+        subject.buy('cola')
+      end
+      it 'returns sum price of bought drinks' do
+        expect(subject.sale_amount).to eq 240
+      end
+      it 'refund returns amount of balance' do
+        expect(subject.refund).to eq [100, 100, 100, 50, 10]
+      end
+    end
+  end
 end
