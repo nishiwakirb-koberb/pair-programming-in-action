@@ -1,1 +1,8 @@
-puts "hello world"
+class VendingMachine
+
+  def insert(money)
+  
+  end
+
+end
+
