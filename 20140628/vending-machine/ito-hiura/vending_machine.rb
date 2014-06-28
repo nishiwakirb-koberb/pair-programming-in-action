@@ -10,7 +10,7 @@ class VendingMachine
   end
   
   def refund
-    money = @total
+    money = total
     @total = 0
     money
   end
