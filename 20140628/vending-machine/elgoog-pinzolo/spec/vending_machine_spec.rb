@@ -44,7 +44,7 @@ describe VendingMachine do
     context 'when inserted 1 money' do
       before { subject.insert(10) }
       it 'returns array that contains 10' do
-        expect(subject.amount).to eq [10]
+        expect(subject.refund).to eq [10]
       end
     end
     context 'when inserted plural money' do
@@ -54,7 +54,7 @@ describe VendingMachine do
         subject.insert(500)
       end
       it 'returns array that contains inserted conins' do
-        expect(subject.amount).to eq [10, 50, 500]
+        expect(subject.refund).to eq [10, 50, 500]
       end
     end
   end
