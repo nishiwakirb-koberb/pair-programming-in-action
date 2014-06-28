@@ -3,18 +3,19 @@
 
 # 自動販売機クラス
 class VendingMachine
+  ACCEPTABLE_MONEY = [10, 50, 100, 500, 1000]
   def initialize
     @total = 0
   end
 
   # コインを投入する
   def input(coin)
-    if coin == 1 || coin == 5 || coin == 2000
-      return false
+    if ACCEPTABLE_MONEY.include?(coin)
+      @total += coin
+      true
+    else
+      false
     end
-    
-    @total += coin
-    return true
   end
 
   # 合計金額を返す
