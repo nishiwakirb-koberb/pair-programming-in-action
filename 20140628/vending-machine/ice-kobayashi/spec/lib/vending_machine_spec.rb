@@ -5,8 +5,9 @@ require_relative '../../lib/vending_machine.rb'
 
 describe VendingMachine do
 
+  subject { VendingMachine.new }
+
   describe "#insert" do
-    subject { VendingMachine.new }
 
     # 10円玉、50円玉、100円玉、500円玉、1000円札
     it { expect(subject.insert(10)).to   eq 0 }
@@ -25,7 +26,6 @@ describe VendingMachine do
   end
 
   describe "#amount" do
-    subject { VendingMachine.new }
 
     it { expect(subject.amount).to eq 0 }
     it "gets 10, then its amount is 10" do
@@ -49,7 +49,6 @@ describe VendingMachine do
   end
 
   describe "#refund" do
-    subject { VendingMachine.new }
 
     it "refunds change" do
       subject.insert 100
