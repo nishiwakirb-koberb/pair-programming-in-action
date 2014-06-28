@@ -20,16 +20,16 @@ describe VendingMachine do
     subject { VendingMachine.new }
 
     it { expect(subject.amount).to eq 0 }
-    it do
+    it "gets 10, then its amount is 10" do
       subject.insert(10)
       expect(subject.amount).to eq 10
     end
-    it do
+    it "gets 10 twice, then its amount is 20" do
       subject.insert(10)
       subject.insert(10)
       expect(subject.amount).to eq 20
     end
-    it do
+    it "gets 10, 50, 100, 500, 1000, then its amount is 1660" do
       subject.insert(10)
       subject.insert(50)
       subject.insert(100)
