@@ -82,4 +82,12 @@ RSpec.describe VendingMachine do
       expect(drink.price).to eq 120
     end
   end
+
+  it "コーラの購入ができるか判定を行う" do
+    vending_machine.input(100)
+    vending_machine.input(10)
+    expect(vending_machine.can_buy?('cola')).to eq false
+    vending_machine.input(10)
+    expect(vending_machine.can_buy?('cola')).to eq true
+  end
 end

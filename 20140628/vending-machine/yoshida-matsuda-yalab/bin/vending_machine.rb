@@ -26,6 +26,18 @@ class VendingMachine
     @total = 0
     pay_back
   end
+
+  # ジュース購入判定を行う
+  def can_buy?(name)
+    cola = @stock.find{|drink|
+      drink.name == name
+    }
+    if (cola.price <= @total)
+      true
+    else
+      false
+    end
+  end
 end
 
 class Drink
