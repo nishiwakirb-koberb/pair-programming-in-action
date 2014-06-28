@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 
 
 # 自動販売機クラス
@@ -8,6 +9,10 @@ class VendingMachine
 
   # コインを投入する
   def input(coin)
+    if coin == 1
+      return false
+    end
+    
     @total += coin
     return true
   end

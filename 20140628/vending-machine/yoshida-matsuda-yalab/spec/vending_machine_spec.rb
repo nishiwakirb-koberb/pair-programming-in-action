@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 require File.expand_path('../spec_helper', __FILE__)
 
 RSpec.describe VendingMachine do
@@ -52,5 +53,11 @@ RSpec.describe VendingMachine do
     vending_machine.input(10)
     vending_machine.input(50)
     expect(vending_machine.refound).to eq answer
+  end
+
+  it "1円玉が投入されたら金額に加算しない" do
+    answer = 0
+    vending_machine.input(1)
+    expect(vending_machine.total).to eq answer
   end
 end
