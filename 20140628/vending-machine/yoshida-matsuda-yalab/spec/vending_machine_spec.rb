@@ -88,6 +88,33 @@ RSpec.describe VendingMachine do
     vending_machine.input(10)
     expect(vending_machine.can_buy?('cola')).to eq false
     vending_machine.input(10)
-    expect(vending_machine.can_buy?('cola')).to eq true
+    expect(!!vending_machine.can_buy?('cola')).to eq true
+
+  end
+
+  context "ジュースを購入する" do
+    it "ジュースを購入する" do
+      vending_machine.input(100)
+      vending_machine.input(50)
+      expect(vending.machine.purchase('cola')).to eq true
+
+
+    end
+
+    it "売り上げ金額を取得する" do
+      sales= 120
+      vending_machine.input(100)
+      vending_machine.input(50)
+      vending_machine.purcase('cola')
+      expect(vending_machine.sale).to eq sales
+    end
+
+    it "払い戻し操作をする" do
+      total = 30
+      vending_machine.input(100)
+      vending_machine.input(50)
+      vending_machine.purcase('cola')
+      expect(vending_machine.refund).to eq total
+    end
   end
 end
