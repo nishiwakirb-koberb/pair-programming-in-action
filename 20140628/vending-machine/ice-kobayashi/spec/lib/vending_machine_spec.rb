@@ -40,4 +40,22 @@ describe VendingMachine do
 
   end
 
+  describe "#refund" do
+    subject { VendingMachine.new }
+
+    it "refunds change" do
+      subject.insert 100
+      subject.insert 500
+      expect(subject.refund).to eq 600
+    end
+
+    it "clear amount after refund " do
+      subject.insert 100
+      subject.insert 500
+      expect(subject.amount).to eq 600
+      expect(subject.refund).to eq 600
+      expect(subject.amount).to eq 0
+    end
+  end
+
 end

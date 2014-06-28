@@ -18,4 +18,10 @@ class VendingMachine
   def amount
     @amount
   end
+
+  def refund
+    change = @amount
+    @amount = 0
+    change
+  end
 end
