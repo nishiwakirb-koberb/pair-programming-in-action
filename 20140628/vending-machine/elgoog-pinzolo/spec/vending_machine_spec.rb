@@ -80,5 +80,37 @@ describe VendingMachine do
         end
       end
     end
+
+    describe 'can_buy?' do
+      context 'when given drink name that is not stored in machine' do
+        it 'returns false' do
+          expect(subject.can_buy?('fanta')).to eq false
+        end
+      end
+      context 'when given dring name that is stored in machine' do
+        context 'when stock is 0' do
+          it 'returns false' do
+            expect(subject.can_buy?('cola')).to eq false
+          end
+        end
+        context 'when stock is not 0' do
+          context 'when have been inserted enough money' do
+            before do
+              subject.insert(100)
+              subject.insert(100)
+            end
+            it 'returns true' do
+              expect(subject.can_buy?('cola')).to eq true
+            end
+          end
+          context 'when have not been inserted encoding money' do
+            before { subject.insert(100) }
+            it 'returns false' do
+              expect(subject.can_buy?('cola')).to eq false
+            end
+          end
+        end
+      end
+    end
   end
 end
