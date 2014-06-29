@@ -34,6 +34,10 @@ class VendingMachine
     return @juice_stock > 0 && paid_amount >= juice_price
   end
 
+  def items
+    @slots.map(&:information)
+  end
+
   private
 
   def acceptable?(inserted)
@@ -51,6 +55,23 @@ class VendingMachine
       @name = name
       @price = price
       @stock = stock
+    end
+
+    def information
+      ItemInformation.new(@name, @price, @stock)
+    end
+  end
+
+  class ItemInformation
+    attr_reader :name, :price, :stock
+    def initialize(name, price, stock)
+      @name = name
+      @price = price
+      @stock = stock
+    end
+
+    def ==(other)
+      ItemInformation === other && @name == other.name && @price == other.price && @stock == other.stock
     end
   end
 

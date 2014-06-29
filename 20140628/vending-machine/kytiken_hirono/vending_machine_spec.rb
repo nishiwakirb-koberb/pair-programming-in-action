@@ -1,6 +1,10 @@
 require 'rspec'
 require './vending_machine'
 
+def item(name, price, stock)
+  VendingMachine::ItemInformation.new(name, price, stock)
+end
+
 describe VendingMachine do
   context "Step 0" do
     it "returns 10 for inserting 10 yen coin" do
@@ -58,15 +62,6 @@ describe VendingMachine do
     end
   end
 
-  context "Step 2" do
-    let(:vm) { VendingMachine.new }
-    it "returns information of the stock" do
-      expect(vm.juice_name).to eq("コーラ")
-      expect(vm.juice_price).to eq(120)
-      expect(vm.juice_stock).to eq(5)
-    end
-  end
-
   context "Step 3" do
     let(:vm) { VendingMachine.new }
     shared_context 'when stock is not enough', stock: :not_enough do
@@ -79,30 +74,30 @@ describe VendingMachine do
     describe '#can_purchase?' do
       context 'when stock is enough' do
         it 'returns false until some money are inserted.' do
-          expect(vm.can_purchase?).to be_falsey
+          expect(vm.can_purchase?).to be false
         end
         it 'returns true after enough money are inserted.' do
           vm.insert 100
-          expect(vm.can_purchase?).to be_falsey
+          expect(vm.can_purchase?).to be false
           vm.insert 10
-          expect(vm.can_purchase?).to be_falsey
+          expect(vm.can_purchase?).to be false
           vm.insert 10
-          expect(vm.can_purchase?).to be_truthy
+          expect(vm.can_purchase?).to be true
         end
         it 'returns false after refund.' do
           vm.insert 500
           vm.refund
-          expect(vm.can_purchase?).to be_falsey
+          expect(vm.can_purchase?).to be false
         end
       end
       context 'when stock is not enough', stock: :not_enough do
         it 'returns false independent from inserted amount.' do
           vm.refund
-          expect(vm.can_purchase?).to be_falsey
+          expect(vm.can_purchase?).to be false
           vm.insert 100
-          expect(vm.can_purchase?).to be_falsey
+          expect(vm.can_purchase?).to be false
           vm.insert 100
-          expect(vm.can_purchase?).to be_falsey
+          expect(vm.can_purchase?).to be false
         end
       end
     end
@@ -118,7 +113,7 @@ describe VendingMachine do
           vm.insert 10
           expect(vm.purchase).to be_nil
           vm.insert 10
-          expect(vm.purchase).to be_truthy
+          expect(vm.purchase).to be true
         end
         it 'returns same sale amount until enough money are inserted' do
           vm.insert 100
@@ -165,6 +160,17 @@ describe VendingMachine do
         vm.purchase
         vm.purchase
         expect(vm.sale_amount).to eq(120*5)
+      end
+    end
+  end
+
+  context "Step 4" do
+    let(:vm) { VendingMachine.new }
+    it "returns information of the stock" do
+      [ ['コーラ', 120, 5],
+        ['水', 100, 5],
+        ['レッドブル', 200, 5] ].each do |expecting|
+        expect(vm.items).to include(item(*expecting))
       end
     end
   end
