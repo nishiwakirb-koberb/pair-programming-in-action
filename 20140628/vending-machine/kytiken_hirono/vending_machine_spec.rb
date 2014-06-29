@@ -151,5 +151,21 @@ describe VendingMachine do
         end
       end
     end
+    describe '#sale_amount' do
+      it 'returns 0 on init.' do
+        expect(vm.sale_amount).to eq(0)
+      end
+      it 'returns sum of sold juice.' do
+        expect(vm.sale_amount).to eq(0)
+        vm.insert 1000
+        vm.purchase
+        expect(vm.sale_amount).to eq(120)
+        vm.purchase
+        vm.purchase
+        vm.purchase
+        vm.purchase
+        expect(vm.sale_amount).to eq(120*5)
+      end
+    end
   end
 end
