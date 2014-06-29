@@ -22,16 +22,18 @@ class VendingMachine
     return refund_amount
   end
 
-  def purchase
-    if can_purchase?
-      @juice_stock -= 1
-      @sale_amount += @juice_price
-      @paid_amount -= @juice_price
+  def purchase(name)
+    slot = find_slot(name)
+    drink = slot.purchase(paid_amount)
+    unless drink.nil?
+      @sale_amount += slot.price
+      @paid_amount -= slot.price
+      drink
     end
   end
 
   def can_purchase?(name)
-    find_item(name).can_purchase?(paid_amount)
+    find_slot(name).can_purchase?(paid_amount)
   end
 
   def items
@@ -49,7 +51,7 @@ class VendingMachine
     end
   end
 
-  def find_item(name)
+  def find_slot(name)
     @slots.find {|slot| slot.name == name} || SENTINEL
   end
 
@@ -67,6 +69,13 @@ class VendingMachine
 
     def can_purchase?(paid_amount)
       @stock > 0 && paid_amount >= @price
+    end
+
+    def purchase(paid_amount)
+      if can_purchase?(paid_amount)
+        @stock -= 1
+        name
+      end
     end
   end
 

@@ -66,8 +66,12 @@ describe VendingMachine do
     let(:vm) { VendingMachine.new }
     shared_context 'when stock is not enough', stock: :not_enough do
       before do
-        vm.insert 1000
-        5.times { vm.purchase }
+        5.times do
+          vm.insert 500
+          vm.purchase('コーラ')
+          vm.purchase('レッドブル')
+          vm.purchase('水')
+        end
         vm.refund
       end
     end
@@ -114,14 +118,39 @@ describe VendingMachine do
           expect(vm.can_purchase?('水')).to be false
         end
       end
+      context 'when stock of cola is not enough' do
+        before do
+          vm.insert 1000
+          5.times { vm.purchase('コーラ') }
+          vm.refund
+        end
+        it 'returns false for cola independent from inserted amount.' do
+          expect(vm.can_purchase?('コーラ')).to be false
+          expect(vm.can_purchase?('レッドブル')).to be false
+          expect(vm.can_purchase?('水')).to be false
+          vm.insert 100
+          expect(vm.can_purchase?('コーラ')).to be false
+          expect(vm.can_purchase?('レッドブル')).to be false
+          expect(vm.can_purchase?('水')).to be true
+          vm.insert 100
+          expect(vm.can_purchase?('コーラ')).to be false
+          expect(vm.can_purchase?('レッドブル')).to be true
+          expect(vm.can_purchase?('水')).to be true
+        end
+      end
       context 'when stock is not enough', stock: :not_enough do
         it 'returns false independent from inserted amount.' do
-          vm.refund
           expect(vm.can_purchase?('コーラ')).to be false
+          expect(vm.can_purchase?('レッドブル')).to be false
+          expect(vm.can_purchase?('水')).to be false
           vm.insert 100
           expect(vm.can_purchase?('コーラ')).to be false
+          expect(vm.can_purchase?('レッドブル')).to be false
+          expect(vm.can_purchase?('水')).to be false
           vm.insert 100
           expect(vm.can_purchase?('コーラ')).to be false
+          expect(vm.can_purchase?('レッドブル')).to be false
+          expect(vm.can_purchase?('水')).to be false
         end
       end
     end
