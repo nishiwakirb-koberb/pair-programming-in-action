@@ -5,6 +5,10 @@ def item(name, price, stock)
   VendingMachine::ItemInformation.new(name, price, stock)
 end
 
+def insert(vm, *coins)
+  coins.each {|coin| vm.insert coin}
+end
+
 describe VendingMachine do
   context "Step 0" do
     it "returns 10 for inserting 10 yen coin" do
@@ -99,9 +103,7 @@ describe VendingMachine do
           expect(vm.can_purchase?('コーラ')).to be true
           expect(vm.can_purchase?('レッドブル')).to be false
           expect(vm.can_purchase?('水')).to be true
-          vm.insert 10
-          vm.insert 10
-          vm.insert 50
+          insert vm, 10, 10, 50
           expect(vm.can_purchase?('コーラ')).to be true
           expect(vm.can_purchase?('レッドブル')).to be false
           expect(vm.can_purchase?('水')).to be true
@@ -155,47 +157,85 @@ describe VendingMachine do
       end
     end
     describe '#purchase' do
+      shared_examples_for 'when it succeeded to purchase' do |name|
+        it 'returns drink' do
+          expect(vm.purchase(name)).to be_truthy
+        end
+        it 'increase sale amount' do
+          expect{vm.purchase(name)}.to change{vm.sale_amount}.by(vm.items.find{|item| item.name == name}.price)
+        end
+        it 'decrease stock' do
+          expect{vm.purchase(name)}.to change{vm.items.find{|item| item.name == name}.stock}
+        end
+      end
+      shared_examples_for 'when it failed to purchase' do |name|
+        it 'makes no change on the vending machine' do
+          expect(vm.purchase(name)).to be_nil
+          expect{vm.purchase(name)}.not_to change{vm.sale_amount}
+          expect{vm.purchase(name)}.not_to change{vm.items.find{|item| item.name == name}.stock}
+        end
+      end
       context 'when stock is enough' do
-        it 'returns nothing until some money are inserted.' do
-          expect(vm.purchase).to be_nil
-          expect{vm.purchase}.not_to change{vm.sale_amount}
+        context 'until some money are inserted' do
+          it_should_behave_like 'when it failed to purchase', 'コーラ'
+          it_should_behave_like 'when it failed to purchase', 'レッドブル'
+          it_should_behave_like 'when it failed to purchase', '水'
         end
-        it 'returns a drink after enough money are inserted.' do
-          vm.insert 100
-          expect(vm.purchase).to be_nil
-          vm.insert 10
-          expect(vm.purchase).to be_nil
-          vm.insert 10
-          expect(vm.purchase).to be true
+        context 'until enough money are inserted' do
+          it_should_behave_like 'when it failed to purchase', 'コーラ' do
+            before { insert vm, 100, 10 }
+          end
+          it_should_behave_like 'when it failed to purchase', 'レッドブル' do
+            before { insert vm, 100, 50, 10, 10, 10 }
+          end
+          it_should_behave_like 'when it failed to purchase', '水' do
+            before { insert vm, 50, 10, 10, 10 }
+          end
         end
-        it 'returns same sale amount until enough money are inserted' do
-          vm.insert 100
-          expect{vm.purchase}.not_to change{vm.sale_amount}
-          vm.insert 10
-          expect{vm.purchase}.not_to change{vm.sale_amount}
-          vm.insert 10
-          expect{vm.purchase}.to change{vm.sale_amount}.by(120)
+        context 'enough money are inserted' do
+          it_should_behave_like 'when it succeeded to purchase', 'コーラ' do
+            before { insert vm, 100, 10, 10 }
+          end
+          it_should_behave_like 'when it succeeded to purchase', 'レッドブル' do
+            before { insert vm, 100, 100 }
+          end
+          it_should_behave_like 'when it succeeded to purchase', '水' do
+            before { vm.insert 100 }
+          end
         end
         it 'returns nothing after refund.' do
           vm.insert 500
           vm.refund
-          expect(vm.purchase).to be_nil
+          expect(vm.purchase('コーラ')).to be_nil
         end
       end
       context 'when stock is not enough', stock: :not_enough do
-        it 'returns nothing independent from inserted amount.' do
-          expect(vm.purchase).to be_nil
-          vm.insert 100
-          expect(vm.purchase).to be_nil
-          vm.insert 100
-          expect(vm.purchase).to be_nil
+        context 'until some money are inserted' do
+          it_should_behave_like 'when it failed to purchase', 'コーラ'
+          it_should_behave_like 'when it failed to purchase', 'レッドブル'
+          it_should_behave_like 'when it failed to purchase', '水'
         end
-        it 'does not change sale amount independent from inserted amount.' do
-          expect{vm.purchase}.not_to change{vm.sale_amount}
-          vm.insert 100
-          expect{vm.purchase}.not_to change{vm.sale_amount}
-          vm.insert 100
-          expect{vm.purchase}.not_to change{vm.sale_amount}
+        context 'until enough money are inserted' do
+          it_should_behave_like 'when it failed to purchase', 'コーラ' do
+            before { insert vm, 100, 10 }
+          end
+          it_should_behave_like 'when it failed to purchase', 'レッドブル' do
+            before { insert vm, 100, 50, 10, 10, 10 }
+          end
+          it_should_behave_like 'when it failed to purchase', '水' do
+            before { insert vm, 50, 10, 10, 10 }
+          end
+        end
+        context 'enough money are inserted' do
+          it_should_behave_like 'when it failed to purchase', 'コーラ' do
+            before { insert vm, 100, 10, 10 }
+          end
+          it_should_behave_like 'when it failed to purchase', 'レッドブル' do
+            before { insert vm, 100, 100 }
+          end
+          it_should_behave_like 'when it failed to purchase', '水' do
+            before { vm.insert 100 }
+          end
         end
       end
     end
@@ -206,12 +246,12 @@ describe VendingMachine do
       it 'returns sum of sold juice.' do
         expect(vm.sale_amount).to eq(0)
         vm.insert 1000
-        vm.purchase
+        vm.purchase('コーラ')
         expect(vm.sale_amount).to eq(120)
-        vm.purchase
-        vm.purchase
-        vm.purchase
-        vm.purchase
+        vm.purchase('コーラ')
+        vm.purchase('コーラ')
+        vm.purchase('コーラ')
+        vm.purchase('コーラ')
         expect(vm.sale_amount).to eq(120*5)
       end
     end
