@@ -9,11 +9,11 @@ class VendingMachine
     @sale_amount = 0
   end
 
-  def insert(payment)
-    unless check_amount(payment)
-      return payment
+  def insert(inserted)
+    unless acceptable?(inserted)
+      return inserted
     else
-      @paid_amount += payment
+      @paid_amount += inserted
       return nil
     end
   end
@@ -38,8 +38,8 @@ class VendingMachine
 
   private
 
-  def check_amount amount
-    case amount
+  def acceptable?(inserted)
+    case inserted
     when 10, 50, 100, 500, 1000
       return true
     else
