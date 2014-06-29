@@ -30,8 +30,8 @@ class VendingMachine
     end
   end
 
-  def can_purchase?
-    return @juice_stock > 0 && paid_amount >= juice_price
+  def can_purchase?(name)
+    find_item(name).can_purchase?(paid_amount)
   end
 
   def items
@@ -49,6 +49,10 @@ class VendingMachine
     end
   end
 
+  def find_item(name)
+    @slots.find {|slot| slot.name == name} || SENTINEL
+  end
+
   class Slot
     attr_reader :name, :price, :stock
     def initialize(name, price, stock = 0)
@@ -60,7 +64,13 @@ class VendingMachine
     def information
       ItemInformation.new(@name, @price, @stock)
     end
+
+    def can_purchase?(paid_amount)
+      @stock > 0 && paid_amount >= @price
+    end
   end
+
+  SENTINEL = Slot.new('', 0, 0)
 
   class ItemInformation
     attr_reader :name, :price, :stock

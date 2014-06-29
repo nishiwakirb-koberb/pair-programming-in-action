@@ -74,30 +74,54 @@ describe VendingMachine do
     describe '#can_purchase?' do
       context 'when stock is enough' do
         it 'returns false until some money are inserted.' do
-          expect(vm.can_purchase?).to be false
+          expect(vm.can_purchase?('コーラ')).to be false
+          expect(vm.can_purchase?('レッドブル')).to be false
+          expect(vm.can_purchase?('水')).to be false
         end
         it 'returns true after enough money are inserted.' do
-          vm.insert 100
-          expect(vm.can_purchase?).to be false
+          vm.insert 50
+          expect(vm.can_purchase?('コーラ')).to be false
+          expect(vm.can_purchase?('レッドブル')).to be false
+          expect(vm.can_purchase?('水')).to be false
+          vm.insert 50
+          expect(vm.can_purchase?('コーラ')).to be false
+          expect(vm.can_purchase?('レッドブル')).to be false
+          expect(vm.can_purchase?('水')).to be true
           vm.insert 10
-          expect(vm.can_purchase?).to be false
+          expect(vm.can_purchase?('コーラ')).to be false
+          expect(vm.can_purchase?('レッドブル')).to be false
+          expect(vm.can_purchase?('水')).to be true
           vm.insert 10
-          expect(vm.can_purchase?).to be true
+          expect(vm.can_purchase?('コーラ')).to be true
+          expect(vm.can_purchase?('レッドブル')).to be false
+          expect(vm.can_purchase?('水')).to be true
+          vm.insert 10
+          vm.insert 10
+          vm.insert 50
+          expect(vm.can_purchase?('コーラ')).to be true
+          expect(vm.can_purchase?('レッドブル')).to be false
+          expect(vm.can_purchase?('水')).to be true
+          vm.insert 10
+          expect(vm.can_purchase?('コーラ')).to be true
+          expect(vm.can_purchase?('レッドブル')).to be true
+          expect(vm.can_purchase?('水')).to be true
         end
         it 'returns false after refund.' do
           vm.insert 500
           vm.refund
-          expect(vm.can_purchase?).to be false
+          expect(vm.can_purchase?('コーラ')).to be false
+          expect(vm.can_purchase?('レッドブル')).to be false
+          expect(vm.can_purchase?('水')).to be false
         end
       end
       context 'when stock is not enough', stock: :not_enough do
         it 'returns false independent from inserted amount.' do
           vm.refund
-          expect(vm.can_purchase?).to be false
+          expect(vm.can_purchase?('コーラ')).to be false
           vm.insert 100
-          expect(vm.can_purchase?).to be false
+          expect(vm.can_purchase?('コーラ')).to be false
           vm.insert 100
-          expect(vm.can_purchase?).to be false
+          expect(vm.can_purchase?('コーラ')).to be false
         end
       end
     end
