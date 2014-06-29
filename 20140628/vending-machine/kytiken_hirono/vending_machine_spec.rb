@@ -209,6 +209,19 @@ describe VendingMachine do
           expect(vm.purchase('コーラ')).to be_nil
         end
       end
+      context 'when stock of cola is not enough' do
+        before do
+          vm.insert 1000
+          5.times { vm.purchase('コーラ') }
+          vm.refund
+        end
+        context 'enough money are inserted' do
+          before { vm.insert 1000 }
+          it_should_behave_like 'when it failed to purchase', 'コーラ'
+          it_should_behave_like 'when it succeeded to purchase', 'レッドブル'
+          it_should_behave_like 'when it succeeded to purchase', '水'
+        end
+      end
       context 'when stock is not enough', stock: :not_enough do
         context 'until some money are inserted' do
           it_should_behave_like 'when it failed to purchase', 'コーラ'
@@ -264,6 +277,43 @@ describe VendingMachine do
         ['水', 100, 5],
         ['レッドブル', 200, 5] ].each do |expecting|
         expect(vm.items).to include(item(*expecting))
+      end
+    end
+
+    describe '#purchasable_items' do
+      context 'when stock is enough' do
+        it 'should be empty until some money are inserted' do
+          expect(vm.purchasable_items).to be_empty
+        end
+        it 'should be empty until enough money are inserted' do
+          insert vm, 50, 10, 10, 10, 10
+          expect(vm.purchasable_items).to be_empty
+          cola = item('コーラ', 120, 5)
+          redbull = item('レッドブル', 200, 5)
+          water = item('水', 100, 5)
+          vm.insert 10
+          expect(vm.purchasable_items).to include('水')
+          insert vm, 10, 10
+          expect(vm.purchasable_items).to include('水', 'コーラ')
+          insert vm, 10, 10, 50, 10
+          expect(vm.purchasable_items).to include('水', 'コーラ', 'レッドブル')
+        end
+        it 'should be empty after refund.' do
+          vm.insert 500
+          vm.refund
+          expect(vm.purchasable_items).to be_empty
+        end
+      end
+      context 'when stock is not enough', stock: :not_enough do
+        it 'should be empty until some money are inserted' do
+          expect(vm.purchasable_items).to be_empty
+        end
+        it 'should be empty until enough money are inserted' do
+          vm.insert 10
+          expect(vm.purchasable_items).to be_empty
+          vm.insert 1000
+          expect(vm.purchasable_items).to be_empty
+        end
       end
     end
   end

@@ -40,6 +40,10 @@ class VendingMachine
     @slots.map(&:information)
   end
 
+  def purchasable_items
+    @slots.select {|slot| slot.can_purchase?(paid_amount)}.map(&:name)
+  end
+
   private
 
   def acceptable?(inserted)
