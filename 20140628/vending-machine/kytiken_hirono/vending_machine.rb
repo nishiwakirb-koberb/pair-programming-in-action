@@ -18,15 +18,6 @@ class VendingMachine
     end
   end
 
-  def check_amount amount
-    case amount
-    when 10, 50, 100, 500, 1000
-      return true
-    else
-      return false
-    end
-  end
-
   def refund
     refund_amount = @paid_amount
     @paid_amount = 0
@@ -44,4 +35,16 @@ class VendingMachine
   def can_purchase?
     return @juice_stock > 0 && paid_amount >= juice_price
   end
+
+  private
+
+  def check_amount amount
+    case amount
+    when 10, 50, 100, 500, 1000
+      return true
+    else
+      return false
+    end
+  end
+
 end
