@@ -9,7 +9,7 @@ class VendingMachine
     @sale_amount = 0
   end
 
-  def payment_insert payment
+  def insert(payment)
     unless check_amount(payment)
       return payment
     else
