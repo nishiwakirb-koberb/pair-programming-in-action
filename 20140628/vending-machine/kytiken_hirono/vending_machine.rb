@@ -1,12 +1,10 @@
 class VendingMachine
-  attr_reader :paid_amount, :juice_name, :juice_price, :juice_stock, :sale_amount
+  attr_reader :paid_amount, :sale_amount
 
   def initialize
     @paid_amount = 0
-    @juice_name = "コーラ"
-    @juice_price = 120
-    @juice_stock = 5
     @sale_amount = 0
+    @slots = [ Slot.new('コーラ', 120, 5), Slot.new('レッドブル', 200, 5), Slot.new('水', 100, 5) ]
   end
 
   def insert(inserted)
