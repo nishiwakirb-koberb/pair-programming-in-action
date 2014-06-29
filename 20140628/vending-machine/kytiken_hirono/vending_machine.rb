@@ -47,4 +47,13 @@ class VendingMachine
     end
   end
 
+  class Slot
+    attr_reader :name, :price, :stock
+    def initialize(name, price, stock = 0)
+      @name = name
+      @price = price
+      @stock = stock
+    end
+  end
+
 end
