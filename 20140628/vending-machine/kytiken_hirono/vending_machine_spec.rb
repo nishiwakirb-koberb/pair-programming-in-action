@@ -66,4 +66,42 @@ describe VendingMachine do
       expect(vm.juice_stock).to eq(5)
     end
   end
+
+  context "Step 3" do
+    let(:vm) { VendingMachine.new }
+    describe '#can_purchase?' do
+      context 'when stock is enough' do
+        it 'returns false until some money are inserted.' do
+          expect(vm.can_purchase?).to be_falsey
+        end
+        it 'returns true after enough money are inserted.' do
+          vm.insert 100
+          expect(vm.can_purchase?).to be_falsey
+          vm.insert 10
+          expect(vm.can_purchase?).to be_falsey
+          vm.insert 10
+          expect(vm.can_purchase?).to be_truthy
+        end
+        it 'returns false after refund.' do
+          vm.insert 500
+          vm.refund
+          expect(vm.can_purchase?).to be_falsey
+        end
+      end
+      context 'when stock is not enough' do
+        before do
+          vm.insert 1000
+          5.times { vm.purchase }
+        end
+        it 'returns false independent from inserted amount.' do
+          vm.refund
+          expect(vm.can_purchase?).to be_falsey
+          vm.insert 100
+          expect(vm.can_purchase?).to be_falsey
+          vm.insert 100
+          expect(vm.can_purchase?).to be_falsey
+        end
+      end
+    end
+  end
 end
