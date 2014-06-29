@@ -103,5 +103,39 @@ describe VendingMachine do
         end
       end
     end
+    describe '#purchase' do
+      context 'when stock is enough' do
+        it 'returns nothing until some money are inserted.' do
+          expect(vm.purchase).to be_nil
+        end
+        it 'returns a drink after enough money are inserted.' do
+          vm.insert 100
+          expect(vm.purchase).to be_nil
+          vm.insert 10
+          expect(vm.purchase).to be_nil
+          vm.insert 10
+          expect(vm.purchase).to be_truthy
+        end
+        it 'returns nothing after refund.' do
+          vm.insert 500
+          vm.refund
+          expect(vm.purchase).to be_nil
+        end
+      end
+      context 'when stock is not enough' do
+        before do
+          vm.insert 1000
+          5.times { vm.purchase }
+        end
+        it 'returns nothing independent from inserted amount.' do
+          vm.refund
+          expect(vm.purchase).to be_nil
+          vm.insert 100
+          expect(vm.purchase).to be_nil
+          vm.insert 100
+          expect(vm.purchase).to be_nil
+        end
+      end
+    end
   end
 end
