@@ -69,6 +69,13 @@ describe VendingMachine do
 
   context "Step 3" do
     let(:vm) { VendingMachine.new }
+    shared_context 'when stock is not enough', stock: :not_enough do
+      before do
+        vm.insert 1000
+        5.times { vm.purchase }
+        vm.refund
+      end
+    end
     describe '#can_purchase?' do
       context 'when stock is enough' do
         it 'returns false until some money are inserted.' do
@@ -88,11 +95,7 @@ describe VendingMachine do
           expect(vm.can_purchase?).to be_falsey
         end
       end
-      context 'when stock is not enough' do
-        before do
-          vm.insert 1000
-          5.times { vm.purchase }
-        end
+      context 'when stock is not enough', stock: :not_enough do
         it 'returns false independent from inserted amount.' do
           vm.refund
           expect(vm.can_purchase?).to be_falsey
@@ -107,6 +110,7 @@ describe VendingMachine do
       context 'when stock is enough' do
         it 'returns nothing until some money are inserted.' do
           expect(vm.purchase).to be_nil
+          expect{vm.purchase}.not_to change{vm.sale_amount}
         end
         it 'returns a drink after enough money are inserted.' do
           vm.insert 100
@@ -116,24 +120,34 @@ describe VendingMachine do
           vm.insert 10
           expect(vm.purchase).to be_truthy
         end
+        it 'returns same sale amount until enough money are inserted' do
+          vm.insert 100
+          expect{vm.purchase}.not_to change{vm.sale_amount}
+          vm.insert 10
+          expect{vm.purchase}.not_to change{vm.sale_amount}
+          vm.insert 10
+          expect{vm.purchase}.to change{vm.sale_amount}.by(120)
+        end
         it 'returns nothing after refund.' do
           vm.insert 500
           vm.refund
           expect(vm.purchase).to be_nil
         end
       end
-      context 'when stock is not enough' do
-        before do
-          vm.insert 1000
-          5.times { vm.purchase }
-        end
+      context 'when stock is not enough', stock: :not_enough do
         it 'returns nothing independent from inserted amount.' do
-          vm.refund
           expect(vm.purchase).to be_nil
           vm.insert 100
           expect(vm.purchase).to be_nil
           vm.insert 100
           expect(vm.purchase).to be_nil
+        end
+        it 'does not change sale amount independent from inserted amount.' do
+          expect{vm.purchase}.not_to change{vm.sale_amount}
+          vm.insert 100
+          expect{vm.purchase}.not_to change{vm.sale_amount}
+          vm.insert 100
+          expect{vm.purchase}.not_to change{vm.sale_amount}
         end
       end
     end
