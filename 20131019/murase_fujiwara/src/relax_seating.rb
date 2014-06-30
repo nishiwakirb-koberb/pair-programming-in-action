@@ -1,32 +1,12 @@
-require 'pp'
-
-def vacant_seat_index(seats)
-  virtual_seats = "-" + seats + "-"
-
-  (virtual_seats =~ /---/) or
-  (virtual_seats =~ /--\w|\w--/) or
-  seats.index('-')
-
-  # if idx = (virtual_seats =~ /---/)
-  #   return idx
-  # end
-  # if idx = (virtual_seats =~ /--\w|\w--/)
-  #   return idx
-  # end
-  # seats.index('-')
-end
+REGEX_ARRAY = [/(?<=-)-(?=-)/, /(?<=-)-(?=\w)|(?<=\w)-(?=-)/, /(?<=\w)-(?=\w)/].freeze
+ESCAPE_FROM_VIRTUAL = (1...-1).freeze
 
 def relax_seating(input)
   num, sequence = input.split(':')
-  seats = "-" * num.to_i
-  sequence.each_char do |c|
-    if c.upcase == c
-      idx = vacant_seat_index(seats)
-      seats[idx] = c
-    else
-      idx = seats.index(c.upcase)
-      seats[idx] = '-'
-    end
-  end
-  seats
+  sequence.each_char.inject('-' * num.to_i) {|seats, c| c == c.upcase ? replace(seats, c) : seats.sub(c.upcase, '-') }
+end
+
+def replace(seats, c)
+  virtual_seats = "-#{seats}-"
+  REGEX_ARRAY.map {|r| virtual_seats.sub(r, c) }.find {|s| s != virtual_seats }[ESCAPE_FROM_VIRTUAL]
 end
